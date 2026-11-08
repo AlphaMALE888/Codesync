@@ -11,7 +11,7 @@
 | **Phase 0** | **Repository Audit and Project Foundation** | **COMPLETE** | 8 November 2026 |
 | **Phase 1** | **Design System and Global Foundation** | **COMPLETE** | 8 November 2026 |
 | **Phase 2** | **Global Navigation and Shared Components** | **COMPLETE** | 8 November 2026 |
-| **Phase 3** | Homepage Hero Experience | NOT STARTED | — |
+| **Phase 3** | **Homepage Hero Experience** | **COMPLETE** | 8 November 2026 |
 | **Phase 4** | Homepage Sections | NOT STARTED | — |
 | **Phase 5** | Services Pages (Hub & 14 Detail Pages) | NOT STARTED | — |
 | **Phase 6** | Portfolio and Case Studies | NOT STARTED | — |
@@ -112,6 +112,67 @@
 - **Known Limitations:**
   - Case studies (`features.work`) and Insights (`features.insights`) are conditionally hidden from navigation per feature flags.
   - Giant cropped wordmark footer scene is reserved for Phase 4.
+
+---
+
+## Phase 3 Record: Homepage Hero Experience
+
+- **Status:** COMPLETE
+- **Date:** 8 November 2026
+- **Objective:** Construct the first-fold hero experience: art-directed headline, supporting line, calls to action, original layered Awadhi arch backdrop, floating teaser preview card, trust rail adhering to the Content Status Rule, staggered line-mask entrance sequence, and GSAP ScrollTrigger desktop scrubbed exit.
+- **Files Created:**
+  - `src/lib/gsap.ts` (safe isomorphic GSAP + ScrollTrigger registration and context hook)
+  - `src/components/motion/useReducedMotion.ts` (media query listener)
+  - `src/components/motion/LineReveal.tsx` (explicit line mask split with staggered reveal)
+  - `src/components/sections/hero/HeroBackdrop.tsx` (SVG pointed arches + gradient + static 6% SVG film-grain)
+  - `src/components/sections/hero/HeroMedia.tsx` (optional video/photo slot with 40% contrast overlay)
+  - `src/components/sections/hero/HeroPreviewCard.tsx` (glassy dark teaser card linking to `/services`)
+  - `src/components/sections/hero/TrustRail.tsx` (verified location statement and conditional logo rail)
+  - `src/components/sections/hero/Hero.tsx` (full composed hero container)
+  - `src/components/sections/AnnouncementTicker.tsx` (null fallback component)
+- **Files Modified:**
+  - `package.json` & `package-lock.json` (`gsap` installed)
+  - `src/app/page.tsx` (composed `<Hero />` with verified metadata and Phase 4 slot)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+- **Components Created:**
+  - `Hero`, `HeroBackdrop`, `HeroMedia`, `HeroPreviewCard`, `TrustRail`, `LineReveal`, `AnnouncementTicker`.
+- **Pages Completed:**
+  - `/` (Homepage first fold complete with hero experience).
+- **Animations Implemented:**
+  - Staggered entrance sequence (Framer Motion):
+    - 0ms: Frame background fade (600ms).
+    - 150ms: Two-line mask reveal with `LineReveal` (`translateY(115%)` to `0`, 800ms, stagger 90ms, cubic-bezier(0.22, 1, 0.36, 1)).
+    - 550ms: Eyebrow label and supporting sentence (y: 16px to 0, 600ms ease-out).
+    - 750ms: CTAs row entrance (600ms ease-out).
+    - 900ms: Floating preview card entrance (scale 0.96 to 1, y: 12px to 0, 700ms).
+    - 1100ms: Trust rail fade in (600ms).
+  - Hover micro-interactions:
+    - Primary SplitArrowButton translates inset arrow tile.
+    - Floating preview card lifts 4px, border shifts to accent, arrow icon rotates 45 degrees.
+    - Secondary WhatsApp text link animates underline.
+  - Scroll exit choreography (GSAP ScrollTrigger, min-width 768px):
+    - Copy block scrubs `yPercent: -8`, opacity `1 -> 0.4`.
+    - Layered arch silhouettes scrub at parallax depth: back layer `-4%`, mid layer `-9%`, front layer `-14%`.
+    - Subtle backdrop scale `1 -> 1.06`.
+  - Reduced-motion compliance:
+    - All entrance translations disabled; instantaneous final visible states rendered.
+    - Scroll exit scrub disabled; background and text remain static.
+- **Dependencies Installed:**
+  - `gsap@^3.12.5` (scroll scrubbing and parallax choreography).
+- **Tests Performed:**
+  - TypeScript strict type check (`npm run type-check` -> 0 errors).
+  - ESLint verification (`npm run lint` -> 0 warnings, 0 errors).
+  - Production build (`npm run build` -> exit code 0).
+  - Verified no unverified claims (374+, 643+, 22+, 30+, 5.0/86) appear in rendered hero.
+  - Contrast check: white headline and text against layered backdrop exceed 4.5:1 WCAG AA.
+  - Mobile checks: svh viewport units prevent mobile browser URL bar jumps; preview card hides below 768px; CTAs adapt cleanly.
+- **Build Results:**
+  - Next.js production build succeeded with static site generation for all routes.
+- **Errors or Unresolved Issues:** None.
+- **Known Limitations:**
+  - Homepage sections below the hero are scheduled for Phase 4.
+  - Client logo rail displays verified location fallback ("Based in Lucknow, Uttar Pradesh") until client confirms partner permissions.
 
 ---
 
