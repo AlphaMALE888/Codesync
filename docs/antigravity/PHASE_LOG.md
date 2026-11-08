@@ -176,6 +176,65 @@
 
 ---
 
+## Phase 4 Record: Homepage Sections
+
+- **Status:** COMPLETE
+- **Date:** 8 November 2026
+- **Objective:** Construct the complete downstream narrative of the homepage beneath the hero: ProofGrid (unequal metric cards + Counter component), CapabilityAccordion (Grow, Build, Run modular panel accordion), VisionSplit (conditional feature), FeatureStrip (4 verified differentiators, zero dev jargon), StatementPanel (concentric arches with GSAP ScrollTrigger scrub scale), ProcessAccordion (4 stages with original ProcessArt highlighting), TeamRail (quote card + portrait cards on colored fields), TestimonialCarousel (DisplayMarquee "Experiences" + 6 verbatim reviews + circular navigation), FinalCta ("Tell us what you want to grow" with call & WhatsApp CTAs), and FooterScene (oversized cropped "CODESYNC" wordmark).
+- **Files Created:**
+  - `src/components/motion/Counter.tsx` (requestAnimationFrame ease-out counter with tabular-nums and SSR fallback)
+  - `src/components/illustrations/GrowArt.tsx` (original SVG geometric growth illustration)
+  - `src/components/illustrations/BuildArt.tsx` (original SVG systems architecture illustration)
+  - `src/components/illustrations/RunArt.tsx` (original SVG operations flywheel illustration)
+  - `src/components/illustrations/ProcessArt.tsx` (original SVG process step radar diagram)
+  - `src/components/illustrations/StatementArt.tsx` (original SVG concentric pointed arches illustration)
+  - `src/components/sections/home/ProofGrid.tsx` & `MetricCard.tsx` (4 unequal metric cards: ad timing, Lucknow presence, SEO timeframe, verified quote)
+  - `src/components/sections/home/CapabilityAccordion.tsx` (Grow / Build / Run panels, vertical tabs on desktop, vertical accordion on mobile)
+  - `src/components/sections/home/VisionSplit.tsx` (guarded by `features.vision`)
+  - `src/components/sections/home/FeatureStrip.tsx` (4 verified service pillars)
+  - `src/components/sections/home/StatementPanel.tsx` (editorial brand statement with GSAP ScrollTrigger scrub)
+  - `src/components/sections/home/ProcessAccordion.tsx` (4-step Discover/Plan/Build/Launch with interactive active state)
+  - `src/components/sections/home/TeamRail.tsx` & `TeamCard.tsx` (editorial team introduction with colored field backdrops)
+  - `src/components/sections/home/TestimonialCarousel.tsx` & `TestimonialCard.tsx` (6 verbatim Google reviews with scroll buttons)
+  - `src/components/sections/home/FinalCta.tsx` (high-contrast bottom CTA with direct phone & WhatsApp links)
+  - `src/components/layout/FooterScene.tsx` (giant cropped "CODESYNC" wordmark scene)
+- **Files Modified:**
+  - `src/data/proof.ts` (populated with strictly verified proof points)
+  - `src/data/testimonials.ts` (populated with 6 verbatim client reviews)
+  - `src/data/team.ts` (populated with leadership profiles)
+  - `src/components/layout/SiteFooter.tsx` (integrated `FooterScene` into the footer)
+  - `src/app/page.tsx` (composed all Phase 4 sections into homepage layout)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+- **Components Created:**
+  - `Counter`, `GrowArt`, `BuildArt`, `RunArt`, `ProcessArt`, `StatementArt`, `ProofGrid`, `MetricCard`, `CapabilityAccordion`, `VisionSplit`, `FeatureStrip`, `StatementPanel`, `ProcessAccordion`, `TeamRail`, `TeamCard`, `TestimonialCarousel`, `TestimonialCard`, `FinalCta`, `FooterScene`.
+- **Pages Completed:**
+  - `/` (Complete homepage experience).
+- **Animations Implemented:**
+  - `Counter`: Smooth ease-out number count-up on scroll entry via IntersectionObserver.
+  - `CapabilityAccordion`: Tab and panel transitions with spring physics (`framer-motion`), cross-fading SVG art and bullet points.
+  - `StatementPanel`: GSAP ScrollTrigger scrub scaling concentric arch rings (`scale: 0.94 -> 1.06`, opacity: `0.7 -> 1`).
+  - `ProcessAccordion`: Interactive 4-stage active step selection with step-specific visual highlights.
+  - `TestimonialCarousel`: Horizontal snap scrolling with smooth programmatically controlled scroll buttons.
+  - `TeamRail`: Colored field hover-zoom and card elevation.
+  - `FinalCta`: Inset arrow button hover and WhatsApp link animations.
+  - Full prefers-reduced-motion fallbacks for all motion components.
+- **Dependencies Installed:**
+  - None (utilized existing `framer-motion` and `gsap`).
+- **Tests Performed:**
+  - TypeScript strict type check (`npm run type-check` -> 0 errors).
+  - ESLint verification (`npm run lint` -> 0 warnings, 0 errors).
+  - Production build (`npm run build` -> exit code 0, 5/5 static pages generated).
+  - Content audit: Zero prohibited terms (`php`, `hostinger`, `static placeholder`, `super admin`).
+  - Responsive audit: 360px to 1440px layout integrity verified.
+- **Build Results:**
+  - Next.js production build succeeded with static site generation for all routes (`/`, `/_not-found`, `/design-system`).
+- **Errors or Unresolved Issues:** None.
+- **Known Limitations:**
+  - Case studies section (`features.work`) and pricing/FAQ section (`features.pricing`) remain gated or reserved for dedicated upcoming phases (Phases 6 and 8).
+
+---
+
 ## Decisions Made
 
 1. **Adoption of Editorial Grotesk & Awadhi Arch Motif**: Approved the visual direction balancing Spartan AI's high-contrast editorial hierarchy with a localized, Lucknow-inspired pointed-arch motif (`ArchMotif.tsx`) in place of generic starbursts.

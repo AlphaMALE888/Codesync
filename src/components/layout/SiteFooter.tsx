@@ -4,6 +4,7 @@ import { siteConfig } from "@/data/site";
 import { features } from "@/data/features";
 import { SplitArrowButton } from "@/components/ui/SplitArrowButton";
 import { Eyebrow } from "@/components/ui/Typography";
+import { FooterScene } from "./FooterScene";
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
@@ -179,10 +180,8 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* Phase 4 Footer Wordmark Scene Slot */}
-          <div id="footer-wordmark-slot" className="w-full">
-            {/* Populated in Phase 4 with the oversized cropped CODESYNC wordmark scene */}
-          </div>
+          {/* Phase 4 Footer Wordmark Scene */}
+          <FooterScene />
 
           {/* Bottom Bar: Copyright & Legal */}
           <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-secondary-on-dark">
