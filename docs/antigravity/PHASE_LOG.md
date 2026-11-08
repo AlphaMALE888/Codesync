@@ -235,6 +235,75 @@
 
 ---
 
+## Phase 5 Record: Services Pages
+
+- **Status:** COMPLETE
+- **Date:** 9 November 2026
+- **Objective:** Build the services overview and individual service pages from a single typed data source and unified template. Present all 14 core services with real, verified information, honest pricing handling (quote-first model with numbers held pending client verification), and clear conversion pathways. Support /services and 14 static pages under /services/[slug], plus /industries returning 404 while features.industries remains false.
+- **Files Created:**
+  - `src/components/sections/services/ServiceRow.tsx` (row component with number, name, one-liner, hover shift, 56px minimum tap target)
+  - `src/components/sections/services/PillarRail.tsx` (sticky left rail on desktop with IntersectionObserver scroll-spy and aria-current, horizontal chip bar on mobile)
+  - `src/components/sections/services/PillarChapter.tsx` (alternating light/dark chapter blocks with large numerals, display pillar titles, and SVG illustration accents)
+  - `src/components/sections/services/ServicesIndex.tsx` (overview layout with editorial statement, sticky rail, 3 chapters, and FinalCta)
+  - `src/components/sections/services/ServiceHero.tsx` (pillar eyebrow, h1, 2-line summary, 3 label facts, staggered entrance, CTAs, and pillar vector artwork)
+  - `src/components/sections/services/AudienceBlock.tsx` (2-4 verified target segments per service)
+  - `src/components/sections/services/WhatYouGet.tsx` (4-column responsive feature strip from verified inclusions and deliverables)
+  - `src/components/sections/services/HowItWorks.tsx` (4-step ProcessAccordion with service-specific one-liners and active diagram)
+  - `src/components/sections/services/PricingBlock.tsx` (quote-first card: "Pricing depends on your goals and scope. Tell us what you need and we will send a clear quote.")
+  - `src/components/sections/services/ServiceTestimonial.tsx` (verbatim single quote proof card or cleanly omitted)
+  - `src/components/sections/services/ServiceFaq.tsx` (dark rounded AccordionItem list populated with verified questions)
+  - `src/components/sections/services/RelatedServices.tsx` (3 cards linking to complementary services)
+  - `src/app/services/page.tsx` (static services overview route)
+  - `src/app/services/[slug]/page.tsx` (SSG dynamic route with generateStaticParams and dynamic metadata)
+  - `src/app/industries/page.tsx` (conditional route returning notFound() when features.industries is false)
+- **Files Modified:**
+  - `src/data/faqs.ts` (populated with 10 verified FAQs from client data)
+  - `src/data/services.ts` (populated with all 14 core services across GROW, BUILD, and RUN)
+  - `src/lib/content.ts` (added getAllServices, getServiceBySlug, getServicesByPillar, getRelatedServices, getFaqsByIds)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+- **Components Created:**
+  - `ServiceRow`, `PillarRail`, `PillarChapter`, `ServicesIndex`, `ServiceHero`, `AudienceBlock`, `WhatYouGet`, `HowItWorks`, `PricingBlock`, `ServiceTestimonial`, `ServiceFaq`, `RelatedServices`.
+- **Pages Completed:**
+  - `/services`
+  - 14 static pages under `/services/[slug]`:
+    - `/services/local-seo-google-business-profile`
+    - `/services/seo`
+    - `/services/google-ads-ppc`
+    - `/services/meta-ads-lead-generation`
+    - `/services/social-content-email-sms`
+    - `/services/business-websites`
+    - `/services/ecommerce-websites`
+    - `/services/mobile-apps`
+    - `/services/ui-ux-graphic-design`
+    - `/services/domain-hosting-maintenance`
+    - `/services/crm`
+    - `/services/erp-billing-gst`
+    - `/services/hrms-payroll`
+    - `/services/custom-software`
+  - `/industries` (returns 404 as feature flag is false)
+- **Animations Implemented:**
+  - `ServiceRow`: Hover state with 6px arrow translate, number color transition to accent, and row background shift (220ms ease-out).
+  - `PillarRail`: Scroll-spy with IntersectionObserver updating active pillar marker and sliding smooth transition.
+  - `ServiceHero`: Staggered entrance sequence (eyebrow, title, summary, 3 key facts, CTAs, vector art) with 600ms ease-out.
+  - `HowItWorks`: Interactive 4-stage accordion expanding step description and updating active radar diagram.
+  - Full prefers-reduced-motion fallbacks for all transitions.
+- **Dependencies Installed:** None (used existing libraries).
+- **Tests Performed:**
+  - TypeScript strict type check (`npm run type-check` -> 0 errors).
+  - ESLint verification (`npm run lint` -> 0 warnings, 0 errors).
+  - Production build (`npm run build` -> exit code 0, 21/21 static pages generated successfully).
+  - Content audit: All 14 services checked against Content Status Rule; no prohibited terms (`hostinger`, `static placeholder`, `super admin`); high-risk app types excluded; candidate prices held pending; quote-first card rendered.
+  - Responsive audit: Verified 360px mobile viewports (including longest service name "Domain, Hosting & Maintenance") up to 1440px+ desktop.
+- **Build Results:**
+  - Next.js production build succeeded with static site generation for all 21 routes.
+- **Errors or Unresolved Issues:** None.
+- **Known Limitations:**
+  - Candidate prices remain pending client sign-off (pricing cards render quote-first messaging).
+  - Legacy path `/seo-services-lucknow` recorded as an open link to be mapped in Phase 12 301 redirects.
+
+---
+
 ## Decisions Made
 
 1. **Adoption of Editorial Grotesk & Awadhi Arch Motif**: Approved the visual direction balancing Spartan AI's high-contrast editorial hierarchy with a localized, Lucknow-inspired pointed-arch motif (`ArchMotif.tsx`) in place of generic starbursts.
@@ -254,7 +323,8 @@
 
 ## Known Open Links
 
-- None (No website code deployed yet).
+- `/seo-services-lucknow`: Legacy SEO page path from old site (`cdmlko.com`); to be mapped via 301 redirect to `/services/seo` during Phase 12 SEO pass.
+- `/contact`: Contact route active as primary call-to-action anchor; fully implemented with inquiry API in Phase 8.
 
 ---
 
