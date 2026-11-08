@@ -10,7 +10,7 @@
 |---|---|---|---|
 | **Phase 0** | **Repository Audit and Project Foundation** | **COMPLETE** | 8 November 2026 |
 | **Phase 1** | **Design System and Global Foundation** | **COMPLETE** | 8 November 2026 |
-| **Phase 2** | Global Navigation and Shared Components | NOT STARTED | — |
+| **Phase 2** | **Global Navigation and Shared Components** | **COMPLETE** | 8 November 2026 |
 | **Phase 3** | Homepage Hero Experience | NOT STARTED | — |
 | **Phase 4** | Homepage Sections | NOT STARTED | — |
 | **Phase 5** | Services Pages (Hub & 14 Detail Pages) | NOT STARTED | — |
@@ -58,6 +58,60 @@
 - **Known Limitations:**
   - The repository was completely empty; no legacy code or assets existed locally.
   - Logo file `cdm-logo-transparent.png` is not locally available; provisional deep forest green token `#2F5A44` is adopted for Phase 1.
+
+## Phase 2 Record: Global Navigation and Shared Components
+
+- **Status:** COMPLETE
+- **Date:** 8 November 2026
+- **Objective:** Build the floating capsule navigation, services dropdown, mobile menu sheet, footer foundation, and the reusable primitives (`DisplayMarquee`, `Accordion`, `MediaSlot`, `SectionHeader`, `Reveal`) for subsequent phases.
+- **Files Created:**
+  - `src/lib/motion.ts`
+  - `src/components/brand/Logo.tsx`
+  - `src/components/navigation/NavLink.tsx`
+  - `src/components/navigation/ServicesMenu.tsx`
+  - `src/components/navigation/MobileMenu.tsx`
+  - `src/components/navigation/FloatingNav.tsx`
+  - `src/components/layout/SiteHeader.tsx`
+  - `src/components/layout/SiteFooter.tsx`
+  - `src/components/layout/PageShell.tsx`
+  - `src/components/ui/DisplayMarquee.tsx`
+  - `src/components/ui/Accordion.tsx`
+  - `src/components/ui/MediaSlot.tsx`
+  - `src/components/ui/SectionHeader.tsx`
+  - `src/components/ui/Reveal.tsx`
+- **Files Modified:**
+  - `package.json` & `package-lock.json` (`framer-motion` installed)
+  - `src/styles/globals.css` (marquee animation keyframes and reduced-motion rules added)
+  - `src/app/layout.tsx` (wrapped with `SiteHeader` and `SiteFooter`)
+  - `src/app/(dev)/design-system/page.tsx` (extended with Phase 2 primitives)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+- **Components Created:**
+  - `FloatingNav`, `NavLink`, `ServicesMenu`, `MobileMenu`, `Logo`, `SiteHeader`, `SiteFooter`, `PageShell`, `DisplayMarquee`, `Accordion`, `AccordionItem`, `MediaSlot`, `SectionHeader`, `Reveal`.
+- **Pages Completed:**
+  - Global shared layout across all routes via `app/layout.tsx`.
+  - Updated dev-only `/design-system` page displaying nav, marquee, accordions, and media slots.
+- **Animations Implemented:**
+  - Floating nav entrance (opacity 0, y -16px to 1, 0 in 450ms; CTA follows in 80ms).
+  - Services dropdown (opacity, y 8px, scale 0.98 to 1, 0, 1 in 220ms ease-out; links stagger 20ms).
+  - Active nav link layout pill slide (`motion.span` layoutId spring animation).
+  - Mobile full-screen drawer (translateY -8% to 0% in 380ms ease-in-out; links stagger 40ms).
+  - Accordion item expansion (height and opacity in 300ms ease-in-out; plus icon 45-degree rotation).
+  - Continuous CSS keyframe marquee (32s per cycle, pauses on hover, static on reduced motion).
+- **Dependencies Installed:**
+  - `framer-motion@^11.11.17` (component state and enter animations).
+- **Tests Performed:**
+  - TypeScript strict type check (`npm run type-check` -> 0 errors).
+  - ESLint verification (`npm run lint` -> 0 warnings, 0 errors).
+  - Production build (`npm run build` -> exit code 0).
+  - Mobile drawer scroll-lock and escape key listener verified.
+  - MediaSlot dev vs production behavior verified.
+- **Build Results:**
+  - Next.js production build succeeded with static site generation for all routes.
+- **Errors or Unresolved Issues:** None.
+- **Known Limitations:**
+  - Case studies (`features.work`) and Insights (`features.insights`) are conditionally hidden from navigation per feature flags.
+  - Giant cropped wordmark footer scene is reserved for Phase 4.
 
 ---
 

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 import "@/styles/globals.css";
 import { SkipLink } from "@/components/ui/SkipLink";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { cn } from "@/lib/cn";
 
 const interBody = Inter({
@@ -30,9 +32,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn(interBody.variable, interDisplay.variable)}>
-      <body className="min-h-screen bg-canvas text-ink selection:bg-accent selection:text-white">
+      <body className="min-h-screen flex flex-col justify-between bg-canvas text-ink selection:bg-accent selection:text-white">
         <SkipLink targetId="main" />
-        <main id="main">{children}</main>
+        <SiteHeader />
+        <main id="main" className="flex-1 w-full pt-16 sm:pt-20">
+          {children}
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

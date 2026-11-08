@@ -7,6 +7,11 @@ import { CategoryPill } from "@/components/ui/CategoryPill";
 import { SplitArrowButton } from "@/components/ui/SplitArrowButton";
 import { TextLink } from "@/components/ui/TextLink";
 import { ArchMotif } from "@/components/ui/ArchMotif";
+import { DisplayMarquee } from "@/components/ui/DisplayMarquee";
+import { Accordion, AccordionItem } from "@/components/ui/Accordion";
+import { MediaSlot } from "@/components/ui/MediaSlot";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { Reveal } from "@/components/ui/Reveal";
 
 export default function DesignSystemPage() {
   if (process.env.NODE_ENV === "production") {
@@ -196,6 +201,70 @@ export default function DesignSystemPage() {
             <div className="flex flex-col items-center gap-3">
               <ArchMotif size="lg" />
               <span className="font-mono text-xs text-text-secondary-on-dark">Large (40x60px)</span>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* 5. Display Marquee Demonstration */}
+      <div className="py-8 bg-canvas border-y border-hairline">
+        <DisplayMarquee text="Grow. Build. Run." />
+      </div>
+
+      {/* 6. Accordion & SectionHeader Demonstration */}
+      <Section tone="dark" padded>
+        <Container>
+          <Reveal>
+            <SectionHeader
+              eyebrow="COMMON QUERIES"
+              title="Frequently Asked Questions"
+              intro="Demonstrating the dark rounded accordion rows and single/multiple expansion states."
+              tone="dark"
+            />
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="max-w-3xl">
+              <Accordion type="single" defaultOpen="item-1" tone="dark">
+                <AccordionItem id="item-1" title="What services does CODESYNC provide?">
+                  Digital marketing (Local SEO, Google Ads, Meta Ads, Social Media, Content, Email, SMS) 
+                  and custom software development (Websites, Mobile Apps, CRM, ERP, Billing, HRMS).
+                </AccordionItem>
+                <AccordionItem id="item-2" title="How is the price of a project decided?">
+                  Final pricing depends on project goals, scope, content preparation, campaign ad budget, 
+                  and required delivery timelines. We follow a transparent quote-first model.
+                </AccordionItem>
+                <AccordionItem id="item-3" title="Do you offer maintenance and support after launch?">
+                  Yes, all IT development services come with maintenance support options including updates, 
+                  technical fixes, and backup monitoring.
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* 7. MediaSlot Placeholder & Image Handling */}
+      <Section tone="light" padded>
+        <Container>
+          <SectionHeader
+            eyebrow="ASSET SAFEGUARD"
+            title="MediaSlot Component Behavior"
+            intro="Guarantees zero broken layout shifts or missing boxes. Displays informative striped markers in development and hides cleanly in production."
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <span className="type-label text-text-secondary font-mono text-xs block">16:9 Aspect Video/Photo</span>
+              <MediaSlot aspect="16/9" label="Hero Terrain Composition" />
+            </div>
+            <div className="space-y-2">
+              <span className="type-label text-text-secondary font-mono text-xs block">4:5 Aspect Team Portrait</span>
+              <MediaSlot aspect="4/5" label="Leadership Headshot" />
+            </div>
+            <div className="space-y-2">
+              <span className="type-label text-text-secondary font-mono text-xs block">1:1 Aspect Client Logo</span>
+              <MediaSlot aspect="1/1" label="Partner Logo" />
             </div>
           </div>
         </Container>
