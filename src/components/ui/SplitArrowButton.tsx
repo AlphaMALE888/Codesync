@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 
 export interface SplitArrowButtonProps {
   href?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
   variant?: "solid-light" | "solid-dark" | "outline";
   size?: "md" | "lg";
   children: React.ReactNode;
@@ -62,7 +62,7 @@ export function SplitArrowButton({
 
   if (href) {
     return (
-      <Link href={href} className={baseClasses} aria-label={ariaLabel}>
+      <Link href={href} onClick={onClick} className={baseClasses} aria-label={ariaLabel}>
         {content}
       </Link>
     );

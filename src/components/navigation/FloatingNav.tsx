@@ -7,7 +7,7 @@ import { Logo } from "@/components/brand/Logo";
 import { NavLink } from "./NavLink";
 import { ServicesMenu } from "./ServicesMenu";
 import { MobileMenu } from "./MobileMenu";
-import { SplitArrowButton } from "@/components/ui/SplitArrowButton";
+import { BookCallTrigger } from "@/components/forms/BookCallTrigger";
 import { navigationItems } from "@/data/navigation";
 import { features } from "@/data/features";
 import { motion, LayoutGroup } from "@/lib/motion";
@@ -113,13 +113,9 @@ export function FloatingNav() {
               transition={{ delay: 0.08, duration: 0.45 }}
               className="hidden sm:block"
             >
-              <SplitArrowButton
-                href="/contact#book-a-call"
-                variant="solid-light"
-                size="md"
-              >
+              <BookCallTrigger variant="solid-light" size="md">
                 Book a free call
-              </SplitArrowButton>
+              </BookCallTrigger>
             </motion.div>
 
             {/* Mobile Menu Trigger (< lg) */}

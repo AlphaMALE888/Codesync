@@ -428,6 +428,65 @@
 
 ---
 
+## Phase 8 Record: Pricing, FAQ and Contact Experience
+
+- **Status:** COMPLETE
+- **Date:** 9 November 2026
+- **Objective:** Construct the complete pricing architecture, split-layout FAQ system, dedicated contact experience, accessible "Book a free call" modal dialog, and secure, production-grade inquiry pipeline. Gated all candidate prices to quote-first display until client signs off on canonical numbers, while supporting development preview flags. Forms validate on client and server with zero fake success states.
+- **Files Created:**
+  - `docs/antigravity/PRICING_DECISIONS.md` (documented all conflicting legacy prices from cdmlko.com across websites, apps, marketing, and add-ons)
+  - `src/lib/inquiry/schema.ts` (lightweight pure TypeScript schema validator for Indian phones, string sanitization, honeypot, and 2.5s timing check)
+  - `src/lib/inquiry/send.ts` (delivery pipeline with Resend email and Webhook adapters, rate-limiter, and 503 fallback handling)
+  - `src/app/api/inquiry/route.ts` (secure Next.js API route with body size limits, rate limiting, validation, and error reporting)
+  - `src/components/forms/Field.tsx` (accessible form field with aria-describedby and error messaging)
+  - `src/components/forms/InquiryForm.tsx` (full contact page inquiry form with loading state, personalized success confirmation, and honest error fallback)
+  - `src/components/forms/BookCallDialog.tsx` (accessible modal dialog and mobile bottom sheet for 15-minute quick consultation, focus trap, and Esc dismiss)
+  - `src/components/forms/BookCallTrigger.tsx` (client trigger wrapper that opens the modal on non-contact pages and scrolls to #book-a-call on /contact)
+  - `src/components/sections/pricing/PricingCard.tsx` (card component supporting quote-first display, recommended plan highlight, and dev candidate view)
+  - `src/components/sections/pricing/PricingToggle.tsx` (3-way segmented pill for Grow, Build, and Run with sliding indicator and keyboard navigation)
+  - `src/components/sections/pricing/PricingComparison.tsx` (standard engagement guarantees and deliverables)
+  - `src/components/sections/pricing/PricingPreview.tsx` (homepage 3-pillar pricing preview linking to /pricing)
+  - `src/components/sections/pricing/PricingView.tsx` (composed interactive pricing view with smooth cross-fade)
+  - `src/components/sections/faq/FaqSection.tsx` (reusable split-layout FAQ with dark rounded accordion)
+  - `src/app/pricing/page.tsx` (full /pricing route with searchParams support)
+  - `src/app/contact/page.tsx` (full /contact route with direct verified communication channels and inquiry form)
+- **Files Modified:**
+  - `src/data/types.ts` (added whoItSuits and note to PricingPlan)
+  - `src/data/pricing.ts` (populated with 9 comprehensive plans across Grow, Build, and Run)
+  - `src/components/ui/SplitArrowButton.tsx` (added onClick event handler support for Link and button)
+  - `src/components/navigation/FloatingNav.tsx` (integrated BookCallTrigger for primary nav CTA)
+  - `src/app/page.tsx` (inserted PricingPreview and FaqSection into homepage slots)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+- **Components Created:**
+  - `Field`, `InquiryForm`, `BookCallDialog`, `BookCallTrigger`, `PricingCard`, `PricingToggle`, `PricingComparison`, `PricingPreview`, `PricingView`, `FaqSection`.
+- **Pages Completed:**
+  - `/pricing`
+  - `/contact`
+  - `/api/inquiry`
+- **Animations Implemented:**
+  - `PricingToggle`: Sliding indicator pill with spring transition (320ms ease-out) and keyboard arrow navigation.
+  - `PricingView`: Tab cross-fade with Framer Motion AnimatePresence (outgoing 150ms, incoming 350ms with y: 16px).
+  - `BookCallDialog`: Modal entrance (opacity 0->1, scale 0.97->1, 250ms) with backdrop fade (200ms) and focus trap.
+  - `InquiryForm`: Field focus accent ring transition, submit loading spinner, and success state reveal.
+  - Full prefers-reduced-motion fallbacks for all motion components.
+- **Dependencies Installed:** None (used pure TypeScript validator and standard Fetch API).
+- **Tests Performed:**
+  - TypeScript strict type check (`npm run type-check` -> 0 errors).
+  - ESLint verification (`npm run lint` -> 0 warnings, 0 errors).
+  - Production build (`npm run build` -> exit code 0, 26 routes generated).
+  - Content audit: Zero fake prices shown in production; quote-first pricing displayed; conflicting prices documented in `PRICING_DECISIONS.md`.
+  - Security audit: Honeypot trap, 2.5s minimum fill time check, IP rate limiter (5 req / 10 min), and 10KB body limit verified.
+  - Prohibited text scan: 0 occurrences of prohibited terms.
+- **Build Results:**
+  - Next.js production build succeeded with static site generation and server route compilation for all 26 routes.
+- **Errors or Unresolved Issues:** None.
+- **Known Limitations:**
+  - Inquiry delivery defaults to HTTP 503 with honest WhatsApp / phone direct fallback until client configures `INQUIRY_PROVIDER` (`resend` or `webhook`).
+  - No online checkout / recurring payment consents (out of scope per prompt).
+
+---
+
 ## Decisions Made
 
 1. **Adoption of Editorial Grotesk & Awadhi Arch Motif**: Approved the visual direction balancing Spartan AI's high-contrast editorial hierarchy with a localized, Lucknow-inspired pointed-arch motif (`ArchMotif.tsx`) in place of generic starbursts.
@@ -449,7 +508,8 @@
 
 - `/seo-services-lucknow`: Legacy SEO page path from old site (`cdmlko.com`); to be mapped via 301 redirect to `/services/seo` during Phase 12 SEO pass.
 - `/career`: Legacy career page path from old site (`cdmlko.com`); to be mapped via 301 redirect to `/about#careers` during Phase 12.
-- `/contact`: Contact route active as primary call-to-action anchor; fully implemented with inquiry API in Phase 8.
+- `/contact`: COMPLETE & VERIFIED.
+- `/pricing`: COMPLETE & VERIFIED.
 
 ---
 

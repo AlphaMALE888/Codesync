@@ -8,6 +8,8 @@ import { StatementPanel } from "@/components/sections/home/StatementPanel";
 import { ProcessAccordion } from "@/components/sections/home/ProcessAccordion";
 import { TeamRail } from "@/components/sections/home/TeamRail";
 import { TestimonialCarousel } from "@/components/sections/home/TestimonialCarousel";
+import { PricingPreview } from "@/components/sections/pricing/PricingPreview";
+import { FaqSection } from "@/components/sections/faq/FaqSection";
 import { SelectedWork } from "@/components/sections/work/SelectedWork";
 import { FinalCta } from "@/components/sections/home/FinalCta";
 
@@ -50,9 +52,11 @@ export default function HomePage() {
       {/* 9. Experiences / Testimonials Carousel (Phase 4) */}
       <TestimonialCarousel />
 
-      {/* SLOT: PricingPreview (Phase 8) */}
+      {/* 10. Pricing Preview (Phase 8) */}
+      <PricingPreview />
 
-      {/* SLOT: FAQSection (Phase 8) */}
+      {/* 11. FAQ Section (Phase 8) */}
+      <FaqSection id="home-faq" limit={6} />
 
       {/* SLOT: InsightsGrid (Phase 9) */}
 

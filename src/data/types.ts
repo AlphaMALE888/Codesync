@@ -143,6 +143,8 @@ export interface PricingPlan extends BaseEntity {
   features: string[];
   excludes?: string[];
   recommended?: boolean;
+  whoItSuits?: string;
+  note?: string;
 }
 
 export interface FaqItem extends BaseEntity {
