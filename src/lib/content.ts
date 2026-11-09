@@ -1,6 +1,9 @@
-import { BaseEntity, ServiceItem, FaqItem } from "@/data/types";
+import { BaseEntity, ServiceItem, FaqItem, ProjectItem } from "@/data/types";
 import { servicesData } from "@/data/services";
 import { faqsData } from "@/data/faqs";
+import { projectsData } from "@/data/projects";
+import { devSampleProjects } from "@/data/__dev__/projects.fixtures";
+import { features } from "@/data/features";
 
 /**
  * Filter items according to the Content Status Rule:
@@ -48,4 +51,46 @@ export function getFaqsByIds(ids: string[]): FaqItem[] {
   return ids
     .map((id) => faqs.find((f) => f.id === id))
     .filter((f): f is FaqItem => Boolean(f));
+}
+
+/**
+ * Retrieve renderable projects.
+ * In production: strictly uses approved items with client permissions.
+ * In development: dev sample fixtures can be loaded when NEXT_PUBLIC_SHOW_DEV_FIXTURES === 'true'.
+ * When features.work is false and not in dev fixture mode, returns an empty array.
+ */
+export function getRenderableProjects(): ProjectItem[] {
+  // If features.work is enabled
+  if (features.work) {
+    const list = [...projectsData];
+    // In development only, allow fixtures if requested
+    if (process.env.NODE_ENV !== "production" && process.env.NEXT_PUBLIC_SHOW_DEV_FIXTURES === "true") {
+      list.push(...devSampleProjects);
+    }
+    return list.filter(
+      (p) =>
+        p.approved &&
+        p.client.permissionToName &&
+        p.status !== "pending" &&
+        p.media.every((m) => m.permission)
+    );
+  }
+
+  // If features.work is false, check if dev fixtures are explicitly enabled for dev testing
+  if (process.env.NODE_ENV !== "production" && process.env.NEXT_PUBLIC_SHOW_DEV_FIXTURES === "true") {
+    return devSampleProjects.filter(
+      (p) =>
+        p.approved &&
+        p.client.permissionToName &&
+        p.status !== "pending" &&
+        p.media.every((m) => m.permission)
+    );
+  }
+
+  return [];
+}
+
+export function getProjectBySlug(slug: string): ProjectItem | undefined {
+  const projects = getRenderableProjects();
+  return projects.find((p) => p.slug === slug);
 }

@@ -91,6 +91,8 @@ export interface ProjectItem extends BaseEntity {
     alt: string;
     kind: "screenshot" | "creative" | "photo" | "video";
     permission: boolean;
+    width?: number;
+    height?: number;
   }[];
   testimonialId?: string;
   links: {

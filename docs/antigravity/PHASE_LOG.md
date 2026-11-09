@@ -304,6 +304,84 @@
 
 ---
 
+## Phase 6 Record: Portfolio and Case Studies
+
+- **Status:** COMPLETE
+- **Date:** 9 November 2026
+- **Objective:** Construct the complete portfolio and case studies system: homepage SelectedWork showcase, /work listing with responsive URL-driven category filtering, and /work/[slug] case-study template. Since the agency currently has zero confirmed publishable case studies, build the full architecture, support development fixtures for testing, and ship with features.work set to false (returning 404 in production until client authorization).
+- **Files Created:**
+  - `src/data/__dev__/projects.fixtures.ts` (4 development-only sample fixtures with "SAMPLE, DEV ONLY" watermarks)
+  - `src/components/sections/work/MetricGrid.tsx` (2x2 KPI grid for verified metrics with fallback to scope deliverables)
+  - `src/components/sections/work/CaseStudyCard.tsx` (16:10 card with client name and category pills, hover zoom/contrast, and animated arrow)
+  - `src/components/sections/work/WorkFilters.tsx` (accessible category filter bar with polite aria-live count announcements and URL query sync)
+  - `src/components/sections/work/WorkGrid.tsx` (responsive 3/2/1 grid with first-item feature span and Framer Motion cross-fade)
+  - `src/components/sections/work/SelectedWork.tsx` (homepage selected-work section with DisplayMarquee, 3 cards, and CTA)
+  - `src/components/sections/work/CaseHero.tsx` (dark hero with label row, 2-3 line title, summary, CTA, and 4:3 framed visual)
+  - `src/components/sections/work/CaseMeta.tsx` (5-column metadata strip with client, industry, services, timeline, and team)
+  - `src/components/sections/work/ProjectMockup.tsx` (1200px browser chrome frame with address bar and desktop GSAP scroll scrub)
+  - `src/components/sections/work/CaseResults.tsx` (light section with value statement and up to 4 icon-led verified outcome cards)
+  - `src/components/sections/work/NextProject.tsx` (large next project link with 12px hover translation and arrow reveal)
+  - `src/app/work/page.tsx` (portfolio archive page with category filtering, guarded by features.work)
+  - `src/app/work/[slug]/page.tsx` (dynamic case study template with SSG params and metadata, guarded by features.work)
+- **Files Modified:**
+  - `src/data/types.ts` (extended ProjectItem media with optional width and height)
+  - `src/lib/content.ts` (added getRenderableProjects and getProjectBySlug with strict production gating)
+  - `src/app/page.tsx` (integrated SelectedWork slot into the homepage)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+- **Components Created:**
+  - `MetricGrid`, `CaseStudyCard`, `WorkFilters`, `WorkGrid`, `SelectedWork`, `CaseHero`, `CaseMeta`, `ProjectMockup`, `CaseResults`, `NextProject`.
+- **Pages Completed:**
+  - `/work` (gated behind `features.work: false`)
+  - `/work/[slug]` (gated behind `features.work: false`)
+- **Animations Implemented:**
+  - `CaseStudyCard`: Pointer hover scales image 1.0 to 1.03 with contrast boost (450ms ease-out), title underline expansion, and overlay arrow 45° rotation (220ms).
+  - `WorkGrid`: Filter transitions with `framer-motion` `AnimatePresence` (opacity fade and y: 16px to 0 stagger).
+  - `ProjectMockup`: Desktop GSAP ScrollTrigger subtle scrub (`yPercent: -3` to `3`) inside the browser window frame.
+  - `NextProject`: Link text shifts 12px right on hover with animated arrow.
+  - Full prefers-reduced-motion fallbacks for all motion components.
+- **Dependencies Installed:** None (used existing GSAP and Framer Motion).
+- **Tests Performed:**
+  - TypeScript strict type check (`npm run type-check` -> 0 errors).
+  - ESLint verification (`npm run lint` -> 0 warnings, 0 errors).
+  - Production build (`npm run build` -> exit code 0, 22/22 static pages generated).
+  - Production fixture exclusion audit: Scanned `.next/` build output for "SAMPLE, DEV ONLY" — 0 occurrences found.
+  - Prohibited text scan: 0 occurrences of prohibited terms.
+  - Verified `/work` and `/work/[slug]` return 404 when `features.work: false`.
+- **Build Results:**
+  - Next.js production build succeeded with static site generation for all 22 routes.
+- **Errors or Unresolved Issues:** None.
+- **Known Limitations:**
+  - Case studies remain hidden in production behind `features.work: false` until client provides real approved project data and permissions.
+  - When dev fixtures are enabled via `NEXT_PUBLIC_SHOW_DEV_FIXTURES="true"` in local development, 4 sample projects render across the homepage, archive, and detail pages.
+
+### How to Add Real Projects and Enable the Feature:
+1. **Add Real Projects:**
+   - In `src/data/projects.ts`, append new `ProjectItem` objects to `projectsData`.
+   - Ensure the following mandatory fields are populated:
+     - `id`: Unique identifier (e.g., `"proj-client-name"`)
+     - `slug`: URL slug (e.g., `"client-name-seo"`)
+     - `status`: `"verified"` or `"draft"` (never `"pending"`)
+     - `approved`: `true` (confirms client sign-off)
+     - `client.name`: Client business name
+     - `client.permissionToName`: `true` (explicit authorization)
+     - `industry`: Industry sector string
+     - `category`: Array matching filters (`["SEO"]`, `["Paid Media"]`, `["Websites"]`, `["Software"]`, `["Local Services"]`)
+     - `services`: Array of valid service slugs from `servicesData`
+     - `summary`: High-level headline outcome
+     - `challenge`: Problem narrative
+     - `approach`: Array of 3–4 action steps
+     - `deliverables`: Array of deliverable strings
+     - `technologies`: Client-stated frameworks and platforms
+     - `metrics`: Array of verified outcomes (`{ label, value, period, source, verified: true }`) or empty `[]`
+     - `media`: Array of screenshots with `permission: true`, `src`, `alt`, `width: 1200`, `height: 750`
+     - `relatedSlugs`: Array of related project slugs
+2. **Turn On the Feature:**
+   - In `src/data/features.ts`, set `work: true`.
+   - Once at least three approved projects exist, this automatically enables the `/work` listing route, all `/work/[slug]` pages, the homepage `<SelectedWork />` showcase, and the navigation/footer "Works" links.
+
+---
+
 ## Decisions Made
 
 1. **Adoption of Editorial Grotesk & Awadhi Arch Motif**: Approved the visual direction balancing Spartan AI's high-contrast editorial hierarchy with a localized, Lucknow-inspired pointed-arch motif (`ArchMotif.tsx`) in place of generic starbursts.

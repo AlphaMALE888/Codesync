@@ -5,8 +5,8 @@ This living document tracks phase-by-phase execution, architectural decisions, a
 ---
 
 ## Current Status Summary
-- **Current Active Phase:** Phase 5 Completed — Awaiting Approval for Phase 6
-- **Overall Project Completion:** Phase 5 of 13 Complete (42.9%)
+- **Current Active Phase:** Phase 6 Completed — Awaiting Approval for Phase 7
+- **Overall Project Completion:** Phase 6 of 13 Complete (50.0%)
 - **Last Updated:** 9 November 2026
 
 ---
@@ -175,6 +175,45 @@ This living document tracks phase-by-phase execution, architectural decisions, a
   - Prohibited text scan: 0 occurrences of prohibited terms.
 - **Next Phase Pending Approval:** Phase 6: Portfolio and Case Studies
 
+### Phase 6: Portfolio and Case Studies
+- **Phase Number:** 6
+- **Phase Name:** Portfolio and Case Studies
+- **Date of Completion:** 9 November 2026
+- **Status:** Completed & Verified
+- **Files Created:**
+  - `src/data/__dev__/projects.fixtures.ts`
+  - `src/components/sections/work/MetricGrid.tsx`
+  - `src/components/sections/work/CaseStudyCard.tsx`
+  - `src/components/sections/work/WorkFilters.tsx`
+  - `src/components/sections/work/WorkGrid.tsx`
+  - `src/components/sections/work/SelectedWork.tsx`
+  - `src/components/sections/work/CaseHero.tsx`
+  - `src/components/sections/work/CaseMeta.tsx`
+  - `src/components/sections/work/ProjectMockup.tsx`
+  - `src/components/sections/work/CaseResults.tsx`
+  - `src/components/sections/work/NextProject.tsx`
+  - `src/app/work/page.tsx`
+  - `src/app/work/[slug]/page.tsx`
+- **Files Modified:**
+  - `src/data/types.ts`
+  - `src/lib/content.ts`
+  - `src/app/page.tsx`
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+- **Features Implemented:**
+  - Homepage `<SelectedWork />`: DisplayMarquee ("Selected Work · Client Outcomes · Verified Systems"), 3-card showcase, and "View all work" CTA. Cleanly returns `null` while `features.work` is `false`.
+  - `/work` Archive: Filterable case studies index with category chips (All, SEO, Paid Media, Websites, Software, Local Services), URL query parameter persistence, and polite live region accessibility.
+  - `/work/[slug]` Case Study Template: Full editorial template with dark hero (`CaseHero`), 5-column metadata strip (`CaseMeta`), challenge & approach narrative, browser mockup (`ProjectMockup`) with desktop GSAP scroll scrub, 2 supporting visuals, verified outcomes grid (`CaseResults`), client testimonial, next-project link (`NextProject`), and `FinalCta`.
+  - Production Content Gating: `features.work` remains `false` in production. Sample dev fixtures (`src/data/__dev__/projects.fixtures.ts`) are completely excluded from production build outputs.
+- **Tests Performed:**
+  - `npm run type-check`: Strict TypeScript pass (0 errors).
+  - `npm run lint`: Next.js core web vitals ESLint pass (0 warnings/errors).
+  - `npm run build`: Production static generation pass (22/22 routes generated with 0 errors).
+  - Production fixture exclusion audit: Scanned `.next/` build output for "SAMPLE, DEV ONLY" — 0 occurrences found.
+  - Prohibited text scan: 0 occurrences of prohibited terms.
+  - Verified `/work` and `/work/[slug]` return 404 when `features.work: false`.
+- **Next Phase Pending Approval:** Phase 7: About, Team and Trust Sections
+
 ---
 
 ## Phase Roadmap & Approval Gate
@@ -185,7 +224,8 @@ This living document tracks phase-by-phase execution, architectural decisions, a
 - [x] **Phase 3:** Homepage Hero Experience *(Completed 8 Nov 2026)*
 - [x] **Phase 4:** Homepage Sections *(Completed 8 Nov 2026)*
 - [x] **Phase 5:** Services Pages *(Completed 9 Nov 2026)*
-- [ ] **Phase 6:** Portfolio and Case Studies *(Awaiting User Approval)*
+- [x] **Phase 6:** Portfolio and Case Studies *(Completed 9 Nov 2026)*
+- [ ] **Phase 7:** About, Team and Trust Sections *(Awaiting User Approval)*
 - [ ] **Phase 7:** About, Team and Trust Sections
 - [ ] **Phase 8:** Pricing, FAQ and Contact Experience
 - [ ] **Phase 9:** Additional Pages (Insights, Legal, Industries, 404)

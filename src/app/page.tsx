@@ -8,6 +8,7 @@ import { StatementPanel } from "@/components/sections/home/StatementPanel";
 import { ProcessAccordion } from "@/components/sections/home/ProcessAccordion";
 import { TeamRail } from "@/components/sections/home/TeamRail";
 import { TestimonialCarousel } from "@/components/sections/home/TestimonialCarousel";
+import { SelectedWork } from "@/components/sections/work/SelectedWork";
 import { FinalCta } from "@/components/sections/home/FinalCta";
 
 export const metadata: Metadata = {
@@ -25,7 +26,8 @@ export default function HomePage() {
       {/* 2. Proof Metrics Cluster (Phase 4) */}
       <ProofGrid />
 
-      {/* SLOT: SelectedWork (Phase 6) */}
+      {/* 3. Selected Work (Phase 6, gated by features.work) */}
+      <SelectedWork />
 
       {/* 3. Capabilities Accordion: Grow / Build / Run (Phase 4) */}
       <CapabilityAccordion />
