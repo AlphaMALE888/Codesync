@@ -117,6 +117,22 @@ export interface TeamMember extends BaseEntity {
   bio?: string;
 }
 
+export interface TeamStory {
+  statement: string;
+  paragraph: string;
+  founderId?: string;
+  status: ContentStatus;
+}
+
+export interface CareerItem extends BaseEntity {
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  description?: string;
+  active: boolean;
+}
+
 export interface PricingPlan extends BaseEntity {
   group: "grow" | "build" | "run";
   name: string;

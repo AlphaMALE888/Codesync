@@ -382,6 +382,52 @@
 
 ---
 
+## Phase 7 Record: About, Team and Trust Sections
+
+- **Status:** COMPLETE
+- **Date:** 9 November 2026
+- **Objective:** Construct the /about page (Company in global navigation and footer), leadership presentation, verified trust elements, and careers section. Because the agency founding narrative and founder statement remain pending client confirmation, the page renders strictly verified facts and draft copy with zero generic filler or unconfirmed credentials.
+- **Files Created:**
+  - `src/components/sections/about/AboutHero.tsx` (intro hero with eyebrow, draft h1, and verified fact sentence regarding digital marketing + in-house software development)
+  - `src/components/sections/about/PillarsBand.tsx` (compact 3-pillar band linking to Grow, Build, and Run capability anchors)
+  - `src/components/sections/about/LeadershipCard.tsx` (4:5 portrait cards over --field-1/2/3 with name, role, and hover bio)
+  - `src/components/sections/about/TextLeadershipRow.tsx` (clean text-only leadership row avoiding anonymous cartoon avatars)
+  - `src/components/sections/about/LeadershipGrid.tsx` (composed leadership section featuring department heads)
+  - `src/components/sections/about/TrustStrip.tsx` (client logos and verified credentials strip, returning null cleanly when items are unverified)
+  - `src/components/sections/about/CareersBand.tsx` (careers section with anchor #careers, open roles list when active, and mailto application CTA)
+  - `src/components/sections/about/CompanyDetails.tsx` (small 3-column verified entity information: legal name, commercial brand, and Lucknow regional base)
+  - `src/app/about/page.tsx` (complete /about page assembling the narrative)
+  - `src/data/careers.ts` (typed careers data file)
+- **Files Modified:**
+  - `src/data/types.ts` (added TeamStory and CareerItem interfaces)
+  - `src/data/team.ts` (added teamStory export, flagged corrected typo for Chief Growth Officer, and annotated pending surname for Mr. Vikas)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+- **Components Created:**
+  - `AboutHero`, `PillarsBand`, `LeadershipCard`, `TextLeadershipRow`, `LeadershipGrid`, `TrustStrip`, `CareersBand`, `CompanyDetails`.
+- **Pages Completed:**
+  - `/about`
+- **Animations Implemented:**
+  - `AboutHero`: Staggered entrance reveal for eyebrow, heading, summary, and action links.
+  - `LeadershipCard`: Image scale (1 to 1.03) inside mask over 450ms ease-out on hover; bio reveal on pointer hover or focus.
+  - `CareersBand`: SplitArrowButton hover and interactive mailto action.
+  - Full prefers-reduced-motion fallbacks for all components.
+- **Dependencies Installed:** None (used existing libraries).
+- **Tests Performed:**
+  - TypeScript strict type check (`npm run type-check` -> 0 errors).
+  - ESLint verification (`npm run lint` -> 0 warnings, 0 errors).
+  - Production build (`npm run build` -> exit code 0, 23/23 static pages generated).
+  - Content audit: Zero unverified certifications (ISO, Startup India, MSME, GeM) or ratings rendered; leadership matches verified facts; unverified founder story cleanly omitted.
+  - Prohibited text scan: 0 occurrences of prohibited terms.
+- **Build Results:**
+  - Next.js production build succeeded with static site generation for all 23 routes.
+- **Errors or Unresolved Issues:** None.
+- **Known Limitations:**
+  - Founder story and vision remain hidden behind `features.vision: false` until client provides authentic statements.
+  - Legacy `/career` path noted under Known Open Links for 301 redirection to `/about#careers` in Phase 12.
+
+---
+
 ## Decisions Made
 
 1. **Adoption of Editorial Grotesk & Awadhi Arch Motif**: Approved the visual direction balancing Spartan AI's high-contrast editorial hierarchy with a localized, Lucknow-inspired pointed-arch motif (`ArchMotif.tsx`) in place of generic starbursts.
@@ -402,6 +448,7 @@
 ## Known Open Links
 
 - `/seo-services-lucknow`: Legacy SEO page path from old site (`cdmlko.com`); to be mapped via 301 redirect to `/services/seo` during Phase 12 SEO pass.
+- `/career`: Legacy career page path from old site (`cdmlko.com`); to be mapped via 301 redirect to `/about#careers` during Phase 12.
 - `/contact`: Contact route active as primary call-to-action anchor; fully implemented with inquiry API in Phase 8.
 
 ---

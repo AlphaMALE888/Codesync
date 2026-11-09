@@ -1,4 +1,6 @@
-import { TeamMember } from "./types";
+import { TeamMember, TeamStory } from "./types";
+
+export const teamStory: TeamStory | null = null;
 
 export const teamData: TeamMember[] = [
   {
@@ -23,6 +25,7 @@ export const teamData: TeamMember[] = [
     id: "sachin-srivastava",
     status: "verified",
     source: "cdmlko.com/about",
+    note: "Legacy site had typo 'Chief Growth & Officer', corrected to 'Chief Growth Officer'",
     name: "Mr. Sachin Anand Srivastava",
     title: "Chief Growth Officer",
     field: 3,
@@ -32,6 +35,7 @@ export const teamData: TeamMember[] = [
     id: "vikas-web",
     status: "draft",
     source: "cdmlko.com/about",
+    note: "Surname pending client confirmation",
     name: "Mr. Vikas",
     title: "Head of Web Development",
     field: 1,
