@@ -1,8 +1,9 @@
-import { BaseEntity, ServiceItem, FaqItem, ProjectItem } from "@/data/types";
+import { BaseEntity, ServiceItem, FaqItem, ProjectItem, ArticleItem } from "@/data/types";
 import { servicesData } from "@/data/services";
 import { faqsData } from "@/data/faqs";
 import { projectsData } from "@/data/projects";
 import { devSampleProjects } from "@/data/__dev__/projects.fixtures";
+import { devSampleArticles } from "@/data/__dev__/articles.fixtures";
 import { features } from "@/data/features";
 
 /**
@@ -93,4 +94,43 @@ export function getRenderableProjects(): ProjectItem[] {
 export function getProjectBySlug(slug: string): ProjectItem | undefined {
   const projects = getRenderableProjects();
   return projects.find((p) => p.slug === slug);
+}
+
+/**
+ * Production articles list.
+ * Starts empty until at least 3 client-verified articles are provided.
+ */
+export const productionArticles: ArticleItem[] = [];
+
+/**
+ * Retrieve renderable articles.
+ * Enforces:
+ * 1. features.insights flag (returns empty array if disabled, unless dev preview requested).
+ * 2. status === 'published'.
+ * 3. body word count > 400 words (eliminates stubs).
+ */
+export function getRenderableArticles(): ArticleItem[] {
+  let list: ArticleItem[] = [];
+
+  if (features.insights) {
+    list = [...productionArticles];
+    if (process.env.NODE_ENV !== "production" && process.env.NEXT_PUBLIC_SHOW_DEV_FIXTURES === "true") {
+      list.push(...devSampleArticles);
+    }
+  } else if (process.env.NODE_ENV !== "production" && process.env.NEXT_PUBLIC_SHOW_DEV_FIXTURES === "true") {
+    list = [...devSampleArticles];
+  } else {
+    return [];
+  }
+
+  return list.filter((article) => {
+    if (article.status !== "published") return false;
+    const wordCount = article.body.trim().split(/\s+/).length;
+    return wordCount > 400;
+  });
+}
+
+export function getArticleBySlug(slug: string): ArticleItem | undefined {
+  const articles = getRenderableArticles();
+  return articles.find((a) => a.slug === slug);
 }

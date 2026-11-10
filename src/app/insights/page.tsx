@@ -1,0 +1,59 @@
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { features } from "@/data/features";
+import { getRenderableArticles } from "@/lib/content";
+import { InsightsGrid } from "@/components/sections/insights/InsightsGrid";
+import { DisplayMarquee } from "@/components/ui/DisplayMarquee";
+
+export const metadata: Metadata = {
+  title: "Insights & Strategy | CODESYNC Digi Marketing Pvt. Ltd.",
+  description:
+    "Practical growth frameworks, performance web architecture, and regional digital marketing insights from CODESYNC Digi Marketing in Lucknow.",
+  alternates: {
+    canonical: "/insights",
+  },
+};
+
+export default function InsightsPage() {
+  // If insights feature is disabled and not in dev fixture preview mode, return 404
+  const isDevFixtureMode =
+    process.env.NODE_ENV !== "production" &&
+    process.env.NEXT_PUBLIC_SHOW_DEV_FIXTURES === "true";
+
+  if (!features.insights && !isDevFixtureMode) {
+    notFound();
+  }
+
+  const articles = getRenderableArticles();
+
+  if (articles.length === 0) {
+    notFound();
+  }
+
+  return (
+    <div className="min-h-screen bg-bg-light text-text-primary pt-32 pb-24">
+      {/* Editorial Marquee Banner */}
+      <div className="border-y border-border-light/60 mb-12">
+        <DisplayMarquee text="INSIGHTS & STRATEGY" speed={36} tone="light" />
+      </div>
+
+      <div className="container-spartan">
+        {/* Header Section */}
+        <div className="max-w-2xl mx-auto text-center mb-16">
+          <span className="type-label text-accent-default font-mono block mb-3">
+            AGENCY INTELLIGENCE &bull; LUCKNOW
+          </span>
+          <h1 className="type-h1 font-display tracking-tight text-text-primary mb-4">
+            Practical Thinking on Growth & Software
+          </h1>
+          <p className="text-text-secondary text-base font-body leading-relaxed">
+            No empty buzzwords. Real case perspectives, local search realities, and architectural decisions from our active client engagements.
+          </p>
+        </div>
+
+        {/* Dynamic Asymmetric Grid */}
+        <InsightsGrid articles={articles} />
+      </div>
+    </div>
+  );
+}

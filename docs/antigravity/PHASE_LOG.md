@@ -12,12 +12,12 @@
 | **Phase 1** | **Design System and Global Foundation** | **COMPLETE** | 8 November 2026 |
 | **Phase 2** | **Global Navigation and Shared Components** | **COMPLETE** | 8 November 2026 |
 | **Phase 3** | **Homepage Hero Experience** | **COMPLETE** | 8 November 2026 |
-| **Phase 4** | Homepage Sections | NOT STARTED | — |
-| **Phase 5** | Services Pages (Hub & 14 Detail Pages) | NOT STARTED | — |
-| **Phase 6** | Portfolio and Case Studies | NOT STARTED | — |
-| **Phase 7** | About, Team and Trust Sections | NOT STARTED | — |
-| **Phase 8** | Pricing, FAQ and Contact Experience | NOT STARTED | — |
-| **Phase 9** | Additional Pages (Insights, Legal, Industries, 404) | NOT STARTED | — |
+| **Phase 4** | Homepage Sections | **COMPLETE** | 8 November 2026 |
+| **Phase 5** | Services Pages (Hub & 14 Detail Pages) | **COMPLETE** | 9 November 2026 |
+| **Phase 6** | Portfolio and Case Studies | **COMPLETE** | 9 November 2026 |
+| **Phase 7** | About, Team and Trust Sections | **COMPLETE** | 9 November 2026 |
+| **Phase 8** | Pricing, FAQ and Contact Experience | **COMPLETE** | 9 November 2026 |
+| **Phase 9** | Additional Pages (Insights, Legal, Industries, 404) | **COMPLETE** | 10 November 2026 |
 | **Phase 10** | Complete Animation and Interaction Pass | NOT STARTED | — |
 | **Phase 11** | Responsive Design | NOT STARTED | — |
 | **Phase 12** | SEO, Performance and Accessibility | NOT STARTED | — |
@@ -641,3 +641,93 @@ Defined in `.env.example`:
 - `NEXT_PUBLIC_GA_ID`
 - `NEXT_PUBLIC_SHOW_DEV_FIXTURES`
 - `NEXT_PUBLIC_SHOW_CANDIDATE_PRICES`
+
+
+---
+
+## Phase 9 Record: Additional Pages (Insights, Legal, Industries, and 404)
+
+- **Status:** COMPLETE
+- **Date:** 10 November 2026
+- **Objective:** Build the full Insights editorial system (gated behind `features.insights: false` until 3 real articles are ready), legal pages (/legal/privacy active; /legal/terms and /legal/refund-cancellation awaiting client text), branded 404 page with Awadhi arch entrance, verify /industries continues returning 404, update SiteFooter to show only active legal links, and document all legal inconsistencies found in the legacy privacy policy.
+
+### Files Created:
+  - `docs/antigravity/LEGAL_REVIEW.md` (documented 5 inconsistencies: third phone 9125100206, "Awanti Puram" address contradiction, Razorpay references without payment gateway, absence of Terms of Service and Refund Policy, cookie notice requirement if Phase 12 analytics are added)
+  - `content/legal/privacy.md` (verbatim 16-section privacy policy, effective 13 September 2026, copied from CONTENT_SOURCE.md without altering legal meaning)
+  - `content/legal/terms.md` (placeholder, status: awaiting-client-text — route returns 404)
+  - `content/legal/refund-cancellation.md` (placeholder, status: awaiting-client-text — route returns 404)
+  - `content/insights/README.md` (editorial publishing guide: schema, renderability rules, word-count gate, feature flag activation steps)
+  - `src/data/__dev__/articles.fixtures.ts` (6 development-only SAMPLE articles watermarked "SAMPLE, DEV ONLY" — zero inclusion in production build verified)
+  - `src/lib/legal.ts` (content file parser: `getLegalPage()`, `getRenderableLegalPages()` with frontmatter YAML parsing and TOC section extraction)
+  - `src/components/legal/TableOfContents.tsx` (IntersectionObserver scroll-spy sticky desktop sidebar + mobile collapsible disclosure with 200ms colour transition on active heading)
+  - `src/components/legal/LegalLayout.tsx` (calm two-column layout: 4-col sticky TOC sidebar + 8-col 720px reading column with branded back link, identity tag, and bottom compliance inquiry block)
+  - `src/components/sections/insights/InsightCard.tsx` (image-led and text-led (pale/dark) card variants with hover cover scale 1.0→1.03, arrow shift, 450ms/220ms transitions)
+  - `src/components/sections/insights/InsightsGrid.tsx` (12-col asymmetric grid with AnimatePresence cross-fade filter: 150ms out / 350ms in y:16px)
+  - `src/components/sections/insights/CategoryFilter.tsx` (category pill filter with active indicator, URL-ready state management)
+  - `src/components/sections/insights/ArticleHeader.tsx` (back link, category pill, h1, metadata byline: author, date, reading time)
+  - `src/components/sections/insights/ArticleBody.tsx` (paragraph parser with h2/h3/blockquote/ordered+unordered list support, 680px column, leading-relaxed)
+  - `src/components/sections/insights/RelatedServiceCta.tsx` (contextual service CTA block linking to the matching service page via `relatedServiceSlug`)
+  - `src/components/sections/insights/ReadingProgress.tsx` (2px accent progress bar, CSS transform-based, passive scroll listener, hidden under reduced motion)
+  - `src/app/legal/privacy/page.tsx` (active 200 route — renders verbatim privacy policy in LegalLayout)
+  - `src/app/legal/terms/page.tsx` (returns notFound() while awaiting-client-text)
+  - `src/app/legal/refund-cancellation/page.tsx` (returns notFound() while awaiting-client-text)
+  - `src/app/not-found.tsx` (custom branded 404: dark green `brand-darkest` frame, display "404" with clamp font size, Awadhi arch motif rising 24px with 600ms ease-out entrance, single sentence, 4 quick links: Services / Pricing / Contact / WhatsApp)
+  - `src/app/insights/page.tsx` (returns notFound() when features.insights false and not in dev fixture mode; renders asymmetric grid with DisplayMarquee "INSIGHTS & STRATEGY" header)
+  - `src/app/insights/[slug]/page.tsx` (dynamic article detail: ReadingProgress bar, ArticleHeader, ArticleBody, RelatedServiceCta, prev/next navigation, FinalCta)
+
+### Files Modified:
+  - `src/data/types.ts` (added `ArticleStatus` type `"published" | "draft" | "pending"`, extended `ArticleItem` with `updated`, `readingTime`, `variant`, `relatedServiceSlug`, added `LegalPageItem` interface)
+  - `src/lib/content.ts` (added `getRenderableArticles()`, `getArticleBySlug()`, `productionArticles[]` with 400-word gate and feature-flag gating; imported `devSampleArticles`)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+
+### Components Created:
+  - `TableOfContents`, `LegalLayout`, `InsightCard`, `InsightsGrid`, `CategoryFilter`, `ArticleHeader`, `ArticleBody`, `RelatedServiceCta`, `ReadingProgress`.
+
+### Pages Completed:
+  - `/legal/privacy` (200 — Active privacy policy)
+  - `/legal/terms` (404 — Awaiting client text)
+  - `/legal/refund-cancellation` (404 — Awaiting client text)
+  - `/insights` (404 — Gated behind features.insights: false)
+  - `/insights/[slug]` (404 — Gated behind features.insights: false)
+  - `/industries` (404 — Confirmed still correctly gated behind features.industries: false)
+  - `/_not-found` → `src/app/not-found.tsx` (Branded 404 with arch motif entrance)
+
+### Animations Implemented:
+  - **not-found.tsx:** Arch motif container rises from y:24px to y:0 in 600ms `cubic-bezier(0.16, 1, 0.3, 1)` on mount; instant final state under `prefers-reduced-motion`.
+  - **InsightsGrid:** AnimatePresence cross-fade on category filter: outgoing 150ms opacity fade, incoming 350ms with y:16px ease. Disabled under reduced motion.
+  - **InsightCard (image-led):** Hover scales inner cover graphic 1.0→1.03 with `transition-transform duration-450 ease-out`.
+  - **InsightCard (text-led):** Background lightens/darkens one step on hover in 220ms transition.
+  - **InsightCard (arrow):** Arrow icon shifts 0.5px right + 0.5px up on card hover (200ms).
+  - **ReadingProgress:** Smooth `transform: scaleX()` driven by passive scroll listener, `transition-transform duration-75`. Not rendered under reduced motion.
+  - **TableOfContents:** Active section link receives `border-accent-default` and `text-accent-default` with 200ms colour transition via IntersectionObserver.
+
+### Production Verification Results:
+  - `npm run type-check` → 0 errors ✓
+  - `npm run lint` → 0 warnings, 0 errors ✓
+  - `npm run build` → exit code 0, **30 static/SSG/dynamic routes generated** ✓
+  - Scan of `.next/server/app/**/*.js` for "SAMPLE" → **0 occurrences** ✓
+  - Scan of `src/`, `content/` for prohibited terms (`hostinger`, `static placeholder`, `super admin`) → **0 occurrences** ✓
+  - `/legal/terms` `.meta` → `status: 404` ✓
+  - `/legal/refund-cancellation` `.meta` → `status: 404` ✓
+  - `/insights` `.meta` → `status: 404` ✓
+  - `/industries` `.meta` → `status: 404` ✓
+  - `/legal/privacy` `.meta` → `status: 200`, no status override ✓
+
+### Open Decisions Logged:
+  - **Login and Signup:** The old `cdmlko.com` website had Login and Signup pages with unknown function (possibly a client portal or admin login for legacy PHP). These routes are **not built** in the new architecture. This is an open decision requiring client confirmation: (a) If a client project portal exists and must remain, the client should specify which platform powers it; (b) if it was a legacy admin panel, it is superseded by the new inquiry workflow and is not required.
+
+### How to Publish a Real Article:
+1. Add an `ArticleItem` to `productionArticles` array in `src/lib/content.ts` (or extend to read from `content/insights/*.md` files).
+2. Ensure `status: "published"` and `body` word count exceeds 400 words.
+3. Set `relatedServiceSlug` to link the bottom CTA to a matching service page.
+4. Once at least 3 real articles exist, set `features.insights: true` in `src/data/features.ts`.
+
+### How to Activate Terms of Service / Refund Policy:
+1. Supply final legal text approved by counsel to `content/legal/terms.md` or `content/legal/refund-cancellation.md`.
+2. Change frontmatter `status: awaiting-client-text` → `status: published` and add `effectiveDate: "YYYY-MM-DD"`.
+3. The route immediately becomes active on next production build; the footer link also becomes visible.
+
+### Known Limitations:
+  - Insights body rendering is a lightweight inline Markdown parser. When real articles are published, the team may wish to adopt `@next/mdx` or `gray-matter` for richer formatting (Phase 13 refinement opportunity).
+  - Legal TOC section IDs are derived from heading numbers ("section-1", "section-2", etc.). If the client's new legal text does not use numbered section headings, the TOC generator may need a slug-based fallback (note for Phase 13).

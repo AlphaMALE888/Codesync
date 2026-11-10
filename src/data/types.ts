@@ -153,15 +153,31 @@ export interface FaqItem extends BaseEntity {
   category: "general" | "seo" | "marketing" | "websites" | "software";
 }
 
-export interface ArticleItem extends BaseEntity {
+export type ArticleStatus = "published" | "draft" | "pending";
+
+export interface ArticleItem extends Omit<BaseEntity, "status"> {
+  status: ArticleStatus;
   slug: string;
   title: string;
   date: string;
+  updated?: string;
   category: string;
   author: string;
   summary: string;
   cover?: string;
   body: string;
+  readingTime?: string;
+  variant?: "image-led" | "text-led-pale" | "text-led-dark";
+  relatedServiceSlug?: string;
+}
+
+export interface LegalPageItem {
+  slug: string;
+  title: string;
+  effectiveDate: string;
+  status: "published" | "awaiting-client-text";
+  content: string;
+  sections?: { id: string; title: string; content: string }[];
 }
 
 export interface CredentialItem extends BaseEntity {
