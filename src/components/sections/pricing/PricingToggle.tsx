@@ -58,7 +58,7 @@ export function PricingToggle({ activePillar, onChange }: PricingToggleProps) {
                 <span className={`block font-display font-medium text-sm sm:text-base ${isActive ? "text-ink" : "text-text-secondary"}`}>
                   {p.label}
                 </span>
-                <span className={`block text-[11px] font-mono ${isActive ? "text-accent font-semibold" : "text-text-secondary/60"}`}>
+                <span className={`hidden sm:block text-[11px] font-mono ${isActive ? "text-accent font-semibold" : "text-text-secondary/60"}`}>
                   {p.sub}
                 </span>
               </div>

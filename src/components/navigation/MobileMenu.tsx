@@ -52,7 +52,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           animate={{ opacity: 1, y: "0%" }}
           exit={{ opacity: 0, y: "-8%" }}
           transition={{ duration: 0.38, ease: [0.65, 0, 0.35, 1] }}
-          className="fixed inset-0 z-50 bg-surface-dark text-on-dark flex flex-col justify-between p-6 overflow-y-auto"
+          className="fixed inset-0 z-50 bg-surface-dark text-on-dark flex flex-col justify-between p-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))] overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile Navigation Menu"
@@ -65,7 +65,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <button
               type="button"
               onClick={onClose}
-              className="w-11 h-11 rounded-pill flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-colors"
+              className="w-11 h-11 rounded-pill flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
               aria-label="Close navigation menu"
             >
               <X className="w-5 h-5" />
@@ -87,7 +87,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     <button
                       type="button"
                       onClick={() => setServicesOpen(!servicesOpen)}
-                      className="w-full flex items-center justify-between text-2xl sm:text-3xl font-display font-semibold text-white tracking-tight text-left"
+                      className="w-full flex items-center justify-between min-h-[48px] text-2xl sm:text-3xl font-display font-semibold text-white tracking-tight text-left"
                     >
                       <span>{item.label}</span>
                       <ChevronDown
@@ -111,13 +111,13 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                               <span className="type-label text-accent-soft tracking-wider block font-bold text-[11px]">
                                 {group.category}
                               </span>
-                              <div className="space-y-1.5 pl-2 border-l border-white/10">
+                              <div className="space-y-1 pl-2 border-l border-white/10">
                                 {group.items.map((subItem) => (
                                   <Link
                                     key={subItem.href}
                                     href={subItem.href}
                                     onClick={onClose}
-                                    className="block text-sm text-text-secondary-on-dark hover:text-white py-1 transition-colors"
+                                    className="flex items-center min-h-[44px] text-sm text-text-secondary-on-dark hover:text-white py-2 px-1 transition-colors"
                                   >
                                     {subItem.label}
                                   </Link>
@@ -143,7 +143,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className="block text-2xl sm:text-3xl font-display font-semibold text-white tracking-tight hover:text-accent-soft transition-colors"
+                    className="flex items-center min-h-[48px] text-2xl sm:text-3xl font-display font-semibold text-white tracking-tight hover:text-accent-soft transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -157,7 +157,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <div className="grid grid-cols-2 gap-3 text-xs">
               <a
                 href={`tel:${siteConfig.contact.phones[0]}`}
-                className="flex items-center justify-center gap-2 p-3 rounded-md bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10"
+                className="flex items-center justify-center min-h-[44px] gap-2 p-3 rounded-md bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10"
               >
                 <Phone className="w-4 h-4 text-accent-soft" />
                 <span>Call Now</span>
@@ -166,7 +166,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 href={siteConfig.contact.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 p-3 rounded-md bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10"
+                className="flex items-center justify-center min-h-[44px] gap-2 p-3 rounded-md bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10"
               >
                 <MessageSquare className="w-4 h-4 text-accent-soft" />
                 <span>WhatsApp</span>

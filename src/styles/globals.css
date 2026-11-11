@@ -75,12 +75,24 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
+
+  /* Prevent iOS Safari 16px auto-zoom on input focus */
+  input, textarea, select {
+    font-size: 16px;
+  }
+
+  /* Balanced text wrapping and responsive overflow protection */
+  h1, h2, h3, h4, .type-display-xl, .type-h1, .type-h2, .type-h3 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
 }
 
 /* Typography Scale Clamps */
 .type-display-xl {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(3.25rem, 11vw, 11rem);
+  font-size: clamp(2.75rem, 10vw, 11rem);
   line-height: 0.9;
   letter-spacing: -0.045em;
   font-weight: 700;
@@ -88,7 +100,7 @@
 
 .type-h1 {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.75rem, 6vw, 6rem);
+  font-size: clamp(2.25rem, 6vw, 6rem);
   line-height: 0.96;
   letter-spacing: -0.04em;
   font-weight: 600;
@@ -96,7 +108,7 @@
 
 .type-h2 {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.25rem, 4.5vw, 4.5rem);
+  font-size: clamp(1.75rem, 4.5vw, 4.5rem);
   line-height: 1.0;
   letter-spacing: -0.035em;
   font-weight: 600;
@@ -104,7 +116,7 @@
 
 .type-h3 {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+  font-size: clamp(1.35rem, 2.2vw, 2.25rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
   font-weight: 600;

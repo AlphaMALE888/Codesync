@@ -65,7 +65,7 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
         <button
           type="button"
           onClick={() => setIsOpenMobile(!isOpenMobile)}
-          className="w-full flex items-center justify-between p-4 text-left font-display font-medium text-text-primary hover:text-accent-default transition-colors"
+          className="w-full min-h-[48px] flex items-center justify-between p-4 text-left font-display font-medium text-text-primary hover:text-accent-default transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
           aria-expanded={isOpenMobile}
         >
           <span className="flex items-center gap-2 text-sm">
@@ -78,7 +78,7 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
         </button>
 
         {isOpenMobile && (
-          <ul className="px-4 pb-4 pt-1 space-y-2 border-t border-border-light text-sm">
+          <ul className="px-4 pb-4 pt-1 space-y-1.5 border-t border-border-light text-sm">
             {sections.map((sec) => {
               const isActive = activeId === sec.id;
               return (
@@ -86,7 +86,7 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
                   <a
                     href={`#${sec.id}`}
                     onClick={(e) => handleScrollTo(e, sec.id)}
-                    className={`block py-1.5 px-2 rounded transition-colors duration-200 ${
+                    className={`flex items-center min-h-[44px] py-2 px-2.5 rounded transition-colors duration-200 ${
                       isActive
                         ? "text-accent-default font-medium bg-accent-soft/20"
                         : "text-text-secondary hover:text-text-primary hover:bg-surface-muted"

@@ -118,10 +118,10 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-muted hover:bg-hairline flex items-center justify-center text-text-secondary hover:text-ink transition-colors cursor-pointer"
+              className="absolute top-4 right-4 w-11 h-11 rounded-full bg-surface-muted hover:bg-hairline flex items-center justify-center text-text-secondary hover:text-ink transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
               aria-label="Close dialog"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
 
             {status === "success" ? (

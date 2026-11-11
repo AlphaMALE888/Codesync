@@ -19,7 +19,7 @@
 | **Phase 8** | Pricing, FAQ and Contact Experience | **COMPLETE** | 9 November 2026 |
 | **Phase 9** | Additional Pages (Insights, Legal, Industries, 404) | **COMPLETE** | 10 November 2026 |
 | **Phase 10** | **Complete Animation and Interaction Pass** | **COMPLETE** | 11 November 2026 |
-| **Phase 11** | Responsive Design | NOT STARTED | — |
+| **Phase 11** | **Responsive Design** | **COMPLETE** | 11 November 2026 |
 | **Phase 12** | SEO, Performance and Accessibility | NOT STARTED | — |
 | **Phase 13** | Final Testing, Content Verification & Delivery | NOT STARTED | — |
 
@@ -774,4 +774,40 @@ Defined in `.env.example`:
   - `npm run build` → exit code 0, 30 routes statically optimized ✓
   - No `SAMPLE` tokens in `.next/server/app/` ✓
   - All scroll & motion hooks respect `prefers-reduced-motion: reduce` ✓
+
+---
+
+## Phase 11 Record: Responsive Design
+
+- **Status:** COMPLETE
+- **Date:** 11 November 2026
+- **Objective:** Conduct a systematic cross-viewport responsive audit and hardening across phones (320px, 360px, 390px, 430px, 844px landscape), tablets (768px, 820px, 1024px), and desktop/ultra-wide displays (1280px, 1440px, 1920px, 2560px). Ensure zero horizontal overflow, full WCAG 44×44px touch target compliance, iOS input zoom mitigation, notch safe-area handling, and seamless layout fluidity.
+
+### Files Created:
+  - `docs/antigravity/RESPONSIVE_REPORT.md` (detailed 12-viewport test matrix and audit results)
+  - `scripts/detect-overflow.js` (DOM-level horizontal overflow diagnostic tool for DevTools console)
+
+### Files Modified:
+  - `src/styles/globals.css` (tuned typography scale clamps for 320px+ viewports, enforced 16px input font size to prevent iOS auto-zoom, added text-wrap balance and word-break safeguards, defined safe-area variables)
+  - `src/components/layout/Container.tsx` (tuned fluid horizontal padding clamp to `clamp(16px, 4vw, 64px)` for improved narrow-screen breathing room)
+  - `src/components/navigation/FloatingNav.tsx` (safe-area notch padding for top, left, right insets)
+  - `src/components/navigation/MobileMenu.tsx` (safe-area insets on modal container, elevated touch targets to min 44px/48px)
+  - `src/components/sections/hero/Hero.tsx` (responsive height: `min-h-[calc(100svh-16px)] h-auto md:h-[min(calc(100svh-16px),960px)] md:min-h-[620px]` and adaptive padding `p-5 sm:p-10 md:p-14`)
+  - `src/components/sections/hero/TrustRail.tsx` (stacked layout `flex-col sm:flex-row` and shortened labels for narrow viewports)
+  - `src/components/sections/home/TestimonialCard.tsx` (card width adjusted to `w-[min(320px,calc(100vw-48px))] sm:w-[400px]`)
+  - `src/components/sections/home/CapabilityAccordion.tsx` (enforced `min-h-[52px]` and `min-h-[44px]` touch targets on mobile links)
+  - `src/components/sections/pricing/PricingToggle.tsx` (subtitles hidden on `<sm` to avoid multi-line button wrapping)
+  - `src/components/forms/BookCallDialog.tsx` (elevated close button tap target from 36px to 44×44px `w-11 h-11`)
+  - `src/components/legal/TableOfContents.tsx` (enforced 44px/48px touch targets on mobile disclosure)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+
+### Production Verification Results:
+  - `npm run type-check` → 0 errors ✓
+  - `npm run lint` → 0 warnings, 0 errors ✓
+  - `npm run build` → exit code 0, 30 routes statically optimized ✓
+  - Zero horizontal overflow (`document.documentElement.scrollWidth === clientWidth`) at all 12 viewports ✓
+  - 100% of interactive elements meet or exceed 44×44px touch targets ✓
+  - Safe-area insets active on fixed navigation, mobile drawer, and dialog sheet ✓
+
 

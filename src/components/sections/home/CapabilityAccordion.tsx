@@ -205,7 +205,7 @@ export function CapabilityAccordion() {
                     <button
                       type="button"
                       onClick={() => setActiveTab(isActive ? -1 : idx)}
-                      className="w-full p-5 flex items-center justify-between text-left"
+                      className="w-full min-h-[52px] p-5 flex items-center justify-between text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
                     >
                       <div className="flex items-center gap-3">
                         <span className="font-mono text-xs text-accent-soft font-bold">
@@ -231,12 +231,12 @@ export function CapabilityAccordion() {
                             {item.desc}
                           </p>
 
-                          <div className="space-y-1.5 pt-2">
+                          <div className="space-y-1 pt-2">
                             {item.services.map((s) => (
                               <Link
                                 key={s.href}
                                 href={s.href}
-                                className="block text-xs font-medium text-white/80 hover:text-white py-1"
+                                className="flex items-center min-h-[44px] text-xs sm:text-sm font-medium text-white/80 hover:text-white py-2 px-1 transition-colors"
                               >
                                 &bull; {s.label}
                               </Link>

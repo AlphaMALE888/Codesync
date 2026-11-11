@@ -10,7 +10,7 @@ export function Container({ children, className, ...props }: ContainerProps) {
   return (
     <div
       className={cn(
-        "w-full max-w-container mx-auto px-[clamp(20px,4vw,64px)]",
+        "w-full max-w-container mx-auto px-[clamp(16px,4vw,64px)]",
         className
       )}
       {...props}

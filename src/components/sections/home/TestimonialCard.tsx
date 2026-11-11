@@ -12,7 +12,7 @@ export function TestimonialCard({ testimonial, className }: TestimonialCardProps
   return (
     <div
       className={cn(
-        "w-[340px] sm:w-[400px] shrink-0 rounded-md border border-hairline bg-white p-7 sm:p-8",
+        "w-[min(320px,calc(100vw-48px))] sm:w-[400px] shrink-0 rounded-md border border-hairline bg-white p-6 sm:p-8",
         "flex flex-col justify-between shadow-sm select-none scroll-snap-align-start",
         className
       )}

@@ -82,11 +82,11 @@ export function Hero() {
       ref={heroRef}
       className={cn(
         "relative w-full mx-auto px-[clamp(8px,1.2vw,16px)] pb-4",
-        "h-[min(calc(100svh-16px),960px)] min-h-[620px]"
+        "min-h-[calc(100svh-16px)] h-auto md:h-[min(calc(100svh-16px),960px)] md:min-h-[620px]"
       )}
     >
       {/* Outer Rounded Hero Frame */}
-      <div className="relative w-full h-full rounded-lg overflow-hidden flex flex-col justify-between p-6 sm:p-10 md:p-14 border border-white/10 shadow-2xl">
+      <div className="relative w-full min-h-full rounded-lg overflow-hidden flex flex-col justify-between p-5 sm:p-10 md:p-14 border border-white/10 shadow-2xl">
         {/* Layered Architectural Backdrop & Film-Grain */}
         <HeroBackdrop
           ref={backdropRef}

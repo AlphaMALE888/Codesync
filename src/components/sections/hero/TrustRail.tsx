@@ -28,20 +28,20 @@ export function TrustRail({ className }: TrustRailProps) {
     >
       {/* Fallback Verified Statement when client logos/ratings are pending */}
       {permittedClients.length === 0 && verifiedProof.length === 0 ? (
-        <div className="w-full flex items-center justify-between text-[11px] sm:text-xs tracking-wider uppercase font-medium">
+        <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-4 text-[10px] sm:text-xs tracking-wider uppercase font-medium">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-pill bg-accent-soft inline-block animate-pulse" />
-            <span>Lucknow Digital Marketing & Software Company</span>
+            <span className="w-2 h-2 rounded-pill bg-accent-soft inline-block shrink-0 animate-pulse" />
+            <span className="truncate">Lucknow Digital Marketing & Software</span>
           </div>
-          <span className="text-white/60">Based in Lucknow, Uttar Pradesh</span>
+          <span className="text-white/60 text-[10px] sm:text-xs shrink-0">Based in Lucknow, UP</span>
         </div>
       ) : (
-        <div className="w-full flex items-center justify-between">
-          <span className="type-label text-[11px] text-white/70">Trusted Local Execution</span>
+        <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <span className="type-label text-[11px] text-white/70 shrink-0">Trusted Local Execution</span>
           {/* Client logos rail when permission is granted */}
-          <div className="flex items-center gap-6 overflow-x-auto">
+          <div className="flex items-center gap-6 overflow-x-auto w-full sm:w-auto scrollbar-none">
             {permittedClients.map((client) => (
-              <span key={client.name} className="font-medium text-white/80">
+              <span key={client.name} className="font-medium text-white/80 shrink-0">
                 {client.name}
               </span>
             ))}

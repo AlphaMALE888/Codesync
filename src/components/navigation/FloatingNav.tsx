@@ -61,7 +61,7 @@ export function FloatingNav() {
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-3 left-0 right-0 z-40 px-3 sm:px-6 pointer-events-none"
+        className="fixed top-[max(0.75rem,env(safe-area-inset-top))] left-0 right-0 z-40 pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))] sm:px-6 pointer-events-none"
       >
         <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-3">
           {/* Left: Brand Capsule */}
