@@ -811,3 +811,56 @@ Defined in `.env.example`:
   - Safe-area insets active on fixed navigation, mobile drawer, and dialog sheet ✓
 
 
+
+
+---
+
+## Phase 12 Record: SEO, Performance and Accessibility
+
+- **Status:** COMPLETE
+- **Date:** 11 November 2026
+- **Objective:** Complete full SEO metadata, dynamic App Router sitemap and robots handlers, typed JSON-LD structured data (Organization, LocalBusiness/ProfessionalService, Service, BreadcrumbList, FAQPage), 26 legacy 301 redirects, security headers, Web App Manifest, Edge runtime OG image and favicon/apple-icon, null-safe analytics, and comprehensive accessibility audit and documentation.
+
+### Files Created:
+  - `next.config.mjs` (26 legacy 301 redirects, security headers: X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy)
+  - `scripts/test-redirects.js` (Node.js redirect test harness, 26 rules verified)
+  - `src/app/sitemap.ts` (Dynamic App Router XML sitemap respecting feature flags and legal status)
+  - `src/app/robots.ts` (Dynamic robots.txt with disallow /api/, /design-system, /(dev)/ and sitemap pointer)
+  - `src/app/manifest.ts` (Web App Manifest with standalone display and brand colors)
+  - `src/app/icon.tsx` (Edge runtime 32×32 favicon)
+  - `src/app/apple-icon.tsx` (Edge runtime 180×180 apple touch icon)
+  - `src/app/opengraph-image.tsx` (Edge runtime 1200×630 OG social preview image)
+  - `src/lib/seo/jsonld.ts` (Strongly typed Schema.org JSON-LD helpers adhering to Content Status Rule)
+  - `src/components/seo/JsonLd.tsx` (Safe JSON-LD script renderer with XSS character escaping)
+  - `src/components/analytics/Analytics.tsx` (Null-safe Google Analytics loader with afterInteractive strategy)
+  - `docs/antigravity/SEO_CHECKLIST.md` (Comprehensive 30-route SEO matrix, canonicals, robots, schemas)
+  - `docs/antigravity/ACCESSIBILITY_REPORT.md` (WCAG 2.1 AA audit, landmarks, contrast, keyboard, focus, ARIA)
+
+### Files Modified:
+  - `src/app/layout.tsx` (metadataBase, title template, OG/Twitter defaults, Organization & LocalBusiness JSON-LD, Analytics component)
+  - `src/app/page.tsx` (canonical, Open Graph, FAQPage JSON-LD)
+  - `src/app/services/page.tsx` (canonical, BreadcrumbList JSON-LD)
+  - `src/app/services/[slug]/page.tsx` (canonical, Service, BreadcrumbList, and FAQPage JSON-LD)
+  - `src/app/pricing/page.tsx` (canonical, BreadcrumbList, and FAQPage JSON-LD)
+  - `src/app/about/page.tsx` (canonical, BreadcrumbList JSON-LD)
+  - `src/app/contact/page.tsx` (canonical, BreadcrumbList, and FAQPage JSON-LD)
+  - `src/app/legal/privacy/page.tsx` (canonical, BreadcrumbList JSON-LD)
+  - `src/app/legal/terms/page.tsx` (noindex/nofollow awaiting client text)
+  - `src/app/legal/refund-cancellation/page.tsx` (noindex/nofollow awaiting client text)
+  - `src/app/work/page.tsx` (canonical, dynamic robots based on features.work, BreadcrumbList JSON-LD)
+  - `src/app/work/[slug]/page.tsx` (canonical, dynamic robots, BreadcrumbList JSON-LD)
+  - `src/app/insights/page.tsx` (canonical, dynamic robots based on features.insights, BreadcrumbList JSON-LD)
+  - `src/app/insights/[slug]/page.tsx` (canonical, dynamic robots, BreadcrumbList JSON-LD)
+  - `src/app/industries/page.tsx` (canonical, dynamic robots based on features.industries)
+  - `src/app/(dev)/design-system/page.tsx` (noindex/nofollow for dev routes)
+  - `docs/antigravity/PHASE_LOG.md`
+  - `PROJECT_PROGRESS.md`
+
+### Production Verification Results:
+  - `npm run type-check` → 0 errors ✓
+  - `npm run lint` → 0 warnings, 0 errors ✓
+  - `npm run build` → exit code 0, 30 routes statically optimized ✓
+  - Redirect validator `scripts/test-redirects.js` → 26 rules, 100% pass ✓
+  - Zero Review/AggregateRating schema rendered (preventing unverified review penalties) ✓
+  - City-level address used in LocalBusiness schema (preventing legacy street address contradictions) ✓
+  - Zero `SAMPLE` tokens in `.next/server/app/` ✓

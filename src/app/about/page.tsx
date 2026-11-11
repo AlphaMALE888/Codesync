@@ -10,16 +10,34 @@ import { TestimonialCarousel } from "@/components/sections/home/TestimonialCarou
 import { CareersBand } from "@/components/sections/about/CareersBand";
 import { CompanyDetails } from "@/components/sections/about/CompanyDetails";
 import { FinalCta } from "@/components/sections/home/FinalCta";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbSchema } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = {
-  title: "About CODESYNC | Lucknow Digital Marketing and Software",
+  title: "About Our Lucknow Agency & Collective",
   description:
     "Learn about CODESYNC Digi Marketing (OPC) Pvt Ltd in Lucknow. Combining performance digital marketing with in-house software development.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Our Lucknow Agency & Collective | CODESYNC",
+    description:
+      "Combining performance digital marketing with in-house software development in Lucknow, Uttar Pradesh.",
+    url: "/about",
+  },
 };
 
 export default function AboutPage() {
+  const breadcrumbs = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "About", url: "/about" },
+  ]);
+
   return (
     <main className="min-h-screen bg-canvas">
+      <JsonLd data={breadcrumbs} />
+
       {/* 1. Intro Hero */}
       <AboutHero />
 

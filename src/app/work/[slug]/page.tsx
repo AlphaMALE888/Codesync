@@ -12,6 +12,8 @@ import { ServiceTestimonial } from "@/components/sections/services/ServiceTestim
 import { FinalCta } from "@/components/sections/home/FinalCta";
 import { getRenderableProjects, getProjectBySlug } from "@/lib/content";
 import { features } from "@/data/features";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbSchema } from "@/lib/seo/jsonld";
 
 interface CaseStudyPageProps {
   params: {
@@ -35,9 +37,30 @@ export function generateMetadata({ params }: CaseStudyPageProps): Metadata {
     };
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cdmlko.com";
+
   return {
     title: `${project.summary} | CODESYNC Case Study`,
     description: project.challenge,
+    alternates: {
+      canonical: `/work/${project.slug}`,
+    },
+    robots: {
+      index: features.work,
+      follow: features.work,
+    },
+    openGraph: {
+      title: `${project.summary} | CODESYNC Case Study`,
+      description: project.challenge,
+      url: `${baseUrl}/work/${project.slug}`,
+      type: "website",
+      siteName: "CODESYNC Digi Marketing",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.summary} | CODESYNC Case Study`,
+      description: project.challenge,
+    },
   };
 }
 
@@ -67,6 +90,13 @@ export default function CaseStudyDetailPage({ params }: CaseStudyPageProps) {
 
   return (
     <main className="min-h-screen bg-canvas">
+      <JsonLd
+        schema={getBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Work", url: "/work" },
+          { name: project.summary, url: `/work/${project.slug}` },
+        ])}
+      />
       {/* 1. Hero */}
       <CaseHero project={project} />
 

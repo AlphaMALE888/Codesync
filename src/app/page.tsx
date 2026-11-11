@@ -12,6 +12,10 @@ import { PricingPreview } from "@/components/sections/pricing/PricingPreview";
 import { FaqSection } from "@/components/sections/faq/FaqSection";
 import { SelectedWork } from "@/components/sections/work/SelectedWork";
 import { FinalCta } from "@/components/sections/home/FinalCta";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getFaqSchema } from "@/lib/seo/jsonld";
+import { faqsData } from "@/data/faqs";
+import { renderable } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Digital Marketing & Software Company in Lucknow | CODESYNC",
@@ -20,8 +24,13 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const homeFaqs = renderable(faqsData)
+    .slice(0, 6)
+    .map((f) => ({ question: f.question, answer: f.answer }));
+
   return (
     <>
+      <JsonLd schema={getFaqSchema(homeFaqs)} />
       {/* 1. Hero Experience (Phase 3) */}
       <Hero />
 

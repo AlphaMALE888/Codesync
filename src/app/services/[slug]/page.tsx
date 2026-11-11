@@ -10,6 +10,9 @@ import { ServiceTestimonial } from "@/components/sections/services/ServiceTestim
 import { ServiceFaq } from "@/components/sections/services/ServiceFaq";
 import { RelatedServices } from "@/components/sections/services/RelatedServices";
 import { FinalCta } from "@/components/sections/home/FinalCta";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getServiceSchema, getBreadcrumbSchema, getFaqSchema } from "@/lib/seo/jsonld";
+import { faqsData } from "@/data/faqs";
 
 interface ServicePageProps {
   params: {
@@ -29,13 +32,22 @@ export function generateMetadata({ params }: ServicePageProps): Metadata {
 
   if (!service) {
     return {
-      title: "Service Not Found | CODESYNC",
+      title: "Service Not Found",
+      robots: { index: false, follow: false },
     };
   }
 
   return {
-    title: `${service.name} in Lucknow | CODESYNC`,
+    title: `${service.name} in Lucknow`,
     description: service.summary,
+    alternates: {
+      canonical: `/services/${service.slug}`,
+    },
+    openGraph: {
+      title: `${service.name} in Lucknow | CODESYNC`,
+      description: service.summary,
+      url: `/services/${service.slug}`,
+    },
   };
 }
 
@@ -46,8 +58,31 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
     notFound();
   }
 
+  const serviceSchema = getServiceSchema(service);
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services" },
+    { name: service.name, url: `/services/${service.slug}` },
+  ]);
+
+  // Extract visible FAQs if present
+  const serviceFaqs = (service.faqs || [])
+    .map((id) => faqsData.find((f) => f.id === id))
+    .filter((f): f is NonNullable<typeof f> => Boolean(f))
+    .map((f) => ({ question: f.question, answer: f.answer }));
+
+  const faqSchema = serviceFaqs.length > 0 ? getFaqSchema(serviceFaqs) : null;
+
   return (
     <main className="min-h-screen bg-canvas">
+      <JsonLd
+        data={[
+          serviceSchema,
+          breadcrumbSchema,
+          ...(faqSchema ? [faqSchema] : []),
+        ]}
+      />
+
       {/* 1. Hero */}
       <ServiceHero service={service} />
 

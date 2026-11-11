@@ -9,6 +9,8 @@ import { ArticleBody } from "@/components/sections/insights/ArticleBody";
 import { RelatedServiceCta } from "@/components/sections/insights/RelatedServiceCta";
 import { FinalCta } from "@/components/sections/home/FinalCta";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbSchema } from "@/lib/seo/jsonld";
 
 interface ArticlePageProps {
   params: {
@@ -35,11 +37,29 @@ export function generateMetadata({ params }: ArticlePageProps): Metadata {
     return { title: "Insight Article Not Found" };
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cdmlko.com";
+
   return {
     title: `${article.title} | CODESYNC Insights`,
     description: article.summary,
     alternates: {
       canonical: `/insights/${article.slug}`,
+    },
+    robots: {
+      index: features.insights,
+      follow: features.insights,
+    },
+    openGraph: {
+      title: `${article.title} | CODESYNC Insights`,
+      description: article.summary,
+      url: `${baseUrl}/insights/${article.slug}`,
+      type: "article",
+      siteName: "CODESYNC Digi Marketing",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${article.title} | CODESYNC Insights`,
+      description: article.summary,
     },
   };
 }
@@ -66,6 +86,13 @@ export default function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className="min-h-screen bg-bg-light text-text-primary pt-32">
+      <JsonLd
+        schema={getBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Insights", url: "/insights" },
+          { name: article.title, url: `/insights/${article.slug}` },
+        ])}
+      />
       {/* Scroll Reading Progress Bar */}
       <ReadingProgress />
 

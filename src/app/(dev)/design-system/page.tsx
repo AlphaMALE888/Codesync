@@ -1,5 +1,14 @@
 import React from "react";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Design System",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Display, Heading, Text, Eyebrow } from "@/components/ui/Typography";

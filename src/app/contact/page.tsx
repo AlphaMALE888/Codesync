@@ -6,16 +6,41 @@ import { InquiryForm } from "@/components/forms/InquiryForm";
 import { FaqSection } from "@/components/sections/faq/FaqSection";
 import { siteConfig } from "@/data/site";
 import { Phone, MessageSquare, Mail, ArrowUpRight } from "lucide-react";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbSchema, getFaqSchema } from "@/lib/seo/jsonld";
+import { faqsData } from "@/data/faqs";
+import { renderable } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Contact Us | CODESYNC Lucknow",
+  title: "Contact Our Lucknow Team",
   description:
     "Get in touch with CODESYNC in Lucknow. Call, WhatsApp, or send a project enquiry directly to our technology and marketing leads.",
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact Our Lucknow Team | CODESYNC",
+    description:
+      "Connect directly with CODESYNC Digi Marketing (OPC) Pvt Ltd in Lucknow, Uttar Pradesh. Call, WhatsApp, or request a free consultation.",
+    url: "/contact",
+  },
 };
 
 export default function ContactPage() {
+  const breadcrumbs = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Contact", url: "/contact" },
+  ]);
+
+  const contactFaqs = renderable(faqsData)
+    .slice(0, 5)
+    .map((f) => ({ question: f.question, answer: f.answer }));
+  const faqSchema = getFaqSchema(contactFaqs);
+
   return (
     <main className="min-h-screen bg-canvas pt-32 sm:pt-40">
+      <JsonLd data={[breadcrumbs, faqSchema]} />
+
       <Container>
         <div id="book-a-call" className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-20 sm:pb-28">
           {/* Left Column: Direct Communication Channels */}
@@ -70,9 +95,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <span className="font-mono text-[11px] text-text-secondary uppercase tracking-wider block">
-                      Primary Phone
+                      Direct Line (Primary)
                     </span>
-                    <span className="font-medium text-base text-ink group-hover:text-accent transition-colors font-mono">
+                    <span className="font-medium text-base text-ink group-hover:text-accent transition-colors">
                       +91 {siteConfig.contact.phones[0]}
                     </span>
                   </div>
@@ -91,9 +116,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <span className="font-mono text-[11px] text-text-secondary uppercase tracking-wider block">
-                      Secondary Phone
+                      Direct Line (Secondary)
                     </span>
-                    <span className="font-medium text-base text-ink group-hover:text-accent transition-colors font-mono">
+                    <span className="font-medium text-base text-ink group-hover:text-accent transition-colors">
                       +91 {siteConfig.contact.phones[1]}
                     </span>
                   </div>
@@ -107,12 +132,12 @@ export default function ContactPage() {
                 className="group flex items-center justify-between p-4 rounded-md bg-white border border-hairline hover:border-accent/40 hover:shadow-sm transition-all"
               >
                 <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-full bg-surface-muted text-text-secondary flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-surface-muted text-ink flex items-center justify-center">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="font-mono text-[11px] text-text-secondary uppercase tracking-wider block">
-                      Direct Email
+                      Official Support
                     </span>
                     <span className="font-medium text-base text-ink group-hover:text-accent transition-colors">
                       {siteConfig.contact.email}
@@ -131,7 +156,7 @@ export default function ContactPage() {
         </div>
       </Container>
 
-      {/* FAQ Preview */}
+      {/* Embedded FAQ Section */}
       <FaqSection id="contact-faq" limit={5} showContactCta={false} />
     </main>
   );

@@ -4,13 +4,19 @@ import { features } from "@/data/features";
 import { getRenderableArticles } from "@/lib/content";
 import { InsightsGrid } from "@/components/sections/insights/InsightsGrid";
 import { DisplayMarquee } from "@/components/ui/DisplayMarquee";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbSchema } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = {
-  title: "Insights & Strategy | CODESYNC Digi Marketing Pvt. Ltd.",
+  title: "Insights & Strategy",
   description:
     "Practical growth frameworks, performance web architecture, and regional digital marketing insights from CODESYNC Digi Marketing in Lucknow.",
   alternates: {
     canonical: "/insights",
+  },
+  robots: {
+    index: features.insights,
+    follow: features.insights,
   },
 };
 
@@ -32,6 +38,12 @@ export default function InsightsPage() {
 
   return (
     <div className="min-h-screen bg-bg-light text-text-primary pt-32 pb-24">
+      <JsonLd
+        schema={getBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Insights", url: "/insights" },
+        ])}
+      />
       {/* Editorial Marquee Banner */}
       <div className="border-y border-border-light/60 mb-12">
         <DisplayMarquee text="INSIGHTS & STRATEGY" speed={36} tone="light" />

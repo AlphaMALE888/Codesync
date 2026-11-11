@@ -7,11 +7,20 @@ import { WorkGrid } from "@/components/sections/work/WorkGrid";
 import { FinalCta } from "@/components/sections/home/FinalCta";
 import { getRenderableProjects } from "@/lib/content";
 import { features } from "@/data/features";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getBreadcrumbSchema } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = {
-  title: "Work & Case Studies | CODESYNC Lucknow",
+  title: "Work & Case Studies",
   description:
     "Explore verified client deliverables, organic search compounding, and custom business software architectures delivered by CODESYNC in Lucknow.",
+  alternates: {
+    canonical: "/work",
+  },
+  robots: {
+    index: features.work,
+    follow: features.work,
+  },
 };
 
 interface WorkPageProps {
@@ -46,6 +55,12 @@ export default function WorkPage({ searchParams }: WorkPageProps) {
 
   return (
     <main className="min-h-screen bg-canvas pt-32 sm:pt-40">
+      <JsonLd
+        data={getBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Work", url: "/work" },
+        ])}
+      />
       <Container>
         {/* Header */}
         <div className="max-w-3xl pb-12 sm:pb-16 border-b border-hairline">
