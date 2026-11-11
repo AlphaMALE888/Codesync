@@ -38,11 +38,12 @@ export function useGSAPContext(
   dependencies: React.DependencyList = []
 ) {
   useEffect(() => {
-    if (!scopeRef.current) return;
+    const scopeElement = scopeRef.current;
+    if (!scopeElement) return;
 
-    const ctx = gsap.context(() => {
-      callback(ctx);
-    }, scopeRef);
+    const ctx = gsap.context((self) => {
+      callback(self);
+    }, scopeElement);
 
     return () => {
       ctx.revert();
