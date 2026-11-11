@@ -18,7 +18,7 @@
 | **Phase 7** | About, Team and Trust Sections | **COMPLETE** | 9 November 2026 |
 | **Phase 8** | Pricing, FAQ and Contact Experience | **COMPLETE** | 9 November 2026 |
 | **Phase 9** | Additional Pages (Insights, Legal, Industries, 404) | **COMPLETE** | 10 November 2026 |
-| **Phase 10** | Complete Animation and Interaction Pass | NOT STARTED | — |
+| **Phase 10** | **Complete Animation and Interaction Pass** | **COMPLETE** | 11 November 2026 |
 | **Phase 11** | Responsive Design | NOT STARTED | — |
 | **Phase 12** | SEO, Performance and Accessibility | NOT STARTED | — |
 | **Phase 13** | Final Testing, Content Verification & Delivery | NOT STARTED | — |
@@ -731,3 +731,47 @@ Defined in `.env.example`:
 ### Known Limitations:
   - Insights body rendering is a lightweight inline Markdown parser. When real articles are published, the team may wish to adopt `@next/mdx` or `gray-matter` for richer formatting (Phase 13 refinement opportunity).
   - Legal TOC section IDs are derived from heading numbers ("section-1", "section-2", etc.). If the client's new legal text does not use numbered section headings, the TOC generator may need a slug-based fallback (note for Phase 13).
+
+---
+
+## Phase 10 Record: Complete Animation and Interaction Pass
+
+- **Status:** COMPLETE
+- **Date:** 11 November 2026
+- **Objective:** Execute the complete motion and interaction pass for the entire application adhering strictly to the library role split: Lenis for smooth scroll only, GSAP ScrollTrigger for scrubbed effects, Framer Motion for component state & enter animations, and CSS for hovers, marquee, and simple transitions. Ensure zero jank, 60fps budget, and full accessibility under `prefers-reduced-motion`.
+
+### Files Created:
+  - `docs/antigravity/MOTION_INVENTORY.md` (single source of truth for all animation values and rules)
+  - `src/lib/motion-tokens.ts` (typed tokens for durations, easings, stagger, travel)
+  - `src/hooks/usePrefersReducedMotion.ts` (SSR-safe listener for OS/browser motion preference)
+  - `src/hooks/useIsDesktop.ts` (SSR-safe `(pointer: fine) and (hover: hover)` check)
+  - `src/components/motion/SmoothScroll.tsx` (Lenis instance, GSAP ticker lagSmoothing(0) sync, modal observer lock, reduced-motion bypass)
+  - `src/components/motion/ImageReveal.tsx` (clip-path inset 0 0 100% 0 → inset 0 0 0% 0 + 1.08→1 scale)
+  - `src/components/motion/WordReveal.tsx` (staggered word reveal for statements & vision)
+  - `src/components/motion/Parallax.tsx` (desktop-only GSAP ScrollTrigger scrubbed container with active will-change)
+  - `src/app/template.tsx` (App Router page transition: opacity 0→1, y:12px→0 in 350ms)
+
+### Files Modified:
+  - `package.json`, `package-lock.json` (`lenis` ^1.3.27 installed)
+  - `src/lib/motion.ts` (re-exports typed tokens from `motion-tokens.ts`)
+  - `src/lib/gsap.ts` (debounced `ScrollTrigger.refresh(200)` on window resize)
+  - `src/components/motion/useReducedMotion.ts` (re-exports from shared `usePrefersReducedMotion`)
+  - `src/components/motion/Counter.tsx` (aligned duration to 1100ms ease-out)
+  - `src/components/ui/Reveal.tsx` (upgraded with stagger support, responsive durations/offsets, no-JS fallback class, reduced-motion bypass)
+  - `src/components/ui/SplitArrowButton.tsx` (3px hover arrow shift, 120ms active press scale 0.98)
+  - `src/components/navigation/FloatingNav.tsx` (dynamic scroll state after 24px: stronger border & shadow-md with 200ms transition)
+  - `src/components/forms/BookCallDialog.tsx` (`data-lenis-prevent` on modal container)
+  - `src/components/navigation/MobileMenu.tsx` (`data-lenis-prevent` on mobile drawer)
+  - `src/components/sections/hero/Hero.tsx` (tuned `scrub: 1.2` for hero arches)
+  - `src/components/sections/home/StatementPanel.tsx` (tuned `scale: 0.94→1.06`, `scrub: 1.5`)
+  - `src/components/sections/work/ProjectMockup.tsx` (tuned `scrub: 1` for mockup parallax)
+  - `src/app/layout.tsx` (mounted `<SmoothScroll>` wrapper)
+  - `src/styles/globals.css` (marquee pause on hover/focus, no-js fallback, Lenis core CSS)
+
+### Production Verification Results:
+  - `npm run type-check` → 0 errors ✓
+  - `npm run lint` → 0 warnings, 0 errors ✓
+  - `npm run build` → exit code 0, 30 routes statically optimized ✓
+  - No `SAMPLE` tokens in `.next/server/app/` ✓
+  - All scroll & motion hooks respect `prefers-reduced-motion: reduce` ✓
+

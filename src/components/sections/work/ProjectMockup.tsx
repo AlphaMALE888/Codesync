@@ -41,7 +41,7 @@ export function ProjectMockup({
               trigger: containerRef.current,
               start: "top bottom",
               end: "bottom top",
-              scrub: true,
+              scrub: 1,
             },
           }
         );

@@ -29,7 +29,7 @@ export function SplitArrowButton({
   const baseClasses = cn(
     "group inline-flex items-center justify-between rounded-pill font-medium transition-all duration-fast ease-out-custom select-none",
     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2",
-    "active:scale-[0.98] motion-reduce:active:scale-100",
+    "active:scale-[0.98] active:duration-[120ms] motion-reduce:active:scale-100",
     size === "md" ? "min-h-[44px] pl-5 pr-2 py-1.5 text-sm gap-3" : "min-h-[52px] pl-6 pr-2.5 py-2 text-base gap-4",
     variant === "solid-light" && "bg-white text-ink border border-hairline hover:bg-surface-muted shadow-sm",
     variant === "solid-dark" && "bg-surface-dark text-on-dark border border-white/10 hover:bg-surface-dark-2 shadow-sm",
@@ -53,7 +53,7 @@ export function SplitArrowButton({
         <ArrowUpRight
           className={cn(
             "w-4 h-4 transition-transform duration-fast ease-out-custom",
-            "group-hover:translate-x-[2px] group-hover:-translate-y-[2px] motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
+            "group-hover:translate-x-[3px] group-hover:-translate-y-[3px] motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
           )}
         />
       </span>

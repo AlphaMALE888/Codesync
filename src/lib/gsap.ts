@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -12,6 +12,22 @@ if (typeof window !== "undefined") {
 // SSR-safe useLayoutEffect
 export const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+/**
+ * Debounced ScrollTrigger refresh setup for resize events
+ */
+let resizeTimeout: NodeJS.Timeout | null = null;
+export function debouncedScrollTriggerRefresh(delay = 200) {
+  if (typeof window === "undefined") return;
+  if (resizeTimeout) clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, delay);
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("resize", () => debouncedScrollTriggerRefresh(200));
+}
 
 /**
  * Safe GSAP context hook that cleanly sets up and cleans up animations/triggers.

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
@@ -11,12 +11,23 @@ import { BookCallTrigger } from "@/components/forms/BookCallTrigger";
 import { navigationItems } from "@/data/navigation";
 import { features } from "@/data/features";
 import { motion, LayoutGroup } from "@/lib/motion";
+import { cn } from "@/lib/cn";
 
 export function FloatingNav() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const servicesTriggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const filteredNav = navigationItems.filter(
     (item) => !item.flag || features[item.flag]
@@ -37,6 +48,13 @@ export function FloatingNav() {
     }, 160);
   };
 
+  const capsuleClass = cn(
+    "pointer-events-auto bg-white/92 backdrop-blur-md rounded-pill transition-all duration-200",
+    scrolled
+      ? "border border-ink/20 shadow-md"
+      : "border border-hairline shadow-sm"
+  );
+
   return (
     <>
       <motion.div
@@ -47,14 +65,17 @@ export function FloatingNav() {
       >
         <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-3">
           {/* Left: Brand Capsule */}
-          <div className="pointer-events-auto bg-white/92 backdrop-blur-md border border-hairline rounded-pill h-11 px-3.5 flex items-center shadow-sm">
+          <div className={cn(capsuleClass, "h-11 px-3.5 flex items-center")}>
             <Logo />
           </div>
 
           {/* Centre: Nav Capsule (Desktop lg and up) */}
           <nav
             aria-label="Main Navigation"
-            className="hidden lg:flex pointer-events-auto bg-white/92 backdrop-blur-md border border-hairline rounded-pill h-11 px-2 items-center shadow-sm relative"
+            className={cn(
+              capsuleClass,
+              "hidden lg:flex h-11 px-2 items-center relative"
+            )}
           >
             <LayoutGroup id="desktopNav">
               {filteredNav.map((item) => {
@@ -122,7 +143,10 @@ export function FloatingNav() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden w-11 h-11 rounded-pill bg-white/92 backdrop-blur-md border border-hairline text-ink flex items-center justify-center shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+              className={cn(
+                capsuleClass,
+                "lg:hidden w-11 h-11 text-ink flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+              )}
               aria-label="Open mobile navigation menu"
             >
               <Menu className="w-5 h-5" />

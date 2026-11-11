@@ -22,15 +22,15 @@ export function StatementPanel() {
         if (svgRef.current && panelRef.current) {
           gsap.fromTo(
             svgRef.current,
-            { scale: 0.9 },
+            { scale: 0.94 },
             {
-              scale: 1.05,
+              scale: 1.06,
               ease: "none",
               scrollTrigger: {
                 trigger: panelRef.current,
                 start: "top bottom",
                 end: "bottom top",
-                scrub: true,
+                scrub: 1.5,
               },
             }
           );

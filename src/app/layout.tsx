@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import { SkipLink } from "@/components/ui/SkipLink";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { cn } from "@/lib/cn";
 
 const interBody = Inter({
@@ -33,12 +34,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(interBody.variable, interDisplay.variable)}>
       <body className="min-h-screen flex flex-col justify-between bg-canvas text-ink selection:bg-accent selection:text-white">
-        <SkipLink targetId="main" />
-        <SiteHeader />
-        <main id="main" className="flex-1 w-full pt-16 sm:pt-20">
-          {children}
-        </main>
-        <SiteFooter />
+        <SmoothScroll>
+          <SkipLink targetId="main" />
+          <SiteHeader />
+          <main id="main" className="flex-1 w-full pt-16 sm:pt-20">
+            {children}
+          </main>
+          <SiteFooter />
+        </SmoothScroll>
       </body>
     </html>
   );
