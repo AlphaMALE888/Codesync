@@ -16,7 +16,7 @@ export function ProofGrid() {
   const quoteProof = testimonialsData[0]; // Mad House Creations verified review
 
   return (
-    <section className="w-full py-16 sm:py-24 bg-canvas">
+    <section className="relative z-10 w-full py-16 sm:py-24 bg-canvas">
       <Container>
         <Reveal>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">

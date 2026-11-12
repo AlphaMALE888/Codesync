@@ -16,7 +16,7 @@ export const HeroBackdrop = forwardRef<HTMLDivElement, HeroBackdropProps>(
       <div
         ref={ref}
         className={cn(
-          "absolute inset-0 w-full h-full overflow-hidden select-none pointer-events-none -z-10 rounded-lg",
+          "absolute inset-0 w-full h-full overflow-hidden select-none pointer-events-none z-0 rounded-lg",
           className
         )}
         aria-hidden="true"

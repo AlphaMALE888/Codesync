@@ -5,7 +5,7 @@ export function FooterScene({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden select-none pt-12 sm:pt-20 border-t border-white/10",
+        "relative w-full select-none pt-10 sm:pt-16 border-t border-white/10",
         className
       )}
       aria-hidden="true"
@@ -13,14 +13,18 @@ export function FooterScene({ className }: { className?: string }) {
       {/* Background Soft Arch Glow */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
-      {/* Oversized Cropped Wordmark */}
-      <div className="w-full flex justify-center leading-none">
+      {/* Oversized Full-Width Wordmark — contained within parent overflow-hidden */}
+      <div className="w-full flex justify-center leading-none pb-0">
         <span
           className={cn(
-            "font-display font-black tracking-tighter uppercase text-white/95",
-            "text-[18vw] sm:text-[19vw] lg:text-[20vw] leading-[0.78]",
-            "translate-y-[12%] select-none pointer-events-none"
+            "font-display font-black uppercase text-white/95 block text-center w-full",
+            "leading-[0.82] select-none pointer-events-none"
           )}
+          style={{
+            fontSize: "clamp(2.5rem, 14vw, 12.5rem)",
+            letterSpacing: "-0.025em",
+            whiteSpace: "nowrap",
+          }}
         >
           CODESYNC
         </span>

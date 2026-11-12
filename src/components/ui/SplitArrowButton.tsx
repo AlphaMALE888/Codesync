@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 export interface SplitArrowButtonProps {
@@ -50,10 +50,10 @@ export function SplitArrowButton({
     <>
       <span className="tracking-tight whitespace-nowrap">{children}</span>
       <span className={iconTileClasses} aria-hidden="true">
-        <ArrowUpRight
+        <ArrowRight
           className={cn(
-            "w-4 h-4 transition-transform duration-fast ease-out-custom",
-            "group-hover:translate-x-[3px] group-hover:-translate-y-[3px] motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
+            "w-4 h-4 transition-transform duration-[280ms] ease-out",
+            "group-hover:translate-x-[4px] motion-reduce:group-hover:translate-x-0"
           )}
         />
       </span>

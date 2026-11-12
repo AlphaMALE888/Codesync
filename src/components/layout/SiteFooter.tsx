@@ -11,7 +11,7 @@ export function SiteFooter() {
 
   return (
     <footer className="w-full px-[clamp(8px,1.2vw,16px)] pb-[clamp(8px,1.2vw,16px)]">
-      <div className="w-full bg-surface-dark text-on-dark rounded-t-lg border-t border-x border-white/10 pt-16 sm:pt-24 pb-12 px-[clamp(20px,4vw,64px)] overflow-hidden">
+      <div className="w-full bg-surface-dark text-on-dark rounded-t-lg border-t border-x border-white/10 pt-16 sm:pt-24 pb-0 px-[clamp(20px,4vw,64px)] overflow-hidden">
         <div className="max-w-[1440px] mx-auto">
           {/* Top Row: Talk To Us Callout Block */}
           <div className="pb-16 border-b border-white/10 flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -180,11 +180,8 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* Phase 4 Footer Wordmark Scene */}
-          <FooterScene />
-
           {/* Bottom Bar: Copyright & Legal */}
-          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-secondary-on-dark">
+          <div className="pt-8 pb-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-secondary-on-dark">
             <div>
               &copy; {currentYear} {siteConfig.name} All rights reserved. Registered as {siteConfig.legalName}.
             </div>
@@ -196,6 +193,9 @@ export function SiteFooter() {
             </div>
           </div>
         </div>
+
+        {/* Phase 4 Footer Wordmark Scene — full-bleed, outside padded container */}
+        <FooterScene />
       </div>
     </footer>
   );

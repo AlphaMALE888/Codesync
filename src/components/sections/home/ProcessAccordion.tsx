@@ -100,6 +100,7 @@ export function ProcessAccordion() {
                       ? "bg-surface-dark-2 border-white/20 shadow-lg"
                       : "bg-white/5 border-white/10 hover:bg-white/10"
                   )}
+                  onMouseEnter={() => setActiveStep(step.num)}
                 >
                   <button
                     type="button"

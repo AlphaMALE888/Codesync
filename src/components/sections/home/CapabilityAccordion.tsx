@@ -108,6 +108,7 @@ export function CapabilityAccordion() {
                   <motion.div
                     key={item.num}
                     onClick={() => setActiveTab(idx)}
+                    onMouseEnter={() => setActiveTab(idx)}
                     layout
                     transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
                     className={cn(

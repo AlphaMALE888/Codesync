@@ -86,7 +86,7 @@ export function Hero() {
       )}
     >
       {/* Outer Rounded Hero Frame */}
-      <div className="relative w-full min-h-full rounded-lg overflow-hidden flex flex-col justify-between p-5 sm:p-10 md:p-14 border border-white/10 shadow-2xl">
+      <div className="relative w-full min-h-full rounded-lg flex flex-col justify-between p-5 sm:p-10 md:p-14 border border-white/10 shadow-2xl overflow-clip">
         {/* Layered Architectural Backdrop & Film-Grain */}
         <HeroBackdrop
           ref={backdropRef}
@@ -96,12 +96,12 @@ export function Hero() {
         />
 
         {/* Top Region: Floating Teaser Preview Card (Upper Right) */}
-        <div className="w-full flex justify-end pt-12 sm:pt-8 pointer-events-auto">
+        <div className="relative z-10 w-full flex justify-end pt-12 sm:pt-8 pointer-events-auto">
           <HeroPreviewCard />
         </div>
 
         {/* Bottom Region: Copy Block & Trust Rail */}
-        <div className="w-full space-y-8 sm:space-y-10">
+        <div className="relative z-10 w-full space-y-8 sm:space-y-10">
           {/* Main Copy Block */}
           <div ref={copyBlockRef} className="max-w-4xl space-y-6">
             {/* Eyebrow Label */}
