@@ -91,7 +91,7 @@ export function ServicesMenu({ isOpen, onClose, triggerRef }: ServicesMenuProps)
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.98 }}
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[740px] max-w-[calc(100vw-32px)] bg-white/95 backdrop-blur-md rounded-md border border-hairline shadow-xl p-6 z-50 overflow-hidden"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[740px] max-w-[calc(100vw-32px)] bg-[#1B1B1B]/95 backdrop-blur-md rounded-md border border-white/12 shadow-xl shadow-black/30 p-6 z-50 overflow-hidden"
           role="region"
           aria-label="Services Submenu"
         >
@@ -102,7 +102,7 @@ export function ServicesMenu({ isOpen, onClose, triggerRef }: ServicesMenuProps)
                   <Eyebrow withRule={false} className="text-accent font-bold text-[10px] tracking-wider mb-1">
                     {col.pillar}
                   </Eyebrow>
-                  <div className="font-display font-semibold text-xs text-ink/70 mb-2">
+                  <div className="font-display font-semibold text-xs text-white/70 mb-2">
                     {col.title}
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export function ServicesMenu({ isOpen, onClose, triggerRef }: ServicesMenuProps)
                       <Link
                         href={item.href}
                         onClick={onClose}
-                        className="block py-1.5 px-2 -mx-2 rounded-sm text-xs font-medium text-text-secondary hover:text-ink hover:bg-surface-muted transition-colors duration-fast"
+                        className="block py-1.5 px-2 -mx-2 rounded-sm text-xs font-medium text-text-secondary hover:text-white hover:bg-white/5 transition-colors duration-fast"
                       >
                         {item.label}
                       </Link>
@@ -135,7 +135,7 @@ export function ServicesMenu({ isOpen, onClose, triggerRef }: ServicesMenuProps)
             <Link
               href="/services"
               onClick={onClose}
-              className="font-medium text-ink hover:text-accent inline-flex items-center gap-1 transition-colors duration-fast"
+              className="font-medium text-white hover:text-accent inline-flex items-center gap-1 transition-colors duration-fast"
             >
               All services overview <ArrowRight className="w-3.5 h-3.5" />
             </Link>

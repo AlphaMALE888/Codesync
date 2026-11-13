@@ -31,7 +31,7 @@ export function SplitArrowButton({
     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2",
     "active:scale-[0.98] active:duration-[120ms] motion-reduce:active:scale-100",
     size === "md" ? "min-h-[44px] pl-5 pr-2 py-1.5 text-sm gap-3" : "min-h-[52px] pl-6 pr-2.5 py-2 text-base gap-4",
-    variant === "solid-light" && "bg-white text-ink border border-hairline hover:bg-surface-muted shadow-sm",
+    variant === "solid-light" && "bg-white text-[#121212] border border-white/20 hover:bg-white/90 shadow-sm",
     variant === "solid-dark" && "bg-surface-dark text-on-dark border border-white/10 hover:bg-surface-dark-2 shadow-sm",
     variant === "outline" && "bg-transparent text-current border border-current hover:bg-current/5",
     disabled && "opacity-50 pointer-events-none cursor-not-allowed",

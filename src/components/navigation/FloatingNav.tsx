@@ -49,10 +49,10 @@ export function FloatingNav() {
   };
 
   const capsuleClass = cn(
-    "pointer-events-auto bg-white/92 backdrop-blur-md rounded-pill transition-all duration-200",
+    "pointer-events-auto bg-[#1B1B1B]/90 backdrop-blur-md rounded-pill transition-all duration-200",
     scrolled
-      ? "border border-ink/20 shadow-md"
-      : "border border-hairline shadow-sm"
+      ? "border border-white/12 shadow-lg shadow-black/20"
+      : "border border-white/8 shadow-sm"
   );
 
   return (
@@ -92,7 +92,7 @@ export function FloatingNav() {
                         type="button"
                         onClick={() => setServicesOpen(!servicesOpen)}
                         aria-expanded={servicesOpen}
-                        className="px-4 py-2 text-sm font-medium text-text-secondary hover:text-ink transition-colors duration-fast select-none rounded-pill flex items-center gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                        className="px-4 py-2 text-sm font-medium text-white/60 hover:text-white transition-colors duration-fast select-none rounded-pill flex items-center gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
                       >
                         <span>{item.label}</span>
                         <span
@@ -145,7 +145,7 @@ export function FloatingNav() {
               onClick={() => setMobileMenuOpen(true)}
               className={cn(
                 capsuleClass,
-                "lg:hidden w-11 h-11 text-ink flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                "lg:hidden w-11 h-11 text-white flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
               )}
               aria-label="Open mobile navigation menu"
             >

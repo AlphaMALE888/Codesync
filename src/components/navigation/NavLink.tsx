@@ -33,7 +33,7 @@ export function NavLink({
       className={cn(
         "relative px-4 py-2 text-sm font-medium transition-colors duration-fast select-none rounded-pill",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2",
-        isActive || isOpen ? "text-ink" : "text-text-secondary hover:text-ink",
+        isActive || isOpen ? "text-white" : "text-white/60 hover:text-white",
         className
       )}
       aria-current={isActive ? "page" : undefined}
@@ -44,7 +44,7 @@ export function NavLink({
       {isActive && (
         <motion.span
           layoutId="activeNavPill"
-          className="absolute inset-0 bg-surface-muted rounded-pill -z-10"
+          className="absolute inset-0 bg-white/10 rounded-pill -z-10"
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
       )}

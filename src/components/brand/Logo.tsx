@@ -29,7 +29,7 @@ export function Logo({ tone = "auto", className, showWordmark = true }: LogoProp
             ? "bg-surface-dark-2 border-white/20 text-white"
             : isLight
             ? "bg-white border-hairline text-ink"
-            : "bg-surface-muted border-hairline text-ink group-hover:bg-accent group-hover:text-white"
+            : "bg-white/10 border-white/12 text-white group-hover:bg-accent group-hover:text-white"
         )}
         aria-hidden="true"
       >
@@ -69,7 +69,7 @@ export function Logo({ tone = "auto", className, showWordmark = true }: LogoProp
         <span
           className={cn(
             "font-display font-bold text-sm tracking-tight uppercase transition-colors duration-fast",
-            isDark ? "text-white" : "text-ink"
+            isDark ? "text-white" : isLight ? "text-ink" : "text-white"
           )}
         >
           CODESYNC
