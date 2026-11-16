@@ -49,10 +49,10 @@ export function FloatingNav() {
   };
 
   const capsuleClass = cn(
-    "pointer-events-auto bg-[#1B1B1B]/90 backdrop-blur-md rounded-pill transition-all duration-200",
+    "pointer-events-auto bg-[#121214]/95 rounded-pill transition-all duration-200",
     scrolled
-      ? "border border-white/12 shadow-lg shadow-black/20"
-      : "border border-white/8 shadow-sm"
+      ? "border border-white/15 shadow-lg shadow-black/40"
+      : "border border-white/10 shadow-sm"
   );
 
   return (

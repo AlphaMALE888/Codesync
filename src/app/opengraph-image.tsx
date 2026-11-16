@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 export const alt = "CODESYNC Digi Marketing | Lucknow Digital Marketing & Software Company";
 export const size = {
   width: 1200,
@@ -19,8 +18,8 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          backgroundColor: "#111213",
-          color: "#FFFFFF",
+          backgroundColor: "#09090B",
+          color: "#F5F5F5",
           fontFamily: "sans-serif",
           position: "relative",
         }}
@@ -34,7 +33,7 @@ export default function Image() {
             width: "600px",
             height: "600px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(47, 90, 68, 0.45) 0%, rgba(17, 18, 19, 0) 70%)",
+            background: "radial-gradient(circle, rgba(165, 31, 61, 0.42) 0%, rgba(100, 27, 48, 0.16) 45%, rgba(9, 9, 11, 0) 72%)",
           }}
         />
 
@@ -58,7 +57,7 @@ export default function Image() {
                 fontSize: "32px",
                 fontWeight: 900,
                 letterSpacing: "-0.04em",
-                color: "#FFFFFF",
+                color: "#F5F5F5",
               }}
             >
               CODESYNC
@@ -69,7 +68,7 @@ export default function Image() {
               fontSize: "14px",
               fontFamily: "monospace",
               letterSpacing: "0.15em",
-              color: "#49735A",
+              color: "#E02E4F",
               textTransform: "uppercase",
             }}
           >
@@ -91,7 +90,7 @@ export default function Image() {
               fontSize: "16px",
               fontFamily: "monospace",
               letterSpacing: "0.15em",
-              color: "#49735A",
+              color: "#E02E4F",
               textTransform: "uppercase",
             }}
           >
@@ -103,7 +102,7 @@ export default function Image() {
               fontWeight: 700,
               lineHeight: 1.08,
               letterSpacing: "-0.035em",
-              color: "#FFFFFF",
+              color: "#F5F5F5",
               margin: 0,
             }}
           >
@@ -113,7 +112,7 @@ export default function Image() {
             style={{
               fontSize: "22px",
               lineHeight: 1.5,
-              color: "#A3A3A0",
+              color: "#C4C4C9",
               margin: 0,
             }}
           >
@@ -127,14 +126,14 @@ export default function Image() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderTop: "1px solid rgba(255, 255, 255, 0.15)",
+            borderTop: "1px solid rgba(245, 245, 245, 0.14)",
             paddingTop: "24px",
           }}
         >
           <span
             style={{
               fontSize: "16px",
-              color: "#A3A3A0",
+              color: "#C4C4C9",
             }}
           >
             cdmlko.com · Codesync Digi Marketing (OPC) Pvt Ltd
@@ -142,7 +141,7 @@ export default function Image() {
           <span
             style={{
               fontSize: "16px",
-              color: "#49735A",
+              color: "#E02E4F",
               fontWeight: 600,
             }}
           >

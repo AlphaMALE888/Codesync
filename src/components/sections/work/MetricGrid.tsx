@@ -56,10 +56,10 @@ export function MetricGrid({ metrics, deliverables = [], theme = "light" }: Metr
               className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-sm text-xs ${
                 isDark
                   ? "bg-white/5 text-white/80 border border-white/10"
-                  : "bg-surface-muted text-ink/80 border border-hairline/80"
+                  : "bg-surface-dark-2 text-ink/85 border border-hairline"
               }`}
             >
-              <Check className="w-3 h-3 text-accent" />
+              <Check className="w-3 h-3 text-accent-soft" />
               <span className="truncate max-w-[140px]">{item}</span>
             </span>
           ))}

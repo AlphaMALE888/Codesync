@@ -10,8 +10,8 @@ export function FooterScene({ className }: { className?: string }) {
       )}
       aria-hidden="true"
     >
-      {/* Background Soft Arch Glow */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+      {/* Subtle Crimson Bottom Horizon Vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#09090B]/75 via-[#641B30]/10 to-transparent pointer-events-none" />
 
       {/* Oversized Full-Width Wordmark — contained within parent overflow-hidden */}
       <div className="w-full flex justify-center leading-none pb-0">

@@ -19,7 +19,7 @@ export function TrustStrip() {
   }
 
   return (
-    <section className="py-12 bg-white border-b border-hairline">
+    <section className="py-12 bg-surface-dark/55 border-b border-white/10">
       <Container>
         <div className="flex flex-col items-center text-center">
           <span className="font-mono text-xs uppercase tracking-widest text-text-secondary block mb-6">

@@ -7,18 +7,20 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function FinalCta() {
   return (
-    <section className="w-full py-20 sm:py-28 px-[clamp(8px,1.2vw,16px)] bg-canvas">
-      <div className="w-full rounded-lg bg-gradient-to-br from-[#1C3829] via-[#14261C] to-surface-dark text-on-dark p-8 sm:p-14 lg:p-20 border border-white/10 shadow-2xl relative overflow-hidden">
-        {/* Subtle Arch Geometry Background */}
-        <div className="absolute right-0 bottom-0 w-80 h-80 opacity-15 pointer-events-none">
-          <svg viewBox="0 0 200 200" fill="none" className="w-full h-full text-white">
-            <path
-              d="M20 200 V120 C20 70 60 20 100 5 C140 20 180 70 180 120 V200"
-              stroke="currentColor"
-              strokeWidth="2"
-            />
-          </svg>
-        </div>
+    <section
+      id="final-cta-section"
+      className="w-full py-20 sm:py-28 px-[clamp(8px,1.2vw,16px)] bg-transparent"
+    >
+      <div className="w-full rounded-lg bg-gradient-to-br from-[#1B1B1F]/80 via-[#121214]/75 to-[#641B30]/30 text-on-dark p-8 sm:p-14 lg:p-20 border border-white/12 shadow-2xl relative overflow-hidden">
+        {/* Subtle Atmospheric Crimson Radial Vignette (lets converging WebGL particles shine) */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle at 75% 50%, rgba(224, 46, 79, 0.14) 0%, rgba(18, 18, 20, 0.05) 55%, transparent 100%)",
+          }}
+          aria-hidden="true"
+        />
 
         <Container className="relative z-10 !px-0">
           <Reveal>
@@ -32,7 +34,7 @@ export function FinalCta() {
               </h2>
 
               <p className="type-body text-text-secondary-on-dark text-base sm:text-lg max-w-xl leading-relaxed">
-                Whether you need qualified leads for your local business or custom software to streamline your operations, 
+                Whether you need qualified leads for your local business or custom software to streamline your operations,
                 our Lucknow team is ready to plan your roadmap.
               </p>
 
@@ -46,7 +48,7 @@ export function FinalCta() {
                   href={siteConfig.contact.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-pill bg-white/10 hover:bg-white/20 text-white text-sm font-medium border border-white/10 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-pill bg-white/10 hover:bg-accent/25 text-white text-sm font-medium border border-white/15 hover:border-accent-soft/50 transition-colors"
                 >
                   <MessageSquare className="w-4 h-4 text-accent-soft" />
                   <span>WhatsApp us</span>

@@ -13,7 +13,7 @@ export function VisionSplit() {
   }
 
   return (
-    <section className="w-full py-20 sm:py-28 bg-surface-dark text-on-dark border-t border-white/10">
+    <section className="w-full py-20 sm:py-28 bg-surface-dark/55 text-on-dark border-t border-white/10">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left: Founder Portrait Card (Span 4) */}

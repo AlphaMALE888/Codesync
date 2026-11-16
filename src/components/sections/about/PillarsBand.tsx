@@ -29,26 +29,26 @@ const PILLARS = [
 
 export function PillarsBand() {
   return (
-    <section className="py-16 sm:py-20 bg-surface-muted border-b border-hairline">
+    <section className="py-16 sm:py-20 bg-surface-dark/55 border-b border-white/10">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {PILLARS.map((p) => (
             <Link
               key={p.num}
               href={p.href}
-              className="group p-6 sm:p-8 rounded-md bg-white border border-hairline/80 hover:border-accent/40 hover:shadow-sm transition-all duration-200 flex flex-col justify-between"
+              className="group p-6 sm:p-8 rounded-md bg-surface-dark-2/85 border border-white/12 hover:border-accent-soft/50 hover:shadow-lg transition-all duration-200 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-xs font-semibold text-accent tracking-widest">
+                  <span className="font-mono text-xs font-semibold text-accent-soft tracking-widest">
                     {p.num} {"//"} {p.name.toUpperCase()}
                   </span>
-                  <div className="w-7 h-7 rounded-full bg-surface-muted flex items-center justify-center text-ink group-hover:bg-accent group-hover:text-white transition-colors">
+                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-ink group-hover:bg-accent group-hover:text-white transition-colors">
                     <ArrowUpRight className="w-3.5 h-3.5 group-hover:rotate-45 transition-transform" />
                   </div>
                 </div>
 
-                <h3 className="font-display font-medium text-xl sm:text-2xl text-ink tracking-tight group-hover:text-accent transition-colors">
+                <h3 className="font-display font-medium text-xl sm:text-2xl text-ink tracking-tight group-hover:text-accent-soft transition-colors">
                   {p.label}
                 </h3>
 
@@ -57,7 +57,7 @@ export function PillarsBand() {
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-hairline/60 flex items-center gap-1 text-xs font-mono text-accent font-semibold tracking-wider uppercase">
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center gap-1 text-xs font-mono text-accent-soft font-semibold tracking-wider uppercase">
                 <span>Explore Capabilities</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </div>

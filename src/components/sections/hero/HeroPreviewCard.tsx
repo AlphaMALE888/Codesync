@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { ArchMotif } from "@/components/ui/ArchMotif";
 import { motion } from "@/lib/motion";
+import { setParticleFocusFromElement, clearParticleFocus } from "@/components/particles/particleState";
 import { cn } from "@/lib/cn";
 
 export interface HeroPreviewCardProps {
@@ -21,11 +22,13 @@ export function HeroPreviewCard({ className }: HeroPreviewCardProps) {
     >
       <Link
         href="/services"
+        onMouseEnter={(e) => setParticleFocusFromElement(e.currentTarget, "attract", 0.85)}
+        onMouseLeave={() => clearParticleFocus()}
         className={cn(
           "group block w-[240px] sm:w-[260px] p-5 rounded-md",
-          "bg-surface-dark-2/80 backdrop-blur-md border border-white/15",
+          "bg-surface-dark-2/92 border border-white/15",
           "text-on-dark shadow-xl transition-all duration-base ease-out-custom",
-          "hover:-translate-y-1 hover:border-accent-soft hover:bg-surface-dark-2/95",
+          "hover:-translate-y-1 hover:border-accent-soft/70 hover:bg-surface-dark-2",
           "focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
         )}
       >

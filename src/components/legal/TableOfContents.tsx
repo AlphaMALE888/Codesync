@@ -61,15 +61,15 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
   return (
     <nav aria-label="Legal document table of contents">
       {/* Mobile Collapsible Disclosure */}
-      <div className="lg:hidden mb-8 border border-border-light bg-surface-subtle rounded-card overflow-hidden">
+      <div className="lg:hidden mb-8 border border-hairline bg-surface-dark-2/85 rounded-md overflow-hidden">
         <button
           type="button"
           onClick={() => setIsOpenMobile(!isOpenMobile)}
-          className="w-full min-h-[48px] flex items-center justify-between p-4 text-left font-display font-medium text-text-primary hover:text-accent-default transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+          className="w-full min-h-[48px] flex items-center justify-between p-4 text-left font-display font-medium text-ink hover:text-accent-soft transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-soft"
           aria-expanded={isOpenMobile}
         >
           <span className="flex items-center gap-2 text-sm">
-            <AlignLeft className="w-4 h-4 text-accent-default" />
+            <AlignLeft className="w-4 h-4 text-accent-soft" />
             Table of Contents
           </span>
           <ChevronDown
@@ -78,7 +78,7 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
         </button>
 
         {isOpenMobile && (
-          <ul className="px-4 pb-4 pt-1 space-y-1.5 border-t border-border-light text-sm">
+          <ul className="px-4 pb-4 pt-1 space-y-1.5 border-t border-hairline text-sm">
             {sections.map((sec) => {
               const isActive = activeId === sec.id;
               return (
@@ -88,8 +88,8 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
                     onClick={(e) => handleScrollTo(e, sec.id)}
                     className={`flex items-center min-h-[44px] py-2 px-2.5 rounded transition-colors duration-200 ${
                       isActive
-                        ? "text-accent-default font-medium bg-accent-soft/20"
-                        : "text-text-secondary hover:text-text-primary hover:bg-surface-muted"
+                        ? "text-accent-soft font-medium bg-accent-deep/30"
+                        : "text-text-secondary hover:text-ink hover:bg-white/5"
                     }`}
                   >
                     {sec.title}
@@ -103,11 +103,11 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
 
       {/* Desktop Sticky Sidebar */}
       <div className="hidden lg:block sticky top-28 max-h-[calc(100vh-140px)] overflow-y-auto pr-4 scrollbar-thin">
-        <div className="text-[11px] font-mono tracking-wider uppercase text-text-muted mb-4 font-semibold flex items-center gap-2">
-          <AlignLeft className="w-3.5 h-3.5 text-accent-default" />
+        <div className="text-[11px] font-mono tracking-wider uppercase text-text-secondary mb-4 font-semibold flex items-center gap-2">
+          <AlignLeft className="w-3.5 h-3.5 text-accent-soft" />
           Contents & Sections
         </div>
-        <ul className="space-y-1 text-xs border-l border-border-light pl-3">
+        <ul className="space-y-1 text-xs border-l border-hairline pl-3">
           {sections.map((sec) => {
             const isActive = activeId === sec.id;
             return (
@@ -117,8 +117,8 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
                   onClick={(e) => handleScrollTo(e, sec.id)}
                   className={`block py-1.5 transition-all duration-200 -ml-[13px] pl-3 border-l-2 ${
                     isActive
-                      ? "border-accent-default text-accent-default font-semibold"
-                      : "border-transparent text-text-secondary hover:text-text-primary hover:border-border-medium"
+                      ? "border-accent-soft text-accent-soft font-semibold"
+                      : "border-transparent text-text-secondary hover:text-ink hover:border-white/25"
                   }`}
                 >
                   {sec.title}

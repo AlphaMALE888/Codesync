@@ -30,7 +30,7 @@ export function TrustRail({ className }: TrustRailProps) {
       {permittedClients.length === 0 && verifiedProof.length === 0 ? (
         <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-4 text-[10px] sm:text-xs tracking-wider uppercase font-medium">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-pill bg-accent-soft inline-block shrink-0 animate-pulse" />
+            <span className="w-2 h-2 rounded-pill bg-accent-soft inline-block shrink-0" />
             <span className="truncate">Lucknow Digital Marketing & Software</span>
           </div>
           <span className="text-white/60 text-[10px] sm:text-xs shrink-0">Based in Lucknow, UP</span>

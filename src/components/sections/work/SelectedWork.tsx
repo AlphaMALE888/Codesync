@@ -18,7 +18,10 @@ export function SelectedWork() {
   }
 
   return (
-    <section className="py-20 sm:py-28 bg-canvas border-b border-hairline overflow-hidden">
+    <section
+      id="work-section"
+      className="py-20 sm:py-28 bg-transparent border-b border-white/10 overflow-hidden"
+    >
       {/* Marquee Heading */}
       <div className="mb-12">
         <DisplayMarquee text="Selected Work · Client Outcomes · Verified Systems" />
@@ -34,7 +37,7 @@ export function SelectedWork() {
 
         {/* View All Work Button */}
         <div className="mt-12 text-center">
-          <SplitArrowButton href="/work">View all work</SplitArrowButton>
+          <SplitArrowButton href="/work" variant="solid-light">View all work</SplitArrowButton>
         </div>
       </Container>
     </section>

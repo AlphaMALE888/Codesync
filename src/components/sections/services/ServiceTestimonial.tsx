@@ -16,7 +16,7 @@ export function ServiceTestimonial({ testimonialIds }: ServiceTestimonialProps) 
   if (!testimonial || !testimonial.quote) return null;
 
   return (
-    <section className="py-16 sm:py-20 bg-white border-b border-hairline">
+    <section className="py-16 sm:py-20 bg-surface-dark/55 border-b border-white/10">
       <Container>
         <div className="max-w-3xl mx-auto text-center">
           <span className="font-mono text-xs uppercase tracking-widest text-text-secondary block mb-4">

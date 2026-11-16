@@ -16,17 +16,15 @@ interface PricingBlockProps {
 }
 
 export function PricingBlock({ pricing, serviceName }: PricingBlockProps) {
-  // If verified numbers are approved and feature flag enabled (Phase 8), render numbers.
-  // Otherwise, strictly render the quote-first card per Phase 5 prompt instructions.
   const showNumbers = features.pricingNumbers && pricing.priceStatus === "verified" && pricing.fromPrice !== null;
 
   return (
-    <section className="py-16 sm:py-24 bg-canvas border-b border-hairline">
+    <section className="py-16 sm:py-24 bg-transparent border-b border-white/10">
       <Container>
-        <div className="max-w-4xl mx-auto rounded-lg bg-white border border-hairline p-8 sm:p-12 shadow-sm">
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-hairline">
+        <div className="max-w-4xl mx-auto rounded-lg bg-surface-dark-2/85 border border-white/12 p-8 sm:p-12 shadow-xl">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-white/10">
             <div>
-              <Eyebrow className="text-accent text-xs">TRANSPARENT PRICING</Eyebrow>
+              <Eyebrow className="text-accent-soft text-xs">TRANSPARENT PRICING</Eyebrow>
               <Heading level={3} className="mt-3 text-2xl sm:text-3xl text-ink font-medium tracking-tight">
                 {showNumbers
                   ? `From ₹${pricing.fromPrice?.toLocaleString("en-IN")} / ${pricing.model}`
@@ -34,7 +32,7 @@ export function PricingBlock({ pricing, serviceName }: PricingBlockProps) {
               </Heading>
             </div>
 
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent text-xs font-mono shrink-0 self-start">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/15 border border-accent/30 text-accent-soft text-xs font-mono shrink-0 self-start">
               <ShieldCheck className="w-4 h-4" />
               <span>Zero Hidden Fees</span>
             </div>
@@ -51,17 +49,20 @@ export function PricingBlock({ pricing, serviceName }: PricingBlockProps) {
             )}
           </div>
 
-          <div className="pt-6 border-t border-hairline flex flex-wrap items-center gap-4 sm:gap-6">
-            <SplitArrowButton href={`/contact?service=${encodeURIComponent(serviceName)}`}>
+          <div className="pt-6 border-t border-white/10 flex flex-wrap items-center gap-4 sm:gap-6">
+            <SplitArrowButton
+              href={`/contact?service=${encodeURIComponent(serviceName)}`}
+              variant="solid-light"
+            >
               Request a clear quote
             </SplitArrowButton>
             <Link
               href={siteConfig.contact.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-ink underline underline-offset-4 hover:text-accent transition-colors min-h-[44px]"
+              className="inline-flex items-center gap-2 text-sm font-medium text-ink underline underline-offset-4 hover:text-accent-soft transition-colors min-h-[44px]"
             >
-              <MessageSquare className="w-4 h-4 text-emerald-600" />
+              <MessageSquare className="w-4 h-4 text-accent-soft" />
               Discuss on WhatsApp
             </Link>
           </div>

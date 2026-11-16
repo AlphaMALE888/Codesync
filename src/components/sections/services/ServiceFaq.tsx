@@ -14,7 +14,7 @@ export function ServiceFaq({ faqIds }: ServiceFaqProps) {
   if (faqs.length === 0) return null;
 
   return (
-    <section className="py-20 sm:py-28 bg-surface-dark text-on-dark border-b border-white/10">
+    <section className="py-20 sm:py-28 bg-surface-dark/55 text-on-dark border-b border-white/10">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-4">

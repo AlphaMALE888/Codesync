@@ -5,11 +5,10 @@ import { Container } from "@/components/layout/Container";
 import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { SplitArrowButton } from "@/components/ui/SplitArrowButton";
 import { motion } from "@/lib/motion";
-import { ArchMotif } from "@/components/ui/ArchMotif";
 
 export function AboutHero() {
   return (
-    <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 bg-canvas border-b border-hairline relative overflow-hidden">
+    <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 bg-transparent border-b border-white/10 relative overflow-hidden">
       <Container>
         <div className="max-w-4xl">
           <motion.div
@@ -17,7 +16,7 @@ export function AboutHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Eyebrow withRule>COMPANY</Eyebrow>
+            <Eyebrow className="text-accent-soft" withRule>COMPANY</Eyebrow>
           </motion.div>
 
           <motion.div
@@ -45,21 +44,16 @@ export function AboutHero() {
             transition={{ duration: 0.5, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
             className="mt-10 flex flex-wrap items-center gap-4 sm:gap-6"
           >
-            <SplitArrowButton href="/contact">Book a free call</SplitArrowButton>
+            <SplitArrowButton href="/contact" variant="solid-light">Book a free call</SplitArrowButton>
             <a
               href="#careers"
-              className="text-sm font-medium text-text-secondary hover:text-ink underline underline-offset-4 transition-colors min-h-[44px] inline-flex items-center"
+              className="text-sm font-medium text-text-secondary hover:text-accent-soft underline underline-offset-4 transition-colors min-h-[44px] inline-flex items-center"
             >
               Explore careers & culture
             </a>
           </motion.div>
         </div>
       </Container>
-
-      {/* Subtle Awadhi arch decorative watermark */}
-      <div className="absolute right-0 bottom-0 translate-x-1/4 translate-y-1/4 opacity-10 pointer-events-none" aria-hidden="true">
-        <ArchMotif size="lg" className="w-96 h-96 text-accent" />
-      </div>
     </section>
   );
 }

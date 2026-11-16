@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { features } from "@/data/features";
 import { getArticleBySlug, getRenderableArticles } from "@/lib/content";
+import { Container } from "@/components/layout/Container";
 import { ReadingProgress } from "@/components/sections/insights/ReadingProgress";
 import { ArticleHeader } from "@/components/sections/insights/ArticleHeader";
 import { ArticleBody } from "@/components/sections/insights/ArticleBody";
@@ -85,7 +86,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     currentIndex < allArticles.length - 1 ? allArticles[currentIndex + 1] : null;
 
   return (
-    <div className="min-h-screen bg-bg-light text-text-primary pt-32">
+    <div className="min-h-screen bg-transparent text-ink pt-32">
       <JsonLd
         schema={getBreadcrumbSchema([
           { name: "Home", url: "/" },
@@ -96,7 +97,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       {/* Scroll Reading Progress Bar */}
       <ReadingProgress />
 
-      <main className="container-spartan pb-20">
+      <Container className="pb-20">
         {/* Article Header */}
         <ArticleHeader article={article} />
 
@@ -107,15 +108,15 @@ export default function ArticlePage({ params }: ArticlePageProps) {
         <RelatedServiceCta serviceSlug={article.relatedServiceSlug} />
 
         {/* Previous / Next Article Navigation */}
-        <div className="max-w-[680px] mx-auto mt-16 pt-8 border-t border-border-light flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-[680px] mx-auto mt-16 pt-8 border-t border-hairline flex flex-col sm:flex-row items-center justify-between gap-4">
           {prevArticle ? (
             <Link
               href={`/insights/${prevArticle.slug}`}
-              className="group flex items-center gap-2 text-xs font-mono text-text-secondary hover:text-text-primary transition-colors text-left"
+              className="group flex items-center gap-2 text-xs font-mono text-text-secondary hover:text-ink transition-colors text-left"
             >
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
               <div>
-                <span className="block text-[10px] text-text-muted uppercase">Previous Article</span>
+                <span className="block text-[10px] text-text-secondary/70 uppercase">Previous Article</span>
                 <span className="font-sans font-medium line-clamp-1">{prevArticle.title}</span>
               </div>
             </Link>
@@ -126,10 +127,10 @@ export default function ArticlePage({ params }: ArticlePageProps) {
           {nextArticle ? (
             <Link
               href={`/insights/${nextArticle.slug}`}
-              className="group flex items-center gap-2 text-xs font-mono text-text-secondary hover:text-text-primary transition-colors text-right"
+              className="group flex items-center gap-2 text-xs font-mono text-text-secondary hover:text-ink transition-colors text-right"
             >
               <div>
-                <span className="block text-[10px] text-text-muted uppercase">Next Article</span>
+                <span className="block text-[10px] text-text-secondary/70 uppercase">Next Article</span>
                 <span className="font-sans font-medium line-clamp-1">{nextArticle.title}</span>
               </div>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -138,7 +139,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
             <div />
           )}
         </div>
-      </main>
+      </Container>
 
       {/* Final Call to Action */}
       <FinalCta />

@@ -12,7 +12,7 @@ interface WorkGridProps {
 export function WorkGrid({ projects }: WorkGridProps) {
   if (projects.length === 0) {
     return (
-      <div className="py-24 text-center border border-dashed border-hairline rounded-md bg-canvas">
+      <div className="py-24 text-center border border-dashed border-hairline rounded-md bg-surface-dark-2/75">
         <span className="font-mono text-xs uppercase tracking-widest text-text-secondary block mb-2">
           PORTFOLIO ARCHIVE
         </span>

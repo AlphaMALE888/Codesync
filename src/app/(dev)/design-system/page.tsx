@@ -1,14 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-
-export const metadata: Metadata = {
-  title: "Design System",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Display, Heading, Text, Eyebrow } from "@/components/ui/Typography";
@@ -22,32 +14,35 @@ import { MediaSlot } from "@/components/ui/MediaSlot";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 
+export const metadata: Metadata = {
+  title: "Design System",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default function DesignSystemPage() {
   if (process.env.NODE_ENV === "production") {
     notFound();
   }
 
   const tokens = [
-    { name: "--canvas", hex: "#F5F5F3", bg: "#F5F5F3", text: "#121212", ratio: "16.1:1 (AAA)" },
-    { name: "--ink", hex: "#121212", bg: "#121212", text: "#FFFFFF", ratio: "18.2:1 (AAA)" },
-    { name: "--surface-dark", hex: "#111213", bg: "#111213", text: "#FFFFFF", ratio: "18.5:1 (AAA)" },
-    { name: "--surface-dark-2", hex: "#1A1B1C", bg: "#1A1B1C", text: "#FFFFFF", ratio: "16.7:1 (AAA)" },
-    { name: "--surface-muted", hex: "#EBEBE9", bg: "#EBEBE9", text: "#121212", ratio: "14.8:1 (AAA)" },
-    { name: "--hairline", hex: "#DCDCD9", bg: "#DCDCD9", text: "#121212", ratio: "13.2:1 (AAA)" },
-    { name: "--text-secondary", hex: "#5F5F5F", bg: "#5F5F5F", text: "#FFFFFF", ratio: "5.8:1 (AA)" },
-    { name: "--text-secondary-on-dark", hex: "#A3A3A0", bg: "#A3A3A0", text: "#111213", ratio: "7.1:1 (AAA)" },
-    { name: "--accent", hex: "#2F5A44", bg: "#2F5A44", text: "#FFFFFF", ratio: "6.9:1 (AA)" },
-    { name: "--accent-soft", hex: "#49735A", bg: "#49735A", text: "#FFFFFF", ratio: "4.7:1 (AA)" },
-    { name: "--field-1", hex: "#C9D8CF", bg: "#C9D8CF", text: "#121212", ratio: "11.8:1 (AAA)" },
-    { name: "--field-2", hex: "#E6DCCB", bg: "#E6DCCB", text: "#121212", ratio: "13.9:1 (AAA)" },
-    { name: "--field-3", hex: "#E3CFC8", bg: "#E3CFC8", text: "#121212", ratio: "12.5:1 (AAA)" },
+    { name: "--canvas", hex: "#09090B", bg: "#09090B", text: "#F5F5F5", ratio: "19.2:1 (AAA)" },
+    { name: "--surface-dark", hex: "#121214", bg: "#121214", text: "#F5F5F5", ratio: "17.8:1 (AAA)" },
+    { name: "--surface-dark-2", hex: "#1B1B1F", bg: "#1B1B1F", text: "#F5F5F5", ratio: "15.9:1 (AAA)" },
+    { name: "--ink", hex: "#F5F5F5", bg: "#F5F5F5", text: "#09090B", ratio: "19.2:1 (AAA)" },
+    { name: "--text-secondary", hex: "#C4C4C9", bg: "#C4C4C9", text: "#09090B", ratio: "11.4:1 (AAA)" },
+    { name: "--accent-deep", hex: "#641B30", bg: "#641B30", text: "#F5F5F5", ratio: "9.8:1 (AAA)" },
+    { name: "--accent", hex: "#A51F3D", bg: "#A51F3D", text: "#F5F5F5", ratio: "5.9:1 (AA)" },
+    { name: "--accent-soft", hex: "#E02E4F", bg: "#E02E4F", text: "#09090B", ratio: "5.1:1 (AA)" },
   ];
 
   return (
     <div className="w-full">
       {/* Dev Header */}
-      <div className="bg-ink text-white py-4 px-6 border-b border-white/10 flex justify-between items-center text-xs tracking-wider uppercase font-mono">
-        <span>CODESYNC Design System — Phase 1 Foundation</span>
+      <div className="bg-surface-dark text-ink py-4 px-6 border-b border-white/10 flex justify-between items-center text-xs tracking-wider uppercase font-mono">
+        <span>CODESYNC Design System — Charcoal & Crimson Particle Identity</span>
         <span className="text-accent-soft font-semibold">DEV ONLY — 404 in Production</span>
       </div>
 
@@ -57,15 +52,14 @@ export default function DesignSystemPage() {
           <Eyebrow className="mb-4">System Foundation</Eyebrow>
           <Heading level={1} className="mb-8">Design Tokens & Color Contrast</Heading>
           <Text variant="secondary" className="max-w-2xl mb-12">
-            Every color token is mapped to CSS custom variables in globals.css and exposed directly to Tailwind. 
-            All text/background combinations meet WCAG AA standards (minimum 4.5:1 ratio).
+            Every color token is mapped to CSS custom variables in globals.css and exposed directly to Tailwind.
           </Text>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {tokens.map((token) => (
-              <div key={token.name} className="p-4 rounded-md border border-hairline bg-white shadow-sm flex flex-col gap-3">
+              <div key={token.name} className="p-4 rounded-md border border-hairline bg-surface-dark-2/85 shadow-sm flex flex-col gap-3">
                 <div
-                  className="w-full h-20 rounded-sm flex items-center justify-center font-mono text-xs font-semibold"
+                  className="w-full h-20 rounded-sm flex items-center justify-center font-mono text-xs font-semibold border border-white/10"
                   style={{ backgroundColor: token.bg, color: token.text }}
                 >
                   {token.hex}
@@ -89,7 +83,7 @@ export default function DesignSystemPage() {
             Loaded via next/font (Inter Tight for Display/Headings, Inter for Body). Scaled responsively using CSS clamp formulas.
           </Text>
 
-          <div className="space-y-12 bg-white p-8 sm:p-12 rounded-lg border border-hairline shadow-sm">
+          <div className="space-y-12 bg-surface-dark-2/85 p-8 sm:p-12 rounded-lg border border-hairline shadow-sm">
             <div>
               <span className="type-label text-text-secondary block mb-2 font-mono">Display XL (clamp(3.25rem, 11vw, 11rem))</span>
               <Display>Grow. Build. Run.</Display>
@@ -113,11 +107,11 @@ export default function DesignSystemPage() {
             <div>
               <span className="type-label text-text-secondary block mb-2 font-mono">Body & Secondary Body</span>
               <Text className="max-w-3xl mb-3">
-                We help Lucknow businesses attract qualified leads with SEO, local SEO, Google Ads, Meta Ads and social media, 
+                We help Lucknow businesses attract qualified leads with SEO, local SEO, Google Ads, Meta Ads and social media,
                 then build the websites, web apps and CRM software that turn demand into lasting growth.
               </Text>
               <Text variant="secondary" className="max-w-3xl">
-                Secondary label text rendered with high contrast compliance (WCAG AA certified).
+                Secondary label text rendered in Silver (#C4C4C9) for high readability over deep obsidian charcoal.
               </Text>
             </div>
             <hr className="border-hairline" />
@@ -136,12 +130,12 @@ export default function DesignSystemPage() {
         <Container>
           <Eyebrow className="mb-4">UI Primitives</Eyebrow>
           <Heading level={2} className="mb-8">Buttons, Pills, Links & Motifs</Heading>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* SplitArrowButton */}
-            <div className="p-8 rounded-lg border border-hairline bg-white shadow-sm space-y-6">
+            <div className="p-8 rounded-lg border border-hairline bg-surface-dark-2/85 shadow-sm space-y-6">
               <span className="type-label text-text-secondary block font-mono">SplitArrowButton (All Variants & Sizes)</span>
-              
+
               <div className="flex flex-wrap items-center gap-4">
                 <SplitArrowButton variant="solid-light" size="md">
                   Book a free call
@@ -165,9 +159,9 @@ export default function DesignSystemPage() {
             </div>
 
             {/* Category Pills & Links */}
-            <div className="p-8 rounded-lg border border-hairline bg-white shadow-sm space-y-6">
+            <div className="p-8 rounded-lg border border-hairline bg-surface-dark-2/85 shadow-sm space-y-6">
               <span className="type-label text-text-secondary block font-mono">CategoryPills & TextLinks</span>
-              
+
               <div className="flex flex-wrap items-center gap-2">
                 <CategoryPill variant="light">SEO & Local</CategoryPill>
                 <CategoryPill variant="dark">Websites & Apps</CategoryPill>
@@ -188,36 +182,35 @@ export default function DesignSystemPage() {
         </Container>
       </Section>
 
-      {/* 4. Awadhi Arch Motif Demonstration */}
+      {/* 4. Orbital Icon Motif Demonstration */}
       <Section tone="dark" padded>
         <Container>
-          <Eyebrow className="text-text-secondary-on-dark mb-4">Original Lucknow Motif</Eyebrow>
-          <Heading level={2} className="text-on-dark mb-6">Awadhi Pointed-Arch Geometry</Heading>
+          <Eyebrow className="text-text-secondary-on-dark mb-4">Orbital Mark</Eyebrow>
+          <Heading level={2} className="text-on-dark mb-6">Minimal Telemetry Iconography</Heading>
           <Text variant="secondary-on-dark" className="max-w-2xl mb-12">
-            Replaces the template&apos;s starburst with an original Awadhi architectural pointed-arch motif, 
-            connecting CODESYNC to its Lucknow heritage.
+            Replaces legacy botanical leaf SVGs with restrained Lucide orbital markers aligned with the persistent WebGL particle field.
           </Text>
 
-          <div className="p-8 rounded-lg border border-white/10 bg-surface-dark-2 flex flex-wrap items-center justify-around gap-8 text-accent-soft">
+          <div className="p-8 rounded-lg border border-white/10 bg-surface-dark-2/85 flex flex-wrap items-center justify-around gap-8 text-accent-soft">
             <div className="flex flex-col items-center gap-3">
               <ArchMotif size="sm" />
-              <span className="font-mono text-xs text-text-secondary-on-dark">Small (16x24px)</span>
+              <span className="font-mono text-xs text-text-secondary-on-dark">Small (16px)</span>
             </div>
             <div className="flex flex-col items-center gap-3">
               <ArchMotif size="md" />
-              <span className="font-mono text-xs text-text-secondary-on-dark">Medium (24x36px)</span>
+              <span className="font-mono text-xs text-text-secondary-on-dark">Medium (24px)</span>
             </div>
             <div className="flex flex-col items-center gap-3">
               <ArchMotif size="lg" />
-              <span className="font-mono text-xs text-text-secondary-on-dark">Large (40x60px)</span>
+              <span className="font-mono text-xs text-text-secondary-on-dark">Large (40px)</span>
             </div>
           </div>
         </Container>
       </Section>
 
       {/* 5. Display Marquee Demonstration */}
-      <div className="py-8 bg-canvas border-y border-hairline">
-        <DisplayMarquee text="Grow. Build. Run." />
+      <div className="py-8 bg-transparent border-y border-hairline">
+        <DisplayMarquee text="Grow. Build. Run." tone="dark" />
       </div>
 
       {/* 6. Accordion & SectionHeader Demonstration */}
@@ -236,15 +229,15 @@ export default function DesignSystemPage() {
             <div className="max-w-3xl">
               <Accordion type="single" defaultOpen="item-1" tone="dark">
                 <AccordionItem id="item-1" title="What services does CODESYNC provide?">
-                  Digital marketing (Local SEO, Google Ads, Meta Ads, Social Media, Content, Email, SMS) 
+                  Digital marketing (Local SEO, Google Ads, Meta Ads, Social Media, Content, Email, SMS)
                   and custom software development (Websites, Mobile Apps, CRM, ERP, Billing, HRMS).
                 </AccordionItem>
                 <AccordionItem id="item-2" title="How is the price of a project decided?">
-                  Final pricing depends on project goals, scope, content preparation, campaign ad budget, 
+                  Final pricing depends on project goals, scope, content preparation, campaign ad budget,
                   and required delivery timelines. We follow a transparent quote-first model.
                 </AccordionItem>
                 <AccordionItem id="item-3" title="Do you offer maintenance and support after launch?">
-                  Yes, all IT development services come with maintenance support options including updates, 
+                  Yes, all IT development services come with maintenance support options including updates,
                   technical fixes, and backup monitoring.
                 </AccordionItem>
               </Accordion>
@@ -259,7 +252,7 @@ export default function DesignSystemPage() {
           <SectionHeader
             eyebrow="ASSET SAFEGUARD"
             title="MediaSlot Component Behavior"
-            intro="Guarantees zero broken layout shifts or missing boxes. Displays informative striped markers in development and hides cleanly in production."
+            intro="Guarantees zero broken layout shifts or missing boxes. Displays informative markers in development and hides cleanly in production."
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

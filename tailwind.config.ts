@@ -21,6 +21,7 @@ const config: Config = {
         accent: {
           DEFAULT: "var(--accent)",
           soft: "var(--accent-soft)",
+          deep: "var(--accent-deep)",
         },
         field: {
           1: "var(--field-1)",

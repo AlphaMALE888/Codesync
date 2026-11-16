@@ -5,9 +5,12 @@ import { Container } from "@/components/layout/Container";
 import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { CategoryPill } from "@/components/ui/CategoryPill";
 import { SplitArrowButton } from "@/components/ui/SplitArrowButton";
-import { ProcessArt } from "@/components/illustrations/ProcessArt";
 import { Reveal } from "@/components/ui/Reveal";
 import { motion, AnimatePresence } from "@/lib/motion";
+import {
+  setParticleFocusFromElement,
+  clearParticleFocus,
+} from "@/components/particles/particleState";
 import { cn } from "@/lib/cn";
 
 export function ProcessAccordion() {
@@ -19,6 +22,7 @@ export function ProcessAccordion() {
       name: "01",
       title: "Discover",
       timeHint: "Week 1",
+      deliverable: "Technical Audit & Growth Scope",
       desc: "We analyze your business, target audience, local competitors, service offer, and commercial growth goals to align on clear scope.",
     },
     {
@@ -26,6 +30,7 @@ export function ProcessAccordion() {
       name: "02",
       title: "Plan",
       timeHint: "Week 1–2",
+      deliverable: "Architecture, Sitemap & Funnel Map",
       desc: "We define the sitemap, messaging hierarchy, service positioning, and technical roadmap before any design or code begins.",
     },
     {
@@ -33,6 +38,7 @@ export function ProcessAccordion() {
       name: "03",
       title: "Build",
       timeHint: "Week 2–3",
+      deliverable: "Staging System & Conversion Tracking",
       desc: "We design and build your responsive pages, web apps, forms, and analytics tracking, sharing live progress updates as we go.",
     },
     {
@@ -40,12 +46,15 @@ export function ProcessAccordion() {
       name: "04",
       title: "Launch",
       timeHint: "Launch Day",
+      deliverable: "Production Go-Live & Lead Monitoring",
       desc: "We run quality checks across all devices, deploy to production, verify live form delivery, and monitor real customer enquiries.",
     },
   ];
 
+  const currentStep = steps.find((s) => s.num === activeStep) || steps[0];
+
   return (
-    <section className="w-full py-20 sm:py-28 bg-surface-dark text-on-dark overflow-hidden border-t border-white/10">
+    <section className="w-full py-20 sm:py-28 bg-surface-dark/55 text-on-dark overflow-hidden border-t border-white/10">
       <Container>
         {/* Section Header */}
         <Reveal>
@@ -61,26 +70,49 @@ export function ProcessAccordion() {
 
         {/* Two-Column Process Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left Diagram Card (Span 5) */}
+          {/* Left Typographic Phase Card (Span 5, replaces old ProcessArt drawing) */}
           <div className="lg:col-span-5 w-full">
             <Reveal>
-              <div className="rounded-md border border-white/10 bg-surface-dark-2 p-8 sm:p-10 flex flex-col justify-between min-h-[340px] shadow-xl">
+              <div className="rounded-md border border-white/12 bg-surface-dark-2/85 p-8 sm:p-10 flex flex-col justify-between min-h-[340px] shadow-xl">
                 <div>
                   <span className="type-label text-accent-soft font-mono text-xs block mb-2">
-                    ACTIVE STAGE // 0{activeStep}
+                    ACTIVE STAGE // {currentStep.name}
                   </span>
-                  <div className="font-display font-bold text-2xl text-white">
-                    {steps.find((s) => s.num === activeStep)?.title} Phase
+                  <div className="font-display font-bold text-3xl text-white tracking-tight">
+                    {currentStep.title} Phase
                   </div>
+                  <p className="mt-3 text-sm text-text-secondary-on-dark leading-relaxed">
+                    {currentStep.desc}
+                  </p>
                 </div>
 
-                <div className="py-6">
-                  <ProcessArt activeStep={activeStep} />
+                {/* Clean 4-Step Phase Progress Indicator */}
+                <div className="py-6 space-y-3">
+                  <div className="flex items-center justify-between text-xs font-mono text-white/70">
+                    <span>Deliverable</span>
+                    <span className="text-white font-medium">{currentStep.deliverable}</span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-2 pt-1">
+                    {steps.map((s) => (
+                      <button
+                        key={s.num}
+                        type="button"
+                        onClick={() => setActiveStep(s.num)}
+                        aria-label={`Select stage ${s.title}`}
+                        className={cn(
+                          "h-1.5 rounded-pill transition-all duration-300",
+                          s.num <= activeStep
+                            ? "bg-accent-soft"
+                            : "bg-white/12 hover:bg-white/25"
+                        )}
+                      />
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between text-xs text-text-secondary-on-dark border-t border-white/10 pt-4">
                   <span>Transparent 4-Stage Method</span>
-                  <span className="font-mono text-white/80">{steps.find((s) => s.num === activeStep)?.timeHint}</span>
+                  <span className="font-mono text-white/80">{currentStep.timeHint}</span>
                 </div>
               </div>
             </Reveal>
@@ -97,10 +129,14 @@ export function ProcessAccordion() {
                   className={cn(
                     "rounded-md border transition-all duration-base overflow-hidden",
                     isOpen
-                      ? "bg-surface-dark-2 border-white/20 shadow-lg"
-                      : "bg-white/5 border-white/10 hover:bg-white/10"
+                      ? "bg-surface-dark-2/90 border-accent-soft/40 shadow-lg"
+                      : "bg-[#121214]/75 border-white/10 hover:border-white/20"
                   )}
-                  onMouseEnter={() => setActiveStep(step.num)}
+                  onMouseEnter={(e) => {
+                    setActiveStep(step.num);
+                    setParticleFocusFromElement(e.currentTarget, "attract", 0.7);
+                  }}
+                  onMouseLeave={() => clearParticleFocus()}
                 >
                   <button
                     type="button"
@@ -112,7 +148,7 @@ export function ProcessAccordion() {
                       <span
                         className={cn(
                           "font-mono font-bold text-sm sm:text-base transition-colors",
-                          isOpen ? "text-accent-soft" : "text-white/40"
+                          isOpen ? "text-accent-soft" : "text-white/45"
                         )}
                       >
                         {step.name}

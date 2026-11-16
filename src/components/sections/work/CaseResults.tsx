@@ -21,12 +21,12 @@ export function CaseResults({ metrics }: CaseResultsProps) {
   const items = verifiedMetrics.slice(0, 4);
 
   return (
-    <section className="py-20 sm:py-28 bg-white border-b border-hairline">
+    <section className="py-20 sm:py-28 bg-surface-dark/55 border-b border-white/10">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Large Value Statement */}
           <div className="lg:col-span-5 space-y-4">
-            <Eyebrow className="text-accent text-xs">MEASURABLE OUTCOMES</Eyebrow>
+            <Eyebrow className="text-accent-soft text-xs">MEASURABLE OUTCOMES</Eyebrow>
             <Heading level={2} className="text-ink text-3xl sm:text-4xl tracking-tight leading-tight">
               Verified outcomes, delivered through discipline.
             </Heading>
@@ -42,13 +42,13 @@ export function CaseResults({ metrics }: CaseResultsProps) {
               return (
                 <div
                   key={idx}
-                  className="p-6 rounded-md bg-canvas border border-hairline/80 flex flex-col justify-between"
+                  className="p-6 rounded-md bg-surface-dark-2/85 border border-white/12 flex flex-col justify-between"
                 >
                   <div className="flex items-center justify-between mb-6">
                     <span className="font-mono text-2xl sm:text-3xl font-medium text-ink tabular-nums">
                       {m.value}
                     </span>
-                    <div className="w-9 h-9 rounded-full bg-accent/10 text-accent flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-full bg-accent/15 border border-accent/30 text-accent-soft flex items-center justify-center">
                       <Icon className="w-4 h-4 stroke-[2.2]" />
                     </div>
                   </div>

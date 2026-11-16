@@ -30,7 +30,7 @@ export function LeadershipCard({ member }: LeadershipCardProps) {
         <span className="font-mono text-xs uppercase tracking-widest text-ink/60">
           LEADERSHIP
         </span>
-        <span className="font-mono text-xs font-semibold text-accent px-2 py-0.5 rounded bg-white/60 backdrop-blur-xs">
+        <span className="font-mono text-xs font-semibold text-accent-soft px-2 py-0.5 rounded bg-surface-dark-2 border border-white/12">
           CODESYNC
         </span>
       </div>
@@ -56,11 +56,11 @@ export function LeadershipCard({ member }: LeadershipCardProps) {
       )}
 
       {/* Bottom Information */}
-      <div className="pt-4 border-t border-ink/10">
+      <div className="pt-4 border-t border-white/10">
         <h3 className="font-display font-medium text-xl sm:text-2xl text-ink tracking-tight">
           {member.name}
         </h3>
-        <p className="text-xs sm:text-sm font-mono uppercase tracking-wider text-accent font-semibold mt-1">
+        <p className="text-xs sm:text-sm font-mono uppercase tracking-wider text-accent-soft font-semibold mt-1">
           {member.title}
         </p>
 

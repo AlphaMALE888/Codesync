@@ -33,7 +33,7 @@ export function PricingToggle({ activePillar, onChange }: PricingToggleProps) {
       <div
         role="tablist"
         aria-label="Service pricing categories"
-        className="relative inline-flex p-1.5 rounded-full bg-surface-muted border border-hairline w-full max-w-xl"
+        className="relative inline-flex p-1.5 rounded-full bg-surface-dark border border-white/12 w-full max-w-xl"
       >
         {PILLARS.map((p, idx) => {
           const isActive = activePillar === p.id;
@@ -45,20 +45,20 @@ export function PricingToggle({ activePillar, onChange }: PricingToggleProps) {
               tabIndex={isActive ? 0 : -1}
               onClick={() => onChange(p.id)}
               onKeyDown={(e) => handleKeyDown(e, idx)}
-              className="relative z-10 flex-1 py-3 px-3 rounded-full text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer min-h-[44px]"
+              className="relative z-10 flex-1 py-3 px-3 rounded-full text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft cursor-pointer min-h-[44px]"
             >
               {isActive && (
                 <motion.div
                   layoutId="pricing-active-pill"
                   transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute inset-0 bg-white rounded-full shadow-sm border border-hairline/60"
+                  className="absolute inset-0 bg-surface-dark-2 rounded-full shadow-md border border-accent-soft/60"
                 />
               )}
               <div className="relative z-10">
-                <span className={`block font-display font-medium text-sm sm:text-base ${isActive ? "text-ink" : "text-text-secondary"}`}>
+                <span className={`block font-display font-medium text-sm sm:text-base ${isActive ? "text-white" : "text-text-secondary hover:text-white"}`}>
                   {p.label}
                 </span>
-                <span className={`hidden sm:block text-[11px] font-mono ${isActive ? "text-accent font-semibold" : "text-text-secondary/60"}`}>
+                <span className={`hidden sm:block text-[11px] font-mono ${isActive ? "text-accent-soft font-semibold" : "text-text-secondary/65"}`}>
                   {p.sub}
                 </span>
               </div>

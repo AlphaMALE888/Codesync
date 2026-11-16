@@ -10,7 +10,7 @@ export function LeadershipGrid() {
   const members = renderable(teamData);
 
   return (
-    <section className="py-20 sm:py-28 bg-canvas border-b border-hairline">
+    <section id="team-section" className="py-20 sm:py-28 bg-transparent border-b border-hairline">
       <Container>
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16">

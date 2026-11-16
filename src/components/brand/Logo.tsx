@@ -26,10 +26,10 @@ export function Logo({ tone = "auto", className, showWordmark = true }: LogoProp
         className={cn(
           "w-8 h-8 rounded-pill flex items-center justify-center transition-colors duration-fast border",
           isDark
-            ? "bg-surface-dark-2 border-white/20 text-white"
+            ? "bg-surface-dark-2 border-white/20 text-white group-hover:border-accent-soft/60"
             : isLight
-            ? "bg-white border-hairline text-ink"
-            : "bg-white/10 border-white/12 text-white group-hover:bg-accent group-hover:text-white"
+            ? "bg-surface-dark-2 border-white/15 text-ink group-hover:border-accent-soft/60"
+            : "bg-white/10 border-white/12 text-white group-hover:bg-accent group-hover:border-accent-soft/60 group-hover:text-white"
         )}
         aria-hidden="true"
       >

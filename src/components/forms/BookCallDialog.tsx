@@ -97,7 +97,7 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-ink/70 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-[#09090B]/85"
           role="dialog"
           aria-modal="true"
           aria-labelledby="book-call-title"
@@ -113,12 +113,12 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 32, scale: 0.97 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full sm:max-w-md max-h-[90svh] overflow-y-auto bg-white rounded-t-xl sm:rounded-lg p-6 sm:p-8 shadow-2xl z-10 border border-hairline"
+            className="relative w-full sm:max-w-md max-h-[90svh] overflow-y-auto bg-surface-dark-2 rounded-t-xl sm:rounded-lg p-6 sm:p-8 shadow-2xl z-10 border border-white/15"
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-11 h-11 rounded-full bg-surface-muted hover:bg-hairline flex items-center justify-center text-text-secondary hover:text-ink transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+              className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/8 hover:bg-white/15 flex items-center justify-center text-text-secondary hover:text-ink transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-soft"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
@@ -126,7 +126,7 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
 
             {status === "success" ? (
               <div className="text-center py-6">
-                <div className="w-12 h-12 rounded-full bg-accent/10 text-accent mx-auto flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-accent/15 border border-accent/30 text-accent-soft mx-auto flex items-center justify-center mb-4">
                   <CheckCircle2 className="w-6 h-6 stroke-[2.2]" />
                 </div>
                 <h3 className="font-display font-medium text-2xl text-ink">
@@ -145,7 +145,7 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
               </div>
             ) : status === "not_configured" ? (
               <div className="text-center py-4">
-                <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-700 mx-auto flex items-center justify-center mb-3 border border-amber-200">
+                <div className="w-10 h-10 rounded-full bg-accent/15 text-accent-soft mx-auto flex items-center justify-center mb-3 border border-accent/30">
                   <AlertCircle className="w-5 h-5" />
                 </div>
                 <h3 className="font-display font-medium text-xl text-ink">
@@ -166,7 +166,7 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
                     href={siteConfig.contact.whatsapp}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 p-3 rounded-md bg-surface-muted text-ink text-sm font-medium border border-hairline hover:bg-hairline transition-colors"
+                    className="flex items-center justify-center gap-2 p-3 rounded-md bg-surface-dark text-ink text-sm font-medium border border-white/12 hover:border-accent-soft/50 transition-colors"
                   >
                     Message on WhatsApp
                   </a>
@@ -175,7 +175,7 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold block mb-1">
+                  <span className="font-mono text-xs uppercase tracking-widest text-accent-soft font-semibold block mb-1">
                     FAST 15-MINUTE CALL
                   </span>
                   <h3 id="book-call-title" className="font-display font-medium text-2xl text-ink tracking-tight">
@@ -206,7 +206,7 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Gaurav Sharma"
-                    className="w-full h-11 px-3.5 rounded-sm border border-hairline bg-canvas text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full h-11 px-3.5 rounded-sm border border-white/15 bg-surface-dark text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-soft"
                   />
                 </div>
 
@@ -221,12 +221,12 @@ export function BookCallDialog({ isOpen, onClose }: BookCallDialogProps) {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="e.g. 8948040913"
-                    className="w-full h-11 px-3.5 rounded-sm border border-hairline bg-canvas text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent font-mono"
+                    className="w-full h-11 px-3.5 rounded-sm border border-white/15 bg-surface-dark text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-soft font-mono"
                   />
                 </div>
 
                 {error && (
-                  <p className="text-xs text-red-600 font-sans" role="alert">
+                  <p className="text-xs text-accent-soft font-sans" role="alert">
                     {error}
                   </p>
                 )}

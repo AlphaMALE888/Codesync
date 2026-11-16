@@ -28,7 +28,7 @@ export function FaqSection({
   }
 
   return (
-    <section id={id} className="py-20 sm:py-28 bg-surface-dark text-on-dark border-b border-white/10">
+    <section id={id} className="py-20 sm:py-28 bg-surface-dark/55 text-on-dark border-b border-white/10">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Split Layout Callout */}

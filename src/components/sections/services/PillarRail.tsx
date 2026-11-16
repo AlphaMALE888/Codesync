@@ -82,7 +82,7 @@ export function PillarRail({ activePillar, onSelectPillar }: PillarRailProps) {
               >
                 <span
                   className={`font-mono text-xs pt-1 transition-colors duration-300 ${
-                    isActive ? "text-accent font-semibold" : "text-ink/30 group-hover:text-ink/60"
+                    isActive ? "text-accent-soft font-semibold" : "text-white/40 group-hover:text-white/75"
                   }`}
                 >
                   {p.num}
@@ -90,7 +90,7 @@ export function PillarRail({ activePillar, onSelectPillar }: PillarRailProps) {
                 <div>
                   <div
                     className={`font-display text-lg tracking-tight font-medium transition-colors duration-300 ${
-                      isActive ? "text-accent" : ""
+                      isActive ? "text-accent-soft" : ""
                     }`}
                   >
                     {p.label}

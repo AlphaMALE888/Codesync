@@ -35,7 +35,7 @@ export default function AboutPage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-canvas">
+    <div className="min-h-screen bg-transparent">
       <JsonLd data={breadcrumbs} />
 
       {/* 1. Intro Hero */}
@@ -70,6 +70,6 @@ export default function AboutPage() {
 
       {/* 11. Final CTA */}
       <FinalCta />
-    </main>
+    </div>
   );
 }

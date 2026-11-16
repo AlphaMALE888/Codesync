@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { features } from "@/data/features";
 import { getRenderableArticles } from "@/lib/content";
+import { Container } from "@/components/layout/Container";
 import { InsightsGrid } from "@/components/sections/insights/InsightsGrid";
 import { DisplayMarquee } from "@/components/ui/DisplayMarquee";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -37,7 +38,7 @@ export default function InsightsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-bg-light text-text-primary pt-32 pb-24">
+    <div className="min-h-screen bg-transparent text-ink pt-32 pb-24">
       <JsonLd
         schema={getBreadcrumbSchema([
           { name: "Home", url: "/" },
@@ -45,17 +46,17 @@ export default function InsightsPage() {
         ])}
       />
       {/* Editorial Marquee Banner */}
-      <div className="border-y border-border-light/60 mb-12">
-        <DisplayMarquee text="INSIGHTS & STRATEGY" speed={36} tone="light" />
+      <div className="border-y border-hairline mb-12">
+        <DisplayMarquee text="INSIGHTS & STRATEGY" speed={36} tone="dark" />
       </div>
 
-      <div className="container-spartan">
+      <Container>
         {/* Header Section */}
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <span className="type-label text-accent-default font-mono block mb-3">
+          <span className="type-label text-accent-soft font-mono block mb-3">
             AGENCY INTELLIGENCE &bull; LUCKNOW
           </span>
-          <h1 className="type-h1 font-display tracking-tight text-text-primary mb-4">
+          <h1 className="type-h1 font-display tracking-tight text-ink mb-4">
             Practical Thinking on Growth & Software
           </h1>
           <p className="text-text-secondary text-base font-body leading-relaxed">
@@ -65,7 +66,7 @@ export default function InsightsPage() {
 
         {/* Dynamic Asymmetric Grid */}
         <InsightsGrid articles={articles} />
-      </div>
+      </Container>
     </div>
   );
 }

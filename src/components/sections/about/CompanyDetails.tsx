@@ -4,7 +4,7 @@ import { siteConfig } from "@/data/site";
 
 export function CompanyDetails() {
   return (
-    <section className="py-12 bg-canvas border-b border-hairline">
+    <section className="py-12 bg-surface-dark/55 border-b border-hairline">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
           {/* Column 1: Legal Entity */}

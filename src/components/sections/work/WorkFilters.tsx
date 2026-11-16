@@ -53,10 +53,10 @@ export function WorkFilters({
               type="button"
               onClick={() => handleSelect(cat)}
               aria-pressed={isSelected}
-              className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 whitespace-nowrap min-h-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+              className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 whitespace-nowrap min-h-[40px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft ${
                 isSelected
-                  ? "bg-accent text-white font-medium shadow-sm"
-                  : "bg-surface-muted text-text-secondary hover:text-ink hover:bg-[#E2E2DF]"
+                  ? "bg-accent text-ink font-medium shadow-sm"
+                  : "bg-surface-dark-2/85 text-text-secondary border border-hairline hover:text-ink hover:bg-white/10"
               }`}
             >
               {cat}

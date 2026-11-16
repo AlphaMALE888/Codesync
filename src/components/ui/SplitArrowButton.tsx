@@ -31,9 +31,9 @@ export function SplitArrowButton({
     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2",
     "active:scale-[0.98] active:duration-[120ms] motion-reduce:active:scale-100",
     size === "md" ? "min-h-[44px] pl-5 pr-2 py-1.5 text-sm gap-3" : "min-h-[52px] pl-6 pr-2.5 py-2 text-base gap-4",
-    variant === "solid-light" && "bg-white text-[#121212] border border-white/20 hover:bg-white/90 shadow-sm",
-    variant === "solid-dark" && "bg-surface-dark text-on-dark border border-white/10 hover:bg-surface-dark-2 shadow-sm",
-    variant === "outline" && "bg-transparent text-current border border-current hover:bg-current/5",
+    variant === "solid-light" && "bg-[#F5F5F5] text-[#09090B] border border-white/20 hover:bg-white shadow-sm",
+    variant === "solid-dark" && "bg-surface-dark-2 text-on-dark border border-white/15 hover:border-accent-soft/50 shadow-sm",
+    variant === "outline" && "bg-transparent text-ink border border-white/20 hover:border-accent-soft hover:bg-white/5",
     disabled && "opacity-50 pointer-events-none cursor-not-allowed",
     className
   );
@@ -41,9 +41,9 @@ export function SplitArrowButton({
   const iconTileClasses = cn(
     "flex items-center justify-center rounded-pill transition-all duration-fast ease-out-custom shrink-0",
     size === "md" ? "w-8 h-8" : "w-9 h-9",
-    variant === "solid-light" && "bg-ink text-white group-hover:bg-accent",
+    variant === "solid-light" && "bg-[#09090B] text-[#F5F5F5] group-hover:bg-accent group-hover:text-white",
     variant === "solid-dark" && "bg-white/10 text-white group-hover:bg-accent group-hover:text-white",
-    variant === "outline" && "bg-current/10 text-current group-hover:bg-current group-hover:text-white"
+    variant === "outline" && "bg-white/10 text-ink group-hover:bg-accent group-hover:text-white"
   );
 
   const content = (

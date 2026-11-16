@@ -14,13 +14,13 @@ export function RelatedServiceCta({ serviceSlug }: RelatedServiceCtaProps) {
   if (!service) return null;
 
   return (
-    <div className="max-w-[680px] mx-auto mt-16 p-8 rounded-card border border-border-light bg-surface-subtle">
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft/30 text-accent-default text-xs font-mono font-medium mb-4">
+    <div className="max-w-[680px] mx-auto mt-16 p-8 rounded-md border border-hairline bg-surface-dark-2/85">
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-deep/30 border border-accent-soft/40 text-accent-soft text-xs font-mono font-medium mb-4">
         <Sparkles className="w-3.5 h-3.5" />
         Recommended Implementation Service
       </div>
 
-      <h3 className="type-h3 font-display tracking-tight text-text-primary mb-2">
+      <h3 className="type-h3 font-display tracking-tight text-ink mb-2">
         Need assistance with {service.name}?
       </h3>
 
@@ -31,14 +31,14 @@ export function RelatedServiceCta({ serviceSlug }: RelatedServiceCtaProps) {
       <div className="flex flex-wrap items-center gap-4">
         <Link
           href={`/services/${service.slug}`}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-button bg-brand-darkest text-white text-xs font-medium hover:bg-brand-darkest/90 transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-accent text-ink text-xs font-medium hover:bg-accent-soft transition-colors"
         >
           Explore {service.name} Scope
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
         <Link
           href="/contact"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-button bg-white border border-border-medium text-text-primary text-xs font-medium hover:bg-surface-muted transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-surface-dark border border-hairline text-ink text-xs font-medium hover:bg-white/10 transition-colors"
         >
           Book a Free Discovery Call
         </Link>

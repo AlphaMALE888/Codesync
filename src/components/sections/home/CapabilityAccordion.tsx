@@ -5,12 +5,14 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow, Heading, Text } from "@/components/ui/Typography";
 import { SplitArrowButton } from "@/components/ui/SplitArrowButton";
-import { GrowArt } from "@/components/illustrations/GrowArt";
-import { BuildArt } from "@/components/illustrations/BuildArt";
-import { RunArt } from "@/components/illustrations/RunArt";
 import { Reveal } from "@/components/ui/Reveal";
 import { motion, AnimatePresence } from "@/lib/motion";
 import { ArrowUpRight } from "lucide-react";
+import {
+  setParticleFocusFromElement,
+  clearParticleFocus,
+  setActiveServicePillar,
+} from "@/components/particles/particleState";
 import { cn } from "@/lib/cn";
 
 export function CapabilityAccordion() {
@@ -22,6 +24,7 @@ export function CapabilityAccordion() {
       name: "GROW",
       title: "Digital Marketing & Visibility",
       desc: "Attract high-intent local and regional enquiries with data-driven SEO, Google Ads, and Meta lead funnels.",
+      focusTag: "Search & Paid Acquisition",
       services: [
         { label: "Local SEO & Google Business Profile", href: "/services/local-seo-google-business-profile" },
         { label: "SEO (Search Engine Optimization)", href: "/services/seo" },
@@ -29,13 +32,13 @@ export function CapabilityAccordion() {
         { label: "Meta Ads & Lead Generation", href: "/services/meta-ads-lead-generation" },
         { label: "Social Media, Content & Bulk SMS", href: "/services/social-content-email-sms" },
       ],
-      art: <GrowArt className="text-accent-soft max-w-[260px]" />,
     },
     {
       num: "002",
       name: "BUILD",
       title: "Websites & Mobile Apps",
       desc: "Fast, responsive web systems and iOS/Android applications engineered for conversion, speed, and clean code.",
+      focusTag: "Full-Stack Web & Mobile",
       services: [
         { label: "Business Websites (WordPress/Custom)", href: "/services/business-websites" },
         { label: "E-Commerce Stores & Multi-Vendor", href: "/services/ecommerce-websites" },
@@ -43,25 +46,35 @@ export function CapabilityAccordion() {
         { label: "UI/UX & Brand Graphic Design", href: "/services/ui-ux-graphic-design" },
         { label: "Domain, Hosting & Maintenance", href: "/services/domain-hosting-maintenance" },
       ],
-      art: <BuildArt className="text-accent-soft max-w-[260px]" />,
     },
     {
       num: "003",
       name: "RUN",
       title: "Business Software Solutions",
       desc: "Custom CRM, ERP, GST billing, and HRMS platforms that eliminate manual friction and connect your business.",
+      focusTag: "Enterprise Operations & Automation",
       services: [
         { label: "Custom CRM Platforms", href: "/services/crm" },
         { label: "ERP, GST Billing & POS Systems", href: "/services/erp-billing-gst" },
         { label: "HRMS & Automated Payroll", href: "/services/hrms-payroll" },
         { label: "Custom Software & API Integrations", href: "/services/custom-software" },
       ],
-      art: <RunArt className="text-accent-soft max-w-[260px]" />,
     },
   ];
 
+  const handleActivate = (idx: number, el?: HTMLElement | null) => {
+    setActiveTab(idx);
+    setActiveServicePillar(idx);
+    if (el) {
+      setParticleFocusFromElement(el, "wave", 0.95);
+    }
+  };
+
   return (
-    <section className="w-full py-20 sm:py-28 bg-surface-dark text-on-dark overflow-hidden">
+    <section
+      id="services-section"
+      className="w-full py-20 sm:py-28 bg-surface-dark text-on-dark overflow-hidden border-y border-white/10"
+    >
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Narrative Column (5 Cols) */}
@@ -107,15 +120,16 @@ export function CapabilityAccordion() {
                 return (
                   <motion.div
                     key={item.num}
-                    onClick={() => setActiveTab(idx)}
-                    onMouseEnter={() => setActiveTab(idx)}
+                    onClick={(e) => handleActivate(idx, e.currentTarget)}
+                    onMouseEnter={(e) => handleActivate(idx, e.currentTarget)}
+                    onMouseLeave={() => clearParticleFocus()}
                     layout
                     transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
                     className={cn(
                       "relative rounded-md border overflow-hidden cursor-pointer select-none transition-colors duration-base",
                       isActive
-                        ? "flex-1 bg-surface-dark-2 border-white/20 p-8 flex flex-col justify-between"
-                        : "w-[72px] bg-white/5 hover:bg-white/10 border-white/10 flex flex-col items-center justify-between py-8"
+                        ? "flex-1 bg-surface-dark-2/90 border-accent-soft/45 p-8 flex flex-col justify-between shadow-2xl"
+                        : "w-[72px] bg-[#121214]/80 hover:bg-surface-dark-2/85 border-white/12 flex flex-col items-center justify-between py-8"
                     )}
                     role="tab"
                     aria-selected={isActive}
@@ -123,7 +137,7 @@ export function CapabilityAccordion() {
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
-                        setActiveTab(idx);
+                        handleActivate(idx, e.currentTarget);
                       }
                     }}
                   >
@@ -162,17 +176,21 @@ export function CapabilityAccordion() {
                               <Link
                                 key={s.href}
                                 href={s.href}
-                                className="block text-xs font-medium text-white/80 hover:text-white hover:translate-x-1 transition-all py-1"
+                                onMouseEnter={(e) => setParticleFocusFromElement(e.currentTarget, "attract", 0.85)}
+                                onMouseLeave={() => clearParticleFocus()}
+                                className="flex items-center justify-between text-xs font-medium text-white/85 hover:text-accent-soft hover:translate-x-1 transition-all py-1.5"
                               >
-                                &bull; {s.label}
+                                <span>&bull; {s.label}</span>
+                                <ArrowUpRight className="w-3.5 h-3.5 opacity-40" />
                               </Link>
                             ))}
                           </div>
                         </div>
 
-                        {/* Bottom SVG Line-Art */}
-                        <div className="flex justify-end pt-4 opacity-75">
-                          {item.art}
+                        {/* Bottom Structural Footer Readout (replaces old leaf-like SVG art) */}
+                        <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                          <span className="text-text-secondary-on-dark">{item.focusTag}</span>
+                          <span className="text-accent-soft">{item.services.length} Services</span>
                         </div>
                       </motion.div>
                     ) : (
@@ -185,7 +203,7 @@ export function CapabilityAccordion() {
                         >
                           {item.name} &bull; {item.title}
                         </span>
-                        <span className="w-2 h-2 rounded-pill bg-white/20" />
+                        <span className="w-2 h-2 rounded-pill bg-accent-soft/50" />
                       </>
                     )}
                   </motion.div>
@@ -201,7 +219,7 @@ export function CapabilityAccordion() {
                 return (
                   <div
                     key={item.num}
-                    className="rounded-md border border-white/10 bg-surface-dark-2 overflow-hidden"
+                    className="rounded-md border border-white/12 bg-surface-dark-2/90 overflow-hidden"
                   >
                     <button
                       type="button"
@@ -242,10 +260,6 @@ export function CapabilityAccordion() {
                                 &bull; {s.label}
                               </Link>
                             ))}
-                          </div>
-
-                          <div className="pt-4 flex justify-center">
-                            {item.art}
                           </div>
                         </motion.div>
                       )}

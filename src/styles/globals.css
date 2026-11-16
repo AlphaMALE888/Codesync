@@ -4,26 +4,27 @@
 
 :root {
   /* Surface & Base Colors */
-  --canvas: #101010;
+  --canvas: #09090B;
   --ink: #F5F5F5;
-  --surface-dark: #151515;
-  --surface-dark-2: #1B1B1B;
-  --surface-muted: #1F1F1F;
-  --hairline: rgba(255,255,255,0.12);
-  
+  --surface-dark: #121214;
+  --surface-dark-2: #1B1B1F;
+  --surface-muted: #1B1B1F;
+  --hairline: rgba(245, 245, 245, 0.10);
+
   /* Text & Contrast Tokens */
-  --text-secondary: #A0A0A0;
-  --text-secondary-on-dark: #A0A0A0;
+  --text-secondary: #C4C4C9;
+  --text-secondary-on-dark: #C4C4C9;
   --on-dark: #F5F5F5;
-  
-  /* Brand Accent Tokens */
-  --accent: #2F5A44;
-  --accent-soft: #49735A;
-  
-  /* Saturated Color Fields for Team Cards */
-  --field-1: #1C2E24;
-  --field-2: #2A2520;
-  --field-3: #2A2224;
+
+  /* Brand Accent Tokens (Restrained Crimson Red Spectrum) */
+  --accent: #A51F3D;
+  --accent-soft: #E02E4F;
+  --accent-deep: #641B30;
+
+  /* Atmospheric Charcoal / Wine Fields for Team & Leadership Cards */
+  --field-1: #181115;
+  --field-2: #141418;
+  --field-3: #1E1217;
 
   /* Border Radii */
   --radius-sm: 12px;
@@ -68,11 +69,11 @@
 
   ::selection {
     background-color: var(--accent);
-    color: #FFFFFF;
+    color: #F5F5F5;
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-soft);
     outline-offset: 2px;
   }
 
@@ -228,5 +229,15 @@ html.lenis, html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Single SmoothCursor on desktop: suppress native cursor across body, links, buttons, cards, and inputs */
+@media (hover: hover) and (pointer: fine) {
+  html.has-smooth-cursor,
+  html.has-smooth-cursor *,
+  html.has-smooth-cursor *::before,
+  html.has-smooth-cursor *::after {
+    cursor: none !important;
   }
 }

@@ -97,8 +97,8 @@ export function InquiryForm() {
   if (status === "success") {
     const firstName = name.split(" ")[0] || "there";
     return (
-      <div className="p-8 sm:p-12 rounded-md bg-white border border-hairline shadow-sm text-center">
-        <div className="w-12 h-12 rounded-full bg-accent/10 text-accent mx-auto flex items-center justify-center mb-4">
+      <div className="p-8 sm:p-12 rounded-md bg-surface-dark-2/90 border border-white/12 shadow-xl text-center">
+        <div className="w-12 h-12 rounded-full bg-accent/15 border border-accent/30 text-accent-soft mx-auto flex items-center justify-center mb-4">
           <CheckCircle2 className="w-6 h-6 stroke-[2.2]" />
         </div>
         <h3 className="font-display font-medium text-2xl text-ink">
@@ -109,14 +109,14 @@ export function InquiryForm() {
           <strong className="text-ink font-mono">{phone}</strong>.
         </p>
 
-        <div className="mt-8 pt-6 border-t border-hairline flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href={siteConfig.contact.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700 bg-emerald-50 px-5 py-2.5 rounded-full border border-emerald-200 hover:bg-emerald-100 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium text-white bg-accent/20 px-5 py-2.5 rounded-full border border-accent/40 hover:bg-accent/35 transition-colors"
           >
-            <MessageSquare className="w-4 h-4" />
+            <MessageSquare className="w-4 h-4 text-accent-soft" />
             Message us on WhatsApp
           </Link>
         </div>
@@ -127,8 +127,8 @@ export function InquiryForm() {
   // HONEST ERROR / NOT CONFIGURED STATE
   if (status === "not_configured" || status === "error") {
     return (
-      <div className="p-8 sm:p-12 rounded-md bg-white border border-hairline shadow-sm text-center">
-        <div className="w-12 h-12 rounded-full bg-amber-50 text-amber-700 mx-auto flex items-center justify-center mb-4 border border-amber-200">
+      <div className="p-8 sm:p-12 rounded-md bg-surface-dark-2/90 border border-white/12 shadow-xl text-center">
+        <div className="w-12 h-12 rounded-full bg-accent/15 text-accent-soft mx-auto flex items-center justify-center mb-4 border border-accent/30">
           <AlertCircle className="w-6 h-6" />
         </div>
         <h3 className="font-display font-medium text-2xl text-ink">
@@ -150,9 +150,9 @@ export function InquiryForm() {
             href={siteConfig.contact.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-muted text-ink text-sm font-medium border border-hairline hover:bg-[#E0E0DE] transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-dark text-ink text-sm font-medium border border-white/15 hover:border-accent-soft/50 transition-colors"
           >
-            <MessageSquare className="w-4 h-4 text-emerald-600" />
+            <MessageSquare className="w-4 h-4 text-accent-soft" />
             WhatsApp Us
           </Link>
         </div>
@@ -172,7 +172,7 @@ export function InquiryForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="p-6 sm:p-10 rounded-md bg-white border border-hairline shadow-sm space-y-6"
+      className="p-6 sm:p-10 rounded-md bg-surface-dark-2/90 border border-white/12 shadow-xl space-y-6"
     >
       <div>
         <h3 className="font-display font-medium text-2xl text-ink tracking-tight">
@@ -208,7 +208,7 @@ export function InquiryForm() {
           placeholder="e.g. Gaurav Sharma"
           aria-invalid={Boolean(errors.name)}
           aria-describedby={errors.name ? "inquiry-name-error" : undefined}
-          className="w-full h-12 px-4 rounded-sm border border-hairline bg-canvas text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+          className="w-full h-12 px-4 rounded-sm border border-white/15 bg-surface-dark text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-soft transition-all"
         />
       </Field>
 
@@ -225,7 +225,7 @@ export function InquiryForm() {
           placeholder="e.g. 8948040913"
           aria-invalid={Boolean(errors.phone)}
           aria-describedby={errors.phone ? "inquiry-phone-error" : undefined}
-          className="w-full h-12 px-4 rounded-sm border border-hairline bg-canvas text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent transition-all font-mono"
+          className="w-full h-12 px-4 rounded-sm border border-white/15 bg-surface-dark text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-soft transition-all font-mono"
         />
       </Field>
 
@@ -240,7 +240,7 @@ export function InquiryForm() {
           placeholder="e.g. client@company.com"
           aria-invalid={Boolean(errors.email)}
           aria-describedby={errors.email ? "inquiry-email-error" : undefined}
-          className="w-full h-12 px-4 rounded-sm border border-hairline bg-canvas text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+          className="w-full h-12 px-4 rounded-sm border border-white/15 bg-surface-dark text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-soft transition-all"
         />
       </Field>
 
@@ -250,10 +250,10 @@ export function InquiryForm() {
           id="inquiry-service"
           value={service}
           onChange={(e) => setService(e.target.value)}
-          className="w-full h-12 px-4 rounded-sm border border-hairline bg-canvas text-base text-ink focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer"
+          className="w-full h-12 px-4 rounded-sm border border-white/15 bg-surface-dark text-base text-ink focus:outline-none focus:ring-2 focus:ring-accent-soft transition-all cursor-pointer"
         >
           {SERVICE_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
+            <option key={opt.value} value={opt.value} className="bg-[#121214] text-[#F5F5F5]">
               {opt.label}
             </option>
           ))}
@@ -270,7 +270,7 @@ export function InquiryForm() {
           placeholder="Briefly describe your objectives, timeframe, or specific deliverables..."
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? "inquiry-message-error" : undefined}
-          className="w-full p-4 rounded-sm border border-hairline bg-canvas text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent transition-all resize-y min-h-[96px]"
+          className="w-full p-4 rounded-sm border border-white/15 bg-surface-dark text-base text-ink placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-soft transition-all resize-y min-h-[96px]"
         />
       </Field>
 
@@ -282,18 +282,18 @@ export function InquiryForm() {
             required
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
-            className="w-4 h-4 mt-0.5 rounded border-hairline text-accent focus:ring-accent"
+            className="w-4 h-4 mt-0.5 rounded border-white/25 bg-surface-dark accent-[#A51F3D] focus:ring-accent-soft"
           />
           <span className="text-xs text-text-secondary leading-relaxed">
             I agree to CODESYNC contacting me regarding this project enquiry in accordance with the{" "}
-            <Link href="/legal/privacy" className="text-ink underline hover:text-accent">
+            <Link href="/legal/privacy" className="text-ink underline hover:text-accent-soft">
               privacy policy
             </Link>
             .
           </span>
         </label>
         {errors.consent && (
-          <p className="text-xs text-red-600 font-sans mt-1" role="alert">
+          <p className="text-xs text-accent-soft font-sans mt-1" role="alert">
             {errors.consent}
           </p>
         )}
@@ -301,7 +301,7 @@ export function InquiryForm() {
 
       {/* General Form Error */}
       {errors.form && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded text-xs text-red-700">
+        <div className="p-3 bg-accent/15 border border-accent/40 rounded text-xs text-accent-soft">
           {errors.form}
         </div>
       )}
@@ -311,7 +311,7 @@ export function InquiryForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full inline-flex items-center justify-center gap-2 min-h-[48px] px-8 rounded-pill font-medium text-sm transition-all duration-200 bg-accent hover:bg-accent-soft text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent disabled:opacity-60 cursor-pointer"
+          className="w-full inline-flex items-center justify-center gap-2 min-h-[48px] px-8 rounded-pill font-medium text-sm transition-all duration-200 bg-accent hover:bg-accent-soft text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-soft disabled:opacity-60 cursor-pointer"
         >
           {loading ? (
             <>

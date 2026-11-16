@@ -37,7 +37,7 @@ export function TestimonialCarousel() {
   };
 
   return (
-    <section className="w-full py-16 sm:py-24 bg-canvas overflow-hidden">
+    <section className="w-full py-16 sm:py-24 bg-transparent overflow-hidden">
       {/* Repeated Giant Marquee Heading */}
       <DisplayMarquee text="Experiences" speed={30} />
 
@@ -55,8 +55,8 @@ export function TestimonialCarousel() {
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
               className={cn(
-                "w-12 h-12 rounded-pill bg-ink text-white flex items-center justify-center transition-all",
-                "hover:bg-accent disabled:opacity-30 disabled:pointer-events-none",
+                "w-12 h-12 rounded-pill bg-surface-dark-2 border border-white/15 text-ink flex items-center justify-center transition-all",
+                "hover:bg-accent hover:border-accent-soft hover:text-white disabled:opacity-30 disabled:pointer-events-none",
                 "focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
               )}
               aria-label="Previous testimonial"
@@ -68,8 +68,8 @@ export function TestimonialCarousel() {
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
               className={cn(
-                "w-12 h-12 rounded-pill bg-ink text-white flex items-center justify-center transition-all",
-                "hover:bg-accent disabled:opacity-30 disabled:pointer-events-none",
+                "w-12 h-12 rounded-pill bg-surface-dark-2 border border-white/15 text-ink flex items-center justify-center transition-all",
+                "hover:bg-accent hover:border-accent-soft hover:text-white disabled:opacity-30 disabled:pointer-events-none",
                 "focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
               )}
               aria-label="Next testimonial"

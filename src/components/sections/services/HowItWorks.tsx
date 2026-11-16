@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow, Heading } from "@/components/ui/Typography";
-import { ProcessArt } from "@/components/illustrations/ProcessArt";
 import { motion, AnimatePresence } from "@/lib/motion";
 import { cn } from "@/lib/cn";
 
@@ -24,8 +23,10 @@ export function HowItWorks({ process }: HowItWorksProps) {
           { step: 4, title: "Launch & Scale", desc: "Test across all devices, deploy to production, and monitor performance compounding." },
         ];
 
+  const currentStep = steps.find((s) => s.step === activeStep) || steps[0];
+
   return (
-    <section className="w-full py-20 sm:py-28 bg-surface-dark text-on-dark overflow-hidden border-b border-white/10">
+    <section className="w-full py-20 sm:py-28 bg-surface-dark/55 text-on-dark overflow-hidden border-b border-white/10">
       <Container>
         {/* Section Header */}
         <div className="mb-14 sm:mb-20 space-y-4">
@@ -37,25 +38,41 @@ export function HowItWorks({ process }: HowItWorksProps) {
           </Heading>
         </div>
 
-        {/* Process Layout: Diagram Card + Step Accordion */}
+        {/* Process Layout: Active Stage Card + Step Accordion */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Visual Diagram Card */}
+          {/* Active Stage Readout Card (replaces ProcessArt drawing) */}
           <div className="lg:col-span-5 w-full order-1 lg:order-1">
-            <div className="rounded-md border border-white/10 bg-surface-dark-2 p-8 sm:p-10 flex flex-col justify-between min-h-[340px] shadow-xl">
+            <div className="rounded-md border border-white/12 bg-surface-dark-2/85 p-8 sm:p-10 flex flex-col justify-between min-h-[340px] shadow-xl">
               <div>
                 <span className="type-label text-accent-soft font-mono text-xs block mb-2">
                   ACTIVE PHASE // 0{activeStep}
                 </span>
-                <div className="font-display font-medium text-2xl text-white">
-                  {steps.find((s) => s.step === activeStep)?.title} Stage
+                <div className="font-display font-medium text-2xl sm:text-3xl text-white">
+                  {currentStep.title} Stage
                 </div>
+                <p className="mt-4 text-sm sm:text-base text-text-secondary-on-dark leading-relaxed">
+                  {currentStep.desc}
+                </p>
               </div>
 
-              <div className="py-6">
-                <ProcessArt activeStep={activeStep} />
+              <div className="py-6 grid grid-cols-4 gap-2">
+                {steps.map((s) => (
+                  <button
+                    key={s.step}
+                    type="button"
+                    onClick={() => setActiveStep(s.step)}
+                    aria-label={`Select step ${s.title}`}
+                    className={cn(
+                      "h-1.5 rounded-pill transition-all duration-300",
+                      s.step <= activeStep
+                        ? "bg-accent-soft"
+                        : "bg-white/12 hover:bg-white/25"
+                    )}
+                  />
+                ))}
               </div>
 
-              <p className="text-xs text-text-secondary-on-dark font-mono tracking-wider uppercase">
+              <p className="text-xs text-text-secondary-on-dark font-mono tracking-wider uppercase border-t border-white/10 pt-4">
                 Step {activeStep} of 4 · CODESYNC Delivery Framework
               </p>
             </div>
@@ -72,8 +89,8 @@ export function HowItWorks({ process }: HowItWorksProps) {
                   className={cn(
                     "cursor-pointer rounded-md border p-6 transition-all duration-300",
                     isOpen
-                      ? "border-accent bg-surface-dark-2 shadow-lg"
-                      : "border-white/10 bg-transparent hover:border-white/20"
+                      ? "border-accent-soft/50 bg-surface-dark-2/90 shadow-lg"
+                      : "border-white/10 bg-[#121214]/75 hover:border-white/20"
                   )}
                   role="button"
                   tabIndex={0}
@@ -105,7 +122,7 @@ export function HowItWorks({ process }: HowItWorksProps) {
                         "w-7 h-7 rounded-full flex items-center justify-center font-mono text-sm transition-transform duration-300",
                         isOpen
                           ? "bg-accent text-white rotate-45"
-                          : "bg-white/5 text-white/40"
+                          : "bg-white/5 text-white/45"
                       )}
                     >
                       +

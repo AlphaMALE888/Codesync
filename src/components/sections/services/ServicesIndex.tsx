@@ -47,11 +47,11 @@ export function ServicesIndex({ services }: ServicesIndexProps) {
   }, []);
 
   return (
-    <div className="pt-32 sm:pt-40 bg-canvas min-h-screen">
+    <div className="pt-32 sm:pt-40 bg-transparent min-h-screen">
       {/* Overview Header */}
       <Container>
-        <div className="max-w-4xl pb-12 sm:pb-16 border-b border-hairline">
-          <Eyebrow>SERVICES</Eyebrow>
+        <div className="max-w-4xl pb-12 sm:pb-16 border-b border-white/10">
+          <Eyebrow className="text-accent-soft">SERVICES</Eyebrow>
           <h1 className="mt-4 font-display font-medium text-display-md sm:text-display-lg tracking-tight text-ink">
             Grow. Build. Run.
           </h1>
@@ -59,7 +59,7 @@ export function ServicesIndex({ services }: ServicesIndexProps) {
             Fourteen focused services across digital marketing, web & app engineering, and custom business software. Based in Lucknow, engineered for scalable commercial growth.
           </p>
           <div className="mt-8">
-            <SplitArrowButton href="/contact">Book a free call</SplitArrowButton>
+            <SplitArrowButton href="/contact" variant="solid-light">Book a free call</SplitArrowButton>
           </div>
         </div>
 

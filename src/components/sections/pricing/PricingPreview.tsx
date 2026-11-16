@@ -1,9 +1,15 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { SplitArrowButton } from "@/components/ui/SplitArrowButton";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
+import {
+  setParticleFocusFromElement,
+  clearParticleFocus,
+} from "@/components/particles/particleState";
 
 const PILLARS_PREVIEW = [
   {
@@ -28,12 +34,15 @@ const PILLARS_PREVIEW = [
 
 export function PricingPreview() {
   return (
-    <section className="py-20 sm:py-28 bg-canvas border-b border-hairline">
+    <section
+      id="pricing-section"
+      className="py-20 sm:py-28 bg-transparent border-y border-white/10"
+    >
       <Container>
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div className="max-w-2xl">
-            <Eyebrow className="text-accent text-xs">TRANSPARENT QUOTING</Eyebrow>
+            <Eyebrow className="text-accent-soft text-xs">TRANSPARENT QUOTING</Eyebrow>
             <Heading level={2} className="mt-4 text-3xl sm:text-4xl text-ink font-medium tracking-tight">
               Clear quotes, no surprises.
             </Heading>
@@ -43,7 +52,9 @@ export function PricingPreview() {
           </div>
 
           <div className="shrink-0">
-            <SplitArrowButton href="/pricing">View pricing overview</SplitArrowButton>
+            <SplitArrowButton href="/pricing" variant="solid-light">
+              View pricing overview
+            </SplitArrowButton>
           </div>
         </div>
 
@@ -53,19 +64,21 @@ export function PricingPreview() {
             <Link
               key={item.group}
               href={item.link}
-              className="group p-6 sm:p-8 rounded-md bg-white border border-hairline hover:border-accent/40 hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              onMouseEnter={(e) => setParticleFocusFromElement(e.currentTarget, "attract", 0.85)}
+              onMouseLeave={() => clearParticleFocus()}
+              className="group p-6 sm:p-8 rounded-md bg-surface-dark-2/85 border border-white/12 hover:border-accent-soft/55 hover:-translate-y-0.5 shadow-lg transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-xs font-semibold text-accent tracking-widest">
+                  <span className="font-mono text-xs font-semibold text-accent-soft tracking-widest">
                     {item.group}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-surface-muted flex items-center justify-center text-ink group-hover:bg-accent group-hover:text-white transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-ink group-hover:bg-accent group-hover:text-white transition-colors">
                     <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform" />
                   </div>
                 </div>
 
-                <h3 className="font-display font-medium text-xl sm:text-2xl text-ink tracking-tight group-hover:text-accent transition-colors">
+                <h3 className="font-display font-medium text-xl sm:text-2xl text-ink tracking-tight group-hover:text-accent-soft transition-colors">
                   {item.title}
                 </h3>
 
@@ -74,8 +87,8 @@ export function PricingPreview() {
                 </p>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-hairline/60 flex items-center justify-between text-xs font-mono text-text-secondary">
-                <span className="flex items-center gap-1.5 text-accent font-semibold">
+              <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-text-secondary">
+                <span className="flex items-center gap-1.5 text-accent-soft font-semibold">
                   <ShieldCheck className="w-4 h-4" />
                   Scope-Based Quote
                 </span>

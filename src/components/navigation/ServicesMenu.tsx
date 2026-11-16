@@ -91,7 +91,7 @@ export function ServicesMenu({ isOpen, onClose, triggerRef }: ServicesMenuProps)
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.98 }}
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[740px] max-w-[calc(100vw-32px)] bg-[#1B1B1B]/95 backdrop-blur-md rounded-md border border-white/12 shadow-xl shadow-black/30 p-6 z-50 overflow-hidden"
+          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[740px] max-w-[calc(100vw-32px)] bg-[#121214]/98 rounded-md border border-white/12 shadow-2xl shadow-black/60 p-6 z-50 overflow-hidden"
           role="region"
           aria-label="Services Submenu"
         >
@@ -99,7 +99,7 @@ export function ServicesMenu({ isOpen, onClose, triggerRef }: ServicesMenuProps)
             {columns.map((col, idx) => (
               <div key={col.pillar} className="flex flex-col space-y-3">
                 <div>
-                  <Eyebrow withRule={false} className="text-accent font-bold text-[10px] tracking-wider mb-1">
+                  <Eyebrow withRule={false} className="text-accent-soft font-bold text-[10px] tracking-wider mb-1">
                     {col.pillar}
                   </Eyebrow>
                   <div className="font-display font-semibold text-xs text-white/70 mb-2">

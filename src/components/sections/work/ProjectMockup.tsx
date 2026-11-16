@@ -53,11 +53,11 @@ export function ProjectMockup({
   );
 
   return (
-    <section ref={containerRef} className="py-16 sm:py-24 bg-canvas border-b border-hairline overflow-hidden">
+    <section ref={containerRef} className="py-16 sm:py-24 bg-transparent border-b border-hairline overflow-hidden">
       <Container>
         {/* Centered Heading */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <span className="font-mono text-xs uppercase tracking-widest text-text-secondary block mb-2">
+          <span className="font-mono text-xs uppercase tracking-widest text-accent-soft block mb-2">
             SYSTEM ARCHITECTURE & INTERFACE
           </span>
           <h2 className="font-display font-medium text-2xl sm:text-3xl text-ink tracking-tight">
@@ -66,17 +66,17 @@ export function ProjectMockup({
         </div>
 
         {/* Browser Window Frame (1200px max) */}
-        <div className="max-w-6xl mx-auto rounded-lg overflow-hidden border border-hairline shadow-2xl bg-white">
+        <div className="max-w-6xl mx-auto rounded-lg overflow-hidden border border-hairline shadow-2xl bg-surface-dark">
           {/* Chrome Bar */}
-          <div className="bg-[#EBEBE8] px-4 py-3 border-b border-hairline flex items-center justify-between">
+          <div className="bg-surface-dark-2 px-4 py-3 border-b border-hairline flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-[#E06C75]/60" />
-              <div className="w-3 h-3 rounded-full bg-[#E5C07B]/60" />
-              <div className="w-3 h-3 rounded-full bg-[#98C379]/60" />
+              <div className="w-3 h-3 rounded-full bg-accent-soft/75" />
+              <div className="w-3 h-3 rounded-full bg-silver/45" />
+              <div className="w-3 h-3 rounded-full bg-white/30" />
             </div>
 
             {/* Address Pill */}
-            <div className="px-6 py-1 rounded-sm bg-white/80 border border-hairline text-xs font-mono text-text-secondary truncate max-w-[260px] sm:max-w-md">
+            <div className="px-6 py-1 rounded-sm bg-[#09090B]/80 border border-hairline text-xs font-mono text-text-secondary truncate max-w-[260px] sm:max-w-md">
               {urlLabel}
             </div>
 
@@ -84,7 +84,7 @@ export function ProjectMockup({
           </div>
 
           {/* Screenshot Container */}
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-surface-muted">
+          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-surface-dark">
             <div ref={imageRef} className="relative w-full h-[106%] -top-[3%]">
               {imageSrc ? (
                 <Image
@@ -95,11 +95,11 @@ export function ProjectMockup({
                   className="object-cover object-top"
                 />
               ) : (
-                <div className="w-full h-full flex flex-col items-center justify-center p-8 bg-gradient-to-b from-[#F2F2F0] to-[#E5E5E2] text-center">
-                  <span className="font-mono text-xs text-text-secondary uppercase tracking-widest">
+                <div className="w-full h-full flex flex-col items-center justify-center p-8 bg-gradient-to-b from-surface-dark to-[#09090B] text-center">
+                  <span className="font-mono text-xs text-accent-soft uppercase tracking-widest">
                     SYSTEM INTERFACE PREVIEW
                   </span>
-                  <span className="font-display font-medium text-lg text-ink/70 mt-2">
+                  <span className="font-display font-medium text-lg text-ink/80 mt-2">
                     Verified Digital Deliverable
                   </span>
                 </div>

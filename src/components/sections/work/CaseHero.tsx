@@ -17,7 +17,7 @@ export function CaseHero({ project }: CaseHeroProps) {
   const primaryCategory = project.category?.[0] || "Case Study";
 
   return (
-    <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 bg-surface-dark text-white border-b border-white/10 relative overflow-hidden">
+    <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 bg-surface-dark/55 text-white border-b border-white/10 relative overflow-hidden">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Metadata & Title */}

@@ -19,7 +19,7 @@ export function CaseMeta({ project }: CaseMetaProps) {
   ].filter((f) => Boolean(f.value));
 
   return (
-    <section className="py-8 sm:py-10 bg-white border-b border-hairline">
+    <section className="py-8 sm:py-10 bg-surface-dark-2/80 border-b border-white/10">
       <Container>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-6 divide-y sm:divide-y-0 sm:divide-x divide-hairline">
           {fields.map((f, idx) => (

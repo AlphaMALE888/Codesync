@@ -24,10 +24,10 @@ const STANDARD_STANDARDS = [
 
 export function PricingComparison() {
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-hairline">
+    <section className="py-16 sm:py-24 bg-surface-dark/55 border-b border-white/10">
       <Container>
         <div className="max-w-3xl mb-12">
-          <Eyebrow className="text-accent text-xs">ENGAGEMENT STANDARDS</Eyebrow>
+          <Eyebrow className="text-accent-soft text-xs">ENGAGEMENT STANDARDS</Eyebrow>
           <Heading level={2} className="mt-3 text-2xl sm:text-3xl text-ink font-medium tracking-tight">
             What every CODESYNC engagement includes.
           </Heading>
@@ -40,9 +40,9 @@ export function PricingComparison() {
           {STANDARD_STANDARDS.map((item, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-md bg-canvas border border-hairline flex items-start gap-4"
+              className="p-6 rounded-md bg-surface-dark-2/85 border border-white/12 flex items-start gap-4 hover:border-accent-soft/45 transition-colors"
             >
-              <div className="w-6 h-6 rounded-full bg-accent/10 text-accent flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-6 h-6 rounded-full bg-accent/15 border border-accent/30 text-accent-soft flex items-center justify-center shrink-0 mt-0.5">
                 <Check className="w-3.5 h-3.5 stroke-[2.5]" />
               </div>
               <div>

@@ -38,7 +38,7 @@ export default function ContactPage() {
   const faqSchema = getFaqSchema(contactFaqs);
 
   return (
-    <main className="min-h-screen bg-canvas pt-32 sm:pt-40">
+    <div className="min-h-screen bg-transparent pt-32 sm:pt-40">
       <JsonLd data={[breadcrumbs, faqSchema]} />
 
       <Container>
@@ -46,7 +46,7 @@ export default function ContactPage() {
           {/* Left Column: Direct Communication Channels */}
           <div className="lg:col-span-5 space-y-8">
             <div>
-              <Eyebrow withRule>DIRECT ACCESS</Eyebrow>
+              <Eyebrow className="text-accent-soft" withRule>DIRECT ACCESS</Eyebrow>
               <Heading level={1} className="mt-4 text-display-md sm:text-display-lg text-ink font-medium tracking-tight">
                 Let&apos;s talk.
               </Heading>
@@ -56,7 +56,7 @@ export default function ContactPage() {
             </div>
 
             {/* Direct Verified Communication Rows */}
-            <div className="space-y-4 pt-4 border-t border-hairline">
+            <div className="space-y-4 pt-4 border-t border-white/10">
               <span className="font-mono text-xs uppercase tracking-widest text-text-secondary block">
                 Direct Channels (Lucknow, UP)
               </span>
@@ -66,17 +66,17 @@ export default function ContactPage() {
                 href={siteConfig.contact.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-between p-4 rounded-md bg-white border border-hairline hover:border-accent/40 hover:shadow-sm transition-all"
+                className="group flex items-center justify-between p-4 rounded-md bg-surface-dark-2/85 border border-white/12 hover:border-accent-soft/50 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-accent/15 border border-accent/30 text-accent-soft flex items-center justify-center">
                     <MessageSquare className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="font-mono text-[11px] text-text-secondary uppercase tracking-wider block">
                       Instant WhatsApp
                     </span>
-                    <span className="font-medium text-base text-ink group-hover:text-emerald-700 transition-colors">
+                    <span className="font-medium text-base text-ink group-hover:text-accent-soft transition-colors">
                       +91 8948040913
                     </span>
                   </div>
@@ -87,17 +87,17 @@ export default function ContactPage() {
               {/* Phone 1 */}
               <a
                 href={`tel:${siteConfig.contact.phones[0]}`}
-                className="group flex items-center justify-between p-4 rounded-md bg-white border border-hairline hover:border-accent/40 hover:shadow-sm transition-all"
+                className="group flex items-center justify-between p-4 rounded-md bg-surface-dark-2/85 border border-white/12 hover:border-accent-soft/50 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 text-accent flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-accent/15 border border-accent/30 text-accent-soft flex items-center justify-center">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="font-mono text-[11px] text-text-secondary uppercase tracking-wider block">
                       Direct Line (Primary)
                     </span>
-                    <span className="font-medium text-base text-ink group-hover:text-accent transition-colors">
+                    <span className="font-medium text-base text-ink group-hover:text-accent-soft transition-colors">
                       +91 {siteConfig.contact.phones[0]}
                     </span>
                   </div>
@@ -108,17 +108,17 @@ export default function ContactPage() {
               {/* Phone 2 */}
               <a
                 href={`tel:${siteConfig.contact.phones[1]}`}
-                className="group flex items-center justify-between p-4 rounded-md bg-white border border-hairline hover:border-accent/40 hover:shadow-sm transition-all"
+                className="group flex items-center justify-between p-4 rounded-md bg-surface-dark-2/85 border border-white/12 hover:border-accent-soft/50 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 text-accent flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-accent/15 border border-accent/30 text-accent-soft flex items-center justify-center">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="font-mono text-[11px] text-text-secondary uppercase tracking-wider block">
                       Direct Line (Secondary)
                     </span>
-                    <span className="font-medium text-base text-ink group-hover:text-accent transition-colors">
+                    <span className="font-medium text-base text-ink group-hover:text-accent-soft transition-colors">
                       +91 {siteConfig.contact.phones[1]}
                     </span>
                   </div>
@@ -129,17 +129,17 @@ export default function ContactPage() {
               {/* Email */}
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="group flex items-center justify-between p-4 rounded-md bg-white border border-hairline hover:border-accent/40 hover:shadow-sm transition-all"
+                className="group flex items-center justify-between p-4 rounded-md bg-surface-dark-2/85 border border-white/12 hover:border-accent-soft/50 hover:shadow-lg transition-all"
               >
                 <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-full bg-surface-muted text-ink flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-white/10 text-ink flex items-center justify-center">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="font-mono text-[11px] text-text-secondary uppercase tracking-wider block">
                       Official Support
                     </span>
-                    <span className="font-medium text-base text-ink group-hover:text-accent transition-colors">
+                    <span className="font-medium text-base text-ink group-hover:text-accent-soft transition-colors">
                       {siteConfig.contact.email}
                     </span>
                   </div>
@@ -158,6 +158,6 @@ export default function ContactPage() {
 
       {/* Embedded FAQ Section */}
       <FaqSection id="contact-faq" limit={5} showContactCta={false} />
-    </main>
+    </div>
   );
 }

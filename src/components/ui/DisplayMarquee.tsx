@@ -1,5 +1,4 @@
 import React from "react";
-import { ArchMotif } from "./ArchMotif";
 import { VisuallyHidden } from "./VisuallyHidden";
 import { cn } from "@/lib/cn";
 
@@ -15,10 +14,14 @@ export interface DisplayMarqueeProps {
 
 export function DisplayMarquee({
   text,
-  separator = <ArchMotif size="lg" className="mx-8 sm:mx-16 opacity-60 text-current" />,
+  separator = (
+    <span className="mx-8 sm:mx-14 inline-flex items-center justify-center" aria-hidden="true">
+      <span className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-accent-soft/85 ring-4 ring-accent/25" />
+    </span>
+  ),
   speed = 32,
   direction = "left",
-  tone = "light",
+  tone = "dark",
   className,
   asHeading = true,
 }: DisplayMarqueeProps) {
@@ -28,7 +31,7 @@ export function DisplayMarquee({
     <div
       className={cn(
         "relative w-full overflow-hidden select-none py-4 sm:py-8",
-        isDark ? "bg-surface-dark text-on-dark" : "bg-canvas text-ink",
+        isDark ? "bg-transparent text-on-dark" : "bg-transparent text-ink",
         className
       )}
     >

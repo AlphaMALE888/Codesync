@@ -3,20 +3,19 @@
 import React from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArchMotif } from "@/components/ui/ArchMotif";
 import { siteConfig } from "@/data/site";
-import { ArrowRight, MessageSquare, Compass, CreditCard, Mail } from "lucide-react";
+import { MessageSquare, Compass, CreditCard, Mail, Orbit } from "lucide-react";
 
 export default function NotFound() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div className="min-h-screen bg-brand-darkest text-white flex flex-col justify-between relative overflow-hidden px-4 sm:px-6 lg:px-8">
-      {/* Background Subtle Gradient & Grid */}
+    <div className="min-h-screen bg-transparent text-white flex flex-col justify-between relative overflow-hidden px-4 sm:px-6 lg:px-8">
+      {/* Subtle Crimson Radial Horizon Glow */}
       <div
-        className="absolute inset-0 opacity-15 pointer-events-none"
+        className="absolute inset-0 opacity-30 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(circle at 50% 40%, rgba(95, 178, 126, 0.25) 0%, transparent 65%)`,
+          backgroundImage: `radial-gradient(circle at 50% 40%, rgba(165, 31, 61, 0.25) 0%, transparent 65%)`,
         }}
       />
 
@@ -24,15 +23,15 @@ export default function NotFound() {
 
       {/* Main Content Area */}
       <div className="relative z-10 max-w-3xl mx-auto w-full text-center py-12">
-        {/* Animated Awadhi Arch Motif */}
+        {/* Particle Orbit Icon */}
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="flex justify-center mb-6 text-accent-soft"
         >
-          <div className="p-4 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
-            <ArchMotif size="lg" className="w-10 h-15" />
+          <div className="p-4 rounded-full bg-surface-dark-2 border border-white/15">
+            <Orbit className="w-8 h-8" />
           </div>
         </motion.div>
 
@@ -53,7 +52,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-xl mx-auto">
           <Link
             href="/services"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-button bg-accent-default text-brand-darkest font-medium text-sm hover:bg-accent-soft transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-pill bg-accent text-white font-medium text-sm hover:bg-accent-soft transition-colors"
           >
             <Compass className="w-4 h-4" />
             Explore Services
@@ -61,7 +60,7 @@ export default function NotFound() {
 
           <Link
             href="/pricing"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-button bg-white/10 hover:bg-white/15 text-white border border-white/15 font-medium text-sm transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-pill bg-surface-dark-2 hover:bg-white/15 text-white border border-white/15 font-medium text-sm transition-colors"
           >
             <CreditCard className="w-4 h-4" />
             View Pricing
@@ -69,7 +68,7 @@ export default function NotFound() {
 
           <Link
             href="/contact"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-button bg-white/10 hover:bg-white/15 text-white border border-white/15 font-medium text-sm transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-pill bg-surface-dark-2 hover:bg-white/15 text-white border border-white/15 font-medium text-sm transition-colors"
           >
             <Mail className="w-4 h-4" />
             Contact Team
@@ -79,7 +78,7 @@ export default function NotFound() {
             href={siteConfig.contact.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-button bg-white/10 hover:bg-white/15 text-accent-soft border border-accent-soft/30 font-medium text-sm transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-pill bg-surface-dark-2 hover:bg-accent/20 text-accent-soft border border-accent-soft/35 font-medium text-sm transition-colors"
           >
             <MessageSquare className="w-4 h-4" />
             WhatsApp

@@ -74,7 +74,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
   const faqSchema = serviceFaqs.length > 0 ? getFaqSchema(serviceFaqs) : null;
 
   return (
-    <main className="min-h-screen bg-canvas">
+    <div className="min-h-screen bg-transparent">
       <JsonLd
         data={[
           serviceSchema,
@@ -112,6 +112,6 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
 
       {/* 9. Final CTA */}
       <FinalCta />
-    </main>
+    </div>
   );
 }

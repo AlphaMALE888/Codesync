@@ -28,7 +28,7 @@ export function FeatureStrip() {
   ];
 
   return (
-    <section className="w-full py-16 sm:py-20 bg-surface-dark-2 text-on-dark border-y border-white/10">
+    <section className="w-full py-16 sm:py-20 bg-surface-dark-2/60 text-on-dark border-y border-white/10">
       <Container>
         <Reveal>
           {/* Top All-Caps Stance Statement */}

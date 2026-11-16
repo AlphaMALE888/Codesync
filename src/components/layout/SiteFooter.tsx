@@ -10,7 +10,10 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full px-[clamp(8px,1.2vw,16px)] pb-[clamp(8px,1.2vw,16px)]">
+    <footer
+      id="site-footer"
+      className="w-full px-[clamp(8px,1.2vw,16px)] pb-[clamp(8px,1.2vw,16px)]"
+    >
       <div className="w-full bg-surface-dark text-on-dark rounded-t-lg border-t border-x border-white/10 pt-16 sm:pt-24 pb-0 px-[clamp(20px,4vw,64px)] overflow-hidden">
         <div className="max-w-[1440px] mx-auto">
           {/* Top Row: Talk To Us Callout Block */}

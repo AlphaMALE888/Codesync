@@ -16,7 +16,7 @@ export function ProofGrid() {
   const quoteProof = testimonialsData[0]; // Mad House Creations verified review
 
   return (
-    <section className="relative z-10 w-full py-16 sm:py-24 bg-canvas">
+    <section id="proof-section" className="relative z-10 w-full pt-12 pb-16 sm:pt-16 sm:pb-24 bg-transparent">
       <Container>
         <Reveal>
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
@@ -24,10 +24,10 @@ export function ProofGrid() {
             <div className="md:col-span-4">
               <MetricCard tone="dark" className="h-full min-h-[220px]">
                 <div className="flex items-center justify-between mb-8">
-                  <span className="w-10 h-10 rounded-pill bg-white/10 flex items-center justify-center text-accent-soft">
+                  <span className="w-10 h-10 rounded-pill bg-accent/15 border border-accent/30 flex items-center justify-center text-accent-soft">
                     <Clock className="w-5 h-5" />
                   </span>
-                  <span className="type-label text-[11px] text-white/50 tracking-wider">
+                  <span className="type-label text-[11px] text-white/60 tracking-wider">
                     TIMING COMMITMENT
                   </span>
                 </div>
@@ -48,7 +48,7 @@ export function ProofGrid() {
             <div className="md:col-span-3">
               <MetricCard tone="light" className="h-full min-h-[220px]">
                 <div className="flex items-center justify-between mb-8">
-                  <span className="w-10 h-10 rounded-pill bg-surface-muted flex items-center justify-center text-accent">
+                  <span className="w-10 h-10 rounded-pill bg-white/5 border border-white/12 flex items-center justify-center text-accent-soft">
                     <Users className="w-5 h-5" />
                   </span>
                   <span className="type-label text-[11px] text-text-secondary tracking-wider">
@@ -67,10 +67,10 @@ export function ProofGrid() {
               </MetricCard>
             </div>
 
-            {/* Card 3: Pale Radial Speed Metric Card (Span 2) */}
+            {/* Card 3: Speed Metric Card (Span 2) */}
             <div className="md:col-span-2">
               <MetricCard tone="muted" className="h-full min-h-[220px] text-center items-center justify-center">
-                <div className="w-12 h-12 rounded-pill border-2 border-dashed border-accent/40 flex items-center justify-center mb-3 text-accent">
+                <div className="w-12 h-12 rounded-pill border border-dashed border-accent-soft/50 bg-accent/10 flex items-center justify-center mb-3 text-accent-soft">
                   <TrendingUp className="w-5 h-5" />
                 </div>
                 <div className="text-2xl sm:text-3xl font-bold tracking-tight text-ink font-tabular">
@@ -86,7 +86,7 @@ export function ProofGrid() {
             <div className="md:col-span-3">
               <MetricCard tone="light" className="h-full min-h-[220px]">
                 <div className="flex items-center justify-between mb-4">
-                  <Quote className="w-6 h-6 text-accent opacity-60" />
+                  <Quote className="w-6 h-6 text-accent-soft opacity-80" />
                   <span className="type-label text-[10px] text-text-secondary tracking-wider">
                     VERIFIED REVIEW
                   </span>

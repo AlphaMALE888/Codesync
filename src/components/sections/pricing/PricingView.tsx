@@ -22,11 +22,11 @@ export function PricingView({ initialPillar = "grow", plans }: PricingViewProps)
   const activePlans = plans.filter((p) => p.group === activePillar);
 
   return (
-    <div className="pt-32 sm:pt-40 bg-canvas min-h-screen">
+    <div className="pt-32 sm:pt-40 bg-transparent min-h-screen">
       {/* Header */}
       <Container>
         <div className="max-w-4xl mx-auto text-center pb-12 sm:pb-16 border-b border-hairline">
-          <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold block mb-2">
+          <span className="font-mono text-xs uppercase tracking-widest text-accent-soft font-semibold block mb-2">
             TRANSPARENT COMMERCIAL TERMS
           </span>
           <h1 className="font-display font-medium text-display-md sm:text-display-lg tracking-tight text-ink">
@@ -44,11 +44,11 @@ export function PricingView({ initialPillar = "grow", plans }: PricingViewProps)
 
         {/* Marquee Accent */}
         <div className="py-8">
-          <DisplayMarquee text="Grow Retainers · Build Projects · Run Software Architecture" />
+          <DisplayMarquee text="Grow Retainers · Build Projects · Run Software Architecture" tone="dark" />
         </div>
 
         {/* Pricing Cards Grid */}
-        <div className="py-12 relative min-h-[500px]">
+        <div id="pricing-section" className="py-12 relative min-h-[500px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activePillar}

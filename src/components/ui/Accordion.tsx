@@ -72,8 +72,8 @@ export function AccordionItem({ id, title, children, className }: AccordionItemP
       className={cn(
         "rounded-md transition-colors duration-base border overflow-hidden",
         isDark
-          ? "bg-surface-dark-2 text-on-dark border-white/10"
-          : "bg-white text-ink border-hairline shadow-sm",
+          ? "bg-surface-dark-2/85 text-on-dark border-white/10 hover:border-white/20"
+          : "bg-surface-dark/85 text-ink border-hairline hover:border-accent-soft/35",
         className
       )}
     >
@@ -84,14 +84,15 @@ export function AccordionItem({ id, title, children, className }: AccordionItemP
           aria-expanded={isOpen}
           aria-controls={`accordion-panel-${id}`}
           id={`accordion-btn-${id}`}
-          className="w-full py-5 px-6 sm:px-7 flex items-center justify-between gap-4 text-left font-display font-medium text-base sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+          className="w-full py-5 px-6 sm:px-7 flex items-center justify-between gap-4 text-left font-display font-medium text-base sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-soft"
         >
-          <span className="tracking-tight">{title}</span>
+          <span className="tracking-tight text-ink">{title}</span>
           <span
             className={cn(
-              "w-8 h-8 rounded-pill flex items-center justify-center shrink-0 transition-transform duration-200",
-              isDark ? "bg-white/10 text-white" : "bg-surface-muted text-ink",
-              isOpen ? "rotate-45" : "rotate-0"
+              "w-8 h-8 rounded-pill flex items-center justify-center shrink-0 transition-all duration-200",
+              isOpen
+                ? "bg-accent text-white rotate-45"
+                : "bg-white/10 text-ink rotate-0"
             )}
             aria-hidden="true"
           >

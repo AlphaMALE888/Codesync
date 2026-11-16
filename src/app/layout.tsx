@@ -5,6 +5,7 @@ import { SkipLink } from "@/components/ui/SkipLink";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { GlobalVisualEffects } from "@/components/visual/GlobalVisualEffects";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Analytics } from "@/components/analytics/Analytics";
 import { getOrganizationSchema, getLocalBusinessSchema } from "@/lib/seo/jsonld";
@@ -79,13 +80,16 @@ export default function RootLayout({
         <JsonLd data={[organizationSchema, localBusinessSchema]} />
       </head>
       <body className="min-h-screen flex flex-col justify-between bg-canvas text-ink selection:bg-accent selection:text-white">
+        <GlobalVisualEffects />
         <SmoothScroll>
           <SkipLink targetId="main" />
           <SiteHeader />
-          <main id="main" className="flex-1 w-full pt-16 sm:pt-20">
+          <main id="main" className="relative z-10 flex-1 w-full pt-16 sm:pt-20">
             {children}
           </main>
-          <SiteFooter />
+          <div className="relative z-10">
+            <SiteFooter />
+          </div>
         </SmoothScroll>
         <Analytics />
       </body>

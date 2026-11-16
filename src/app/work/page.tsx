@@ -54,7 +54,7 @@ export default function WorkPage({ searchParams }: WorkPageProps) {
         );
 
   return (
-    <main className="min-h-screen bg-canvas pt-32 sm:pt-40">
+    <div className="min-h-screen bg-transparent pt-32 sm:pt-40">
       <JsonLd
         data={getBreadcrumbSchema([
           { name: "Home", url: "/" },
@@ -90,6 +90,6 @@ export default function WorkPage({ searchParams }: WorkPageProps) {
 
       {/* Conversion CTA */}
       <FinalCta />
-    </main>
+    </div>
   );
 }
