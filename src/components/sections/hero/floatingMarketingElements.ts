@@ -5,7 +5,6 @@ export interface FloatingElementEntry {
   group: THREE.Group;
   basePosition: THREE.Vector3;
   baseRotation: THREE.Euler;
-  parallaxWeight: number;
   floatAmplitude: number;
   floatSpeed: number;
   floatPhase: number;
@@ -121,22 +120,22 @@ export function buildMarketingElements(
 
   // Shared calibrated PBR materials (roughness varies >= 0.25 between ivory tiles and crimson accents)
   const ivoryMat = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(0xe8e0d8),
-    roughness: 0.30,
+    color: new THREE.Color(0xefe8e0),
+    roughness: 0.32,
     metalness: 0.03,
-    clearcoat: 0.32,
-    clearcoatRoughness: 0.30,
-    envMapIntensity: 0.46,
+    clearcoat: 0.24,
+    clearcoatRoughness: 0.32,
+    envMapIntensity: 0.20,
     roughnessMap: roughnessTexture,
   });
 
   const barColumnMat = new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(0xe6ded6),
-    roughness: 0.28,
+    color: new THREE.Color(0xede5dd),
+    roughness: 0.30,
     metalness: 0.04,
-    clearcoat: 0.38,
-    clearcoatRoughness: 0.28,
-    envMapIntensity: 0.48,
+    clearcoat: 0.28,
+    clearcoatRoughness: 0.30,
+    envMapIntensity: 0.20,
     roughnessMap: roughnessTexture,
   });
 
@@ -178,13 +177,13 @@ export function buildMarketingElements(
   const analyticsGroup = new THREE.Group();
   analyticsGroup.name = "analyticsTile";
 
-  const tileBaseGeo = new THREE.ExtrudeGeometry(createRoundedSquareShape(0.84, 0.14), {
+  const tileBaseGeo = new THREE.ExtrudeGeometry(createRoundedSquareShape(0.84, 0.12), {
     depth: 0.13,
     steps: 1,
     curveSegments: 14,
     bevelEnabled: true,
-    bevelThickness: 0.045,
-    bevelSize: 0.042,
+    bevelThickness: 0.028,
+    bevelSize: 0.026,
     bevelSegments: 4,
   });
   tileBaseGeo.translate(0, 0, -0.065);
@@ -204,32 +203,31 @@ export function buildMarketingElements(
   ];
   const barBaseY = -0.23;
   for (const spec of miniBarSpecs) {
-    const bGeo = new THREE.ExtrudeGeometry(createRoundedRectShape(0.088, spec.h, 0.022), {
+    const bGeo = new THREE.ExtrudeGeometry(createRoundedRectShape(0.088, spec.h, 0.016), {
       depth: 0.055,
       steps: 1,
       curveSegments: 8,
       bevelEnabled: true,
-      bevelThickness: 0.016,
-      bevelSize: 0.014,
+      bevelThickness: 0.012,
+      bevelSize: 0.010,
       bevelSegments: 3,
     });
     bGeo.computeVertexNormals();
     geometries.push(bGeo);
 
     const barMesh = new THREE.Mesh(bGeo, crimsonAccentMat);
-    barMesh.position.set(spec.x, barBaseY + spec.h * 0.5, 0.092);
+    barMesh.position.set(spec.x, barBaseY + spec.h * 0.5, 0.082);
     analyticsGroup.add(barMesh);
   }
 
-  analyticsGroup.position.set(0.05, 1.48, -0.25);
-  analyticsGroup.rotation.set(0.14, -0.34, 0.08);
+  analyticsGroup.position.set(-0.08, 1.56, 0.24);
+  analyticsGroup.rotation.set(0.14, -0.36, 0.10);
   root.add(analyticsGroup);
 
   entries.push({
     group: analyticsGroup,
     basePosition: analyticsGroup.position.clone(),
     baseRotation: analyticsGroup.rotation.clone(),
-    parallaxWeight: 1.35,
     floatAmplitude: 0.085,
     floatSpeed: 1.05,
     floatPhase: 0.4,
@@ -305,15 +303,15 @@ export function buildMarketingElements(
   dartGroup.rotation.set(0.55, 0.15, -0.78);
 
   targetGroup.add(outerRing, innerRing, centerDot, dartGroup);
-  targetGroup.position.set(-1.58, 0.34, 0.65);
-  targetGroup.rotation.set(0.18, 0.42, -0.06);
+  targetGroup.position.set(-1.94, 0.40, 0.58);
+  targetGroup.rotation.set(0.16, -0.34, 0.12);
+  targetGroup.scale.setScalar(0.90);
   root.add(targetGroup);
 
   entries.push({
     group: targetGroup,
     basePosition: targetGroup.position.clone(),
     baseRotation: targetGroup.rotation.clone(),
-    parallaxWeight: 1.55,
     floatAmplitude: 0.075,
     floatSpeed: 0.92,
     floatPhase: 1.85,
@@ -327,9 +325,9 @@ export function buildMarketingElements(
   barChartGroup.name = "groundedBarChart";
 
   const columnSpecs = [
-    { x: 0.56, z: 0.46, w: 0.52, d: 0.46, h: 0.54 },
-    { x: 1.24, z: 0.38, w: 0.54, d: 0.48, h: 0.96 },
-    { x: 1.94, z: 0.3, w: 0.56, d: 0.5, h: 1.44 },
+    { x: 0.44, z: 0.46, w: 0.46, d: 0.44, h: 0.48 },
+    { x: 1.12, z: 0.38, w: 0.48, d: 0.46, h: 0.88 },
+    { x: 1.80, z: 0.30, w: 0.50, d: 0.48, h: 1.38 },
   ];
 
   const shadowDiscGeo = new THREE.CircleGeometry(0.42, 24);
@@ -339,22 +337,23 @@ export function buildMarketingElements(
   for (const col of columnSpecs) {
     const floorY = platformHeightAt(col.x, col.z);
     // Extrude horizontally and rotate so height grows +Y from y=0 base (bottom-center pivot)
-    const colGeo = new THREE.ExtrudeGeometry(createRoundedRectShape(col.w, col.d, 0.085), {
+    const colGeo = new THREE.ExtrudeGeometry(createRoundedRectShape(col.w, col.d, 0.048), {
       depth: col.h,
       steps: 1,
       curveSegments: 10,
       bevelEnabled: true,
-      bevelThickness: 0.05,
-      bevelSize: 0.04,
-      bevelSegments: 4,
+      bevelThickness: 0.028,
+      bevelSize: 0.026,
+      bevelSegments: 5,
     });
     colGeo.rotateX(-Math.PI * 0.5);
-    colGeo.translate(0, 0.05, 0); // shift bottom bevel cleanly onto y = 0
+    colGeo.translate(0, 0.028, 0); // shift bottom bevel cleanly onto y = 0
     colGeo.computeVertexNormals();
     geometries.push(colGeo);
 
     const colMesh = new THREE.Mesh(colGeo, barColumnMat);
-    colMesh.position.set(col.x, floorY - 0.04, col.z);
+    colMesh.position.set(col.x, floorY - 0.03, col.z);
+    colMesh.rotation.y = -0.28;
     colMesh.castShadow = castShadowOnGpu;
     colMesh.receiveShadow = true;
     barChartGroup.add(colMesh);
@@ -370,7 +369,6 @@ export function buildMarketingElements(
     group: barChartGroup,
     basePosition: barChartGroup.position.clone(),
     baseRotation: barChartGroup.rotation.clone(),
-    parallaxWeight: 0.45, // Grounded on platform
     floatAmplitude: 0,
     floatSpeed: 0,
     floatPhase: 0,
@@ -383,8 +381,8 @@ export function buildMarketingElements(
   const pieGroup = new THREE.Group();
   pieGroup.name = "pieChartElement";
 
-  const pieRadius = 0.54;
-  const wedgeStart = 0.35;
+  const pieRadius = 0.44;
+  const wedgeStart = 0.38;
   const wedgeEnd = wedgeStart + 1.24; // ~71 deg crimson sector
 
   const mainPieShape = createSectorShape(pieRadius, wedgeEnd + 0.06, wedgeStart + Math.PI * 2 - 0.06, 32);
@@ -395,8 +393,8 @@ export function buildMarketingElements(
     steps: 1,
     curveSegments: 24,
     bevelEnabled: true,
-    bevelThickness: 0.045,
-    bevelSize: 0.04,
+    bevelThickness: 0.028,
+    bevelSize: 0.026,
     bevelSegments: 4,
   });
   mainPieGeo.translate(0, 0, -0.08);
@@ -407,8 +405,8 @@ export function buildMarketingElements(
     steps: 1,
     curveSegments: 14,
     bevelEnabled: true,
-    bevelThickness: 0.042,
-    bevelSize: 0.036,
+    bevelThickness: 0.026,
+    bevelSize: 0.024,
     bevelSegments: 4,
   });
   wedgeGeo.translate(0, 0, -0.09);
@@ -426,15 +424,14 @@ export function buildMarketingElements(
   wedgeMesh.castShadow = castShadowOnGpu;
 
   pieGroup.add(mainPieMesh, wedgeMesh);
-  pieGroup.position.set(3.26, -1.08, 0.44);
-  pieGroup.rotation.set(-0.24, -0.32, 0.18);
+  pieGroup.position.set(2.94, -1.04, 0.34);
+  pieGroup.rotation.set(-0.18, -0.38, 0.14);
   root.add(pieGroup);
 
   entries.push({
     group: pieGroup,
     basePosition: pieGroup.position.clone(),
     baseRotation: pieGroup.rotation.clone(),
-    parallaxWeight: 1.15,
     floatAmplitude: 0.065,
     floatSpeed: 0.88,
     floatPhase: 3.1,

@@ -215,10 +215,43 @@ html.lenis, html.lenis body {
   transform: none !important;
 }
 
+/* Commitment 3D Stack Subtle Idle Float & Crimson Node Pulse */
+@keyframes commitment-slab-float {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, -2.5px, 0);
+  }
+}
+
+@keyframes commitment-node-pulse {
+  0%, 100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.16);
+  }
+}
+
+.animate-commitment-float {
+  animation: commitment-slab-float var(--float-dur, 5.6s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
+.animate-commitment-node {
+  animation: commitment-node-pulse 3.4s ease-in-out var(--node-delay, 0s) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 /* Reduced Motion Override */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee-left,
-  .animate-marquee-right {
+  .animate-marquee-right,
+  .animate-commitment-float,
+  .animate-commitment-node {
     animation: none !important;
     transform: none !important;
   }

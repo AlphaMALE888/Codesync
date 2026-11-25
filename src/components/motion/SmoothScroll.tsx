@@ -23,9 +23,13 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       return;
     }
 
-    // Initialize Lenis
+    // Prevent unnecessary layout recalculation on mobile address-bar resize
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    // Initialize Lenis for ultra-silky site-wide wheel & momentum scrolling
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: 0.085,
+      wheelMultiplier: 0.95,
       smoothWheel: true,
       syncTouch: false, // native momentum scrolling on touch devices
     });
@@ -44,15 +48,23 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
-    // Observe body style changes to stop/resume Lenis when dialogs/menus lock scroll
+    // Observe body style changes only to stop/resume Lenis when state transitions
+    let isLocked =
+      document.body.style.overflow === "hidden" ||
+      document.documentElement.classList.contains("overflow-hidden");
+    if (isLocked) lenis.stop();
+
     const observer = new MutationObserver(() => {
-      const isOverflowHidden =
+      const nextLocked =
         document.body.style.overflow === "hidden" ||
         document.documentElement.classList.contains("overflow-hidden");
-      if (isOverflowHidden) {
-        lenis.stop();
-      } else {
-        lenis.start();
+      if (nextLocked !== isLocked) {
+        isLocked = nextLocked;
+        if (isLocked) {
+          lenis.stop();
+        } else {
+          lenis.start();
+        }
       }
     });
 

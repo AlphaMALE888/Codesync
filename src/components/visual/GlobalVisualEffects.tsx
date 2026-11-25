@@ -21,15 +21,29 @@ export function GlobalVisualEffects() {
     if (typeof window === "undefined") return;
     particleBridge.pathname = pathname;
 
-    const updateExclusionZones = () => {
+    let cachedServicesEl =
+      pathname === "/" ? document.getElementById("services-section") : null;
+    let cachedFooterEl = document.getElementById("site-footer");
+
+    const refreshCachedEls = () => {
+      if (pathname === "/" && !cachedServicesEl) {
+        cachedServicesEl = document.getElementById("services-section");
+      }
+      if (!cachedFooterEl) {
+        cachedFooterEl = document.getElementById("site-footer");
+      }
+    };
+
+    const updateExclusionZonesNow = () => {
+      if (particleBridge.fluidBlend <= 0.01 && !particleBridge.hasPointerMoved) {
+        return;
+      }
+      refreshCachedEls();
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const servicesEl =
-        pathname === "/" ? document.getElementById("services-section") : null;
-      const footerEl = document.getElementById("site-footer");
 
-      const servicesRect = servicesEl ? servicesEl.getBoundingClientRect() : null;
-      const footerRect = footerEl ? footerEl.getBoundingClientRect() : null;
+      const servicesRect = cachedServicesEl ? cachedServicesEl.getBoundingClientRect() : null;
+      const footerRect = cachedFooterEl ? cachedFooterEl.getBoundingClientRect() : null;
 
       particleBridge.excludeServicesUv = rectToUvBounds(servicesRect, vw, vh);
       particleBridge.excludeFooterUv = rectToUvBounds(footerRect, vw, vh);
@@ -41,6 +55,15 @@ export function GlobalVisualEffects() {
           [servicesRect, footerRect]
         );
       }
+    };
+
+    let exclusionRaf = 0;
+    const scheduleExclusionUpdate = () => {
+      if (exclusionRaf) return;
+      exclusionRaf = requestAnimationFrame(() => {
+        exclusionRaf = 0;
+        updateExclusionZonesNow();
+      });
     };
 
     const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
@@ -66,19 +89,19 @@ export function GlobalVisualEffects() {
     const hasHero = pathname === "/" && Boolean(heroEl);
     particleBridge.hasHero = hasHero;
 
-    const getHeroScrubDistance = () => {
-      if (!heroEl) return Math.max(480, window.innerHeight);
-      const h = heroEl.getBoundingClientRect().height || window.innerHeight;
-      return Math.max(480, Math.round(h * 1.15));
-    };
+    let cachedHeroScrubDistance = heroEl
+      ? Math.max(480, Math.round((heroEl.getBoundingClientRect().height || window.innerHeight) * 1.15))
+      : Math.max(480, window.innerHeight);
+
+    const getHeroScrubDistance = () => cachedHeroScrubDistance;
 
     if (!hasHero) {
       applyHeroProgress(1, false);
-      updateExclusionZones();
+      updateExclusionZonesNow();
     } else {
       const initialProgress = clamp01(window.scrollY / getHeroScrubDistance());
       applyHeroProgress(initialProgress, true);
-      updateExclusionZones();
+      updateExclusionZonesNow();
     }
 
     let scrollTween: gsap.core.Tween | null = null;
@@ -93,7 +116,7 @@ export function GlobalVisualEffects() {
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             applyHeroProgress(self.progress, true);
-            updateExclusionZones();
+            scheduleExclusionUpdate();
           },
         });
       } else {
@@ -110,10 +133,10 @@ export function GlobalVisualEffects() {
           scrollTrigger: {
             start: 0,
             end: () => getHeroScrubDistance(),
-            scrub: 1.25,
+            scrub: true,
             invalidateOnRefresh: true,
             onUpdate: () => {
-              updateExclusionZones();
+              scheduleExclusionUpdate();
             },
           },
         });
@@ -124,7 +147,11 @@ export function GlobalVisualEffects() {
     let resizeObs: ResizeObserver | null = null;
     if (heroEl && typeof ResizeObserver !== "undefined") {
       resizeObs = new ResizeObserver(() => {
-        updateExclusionZones();
+        cachedHeroScrubDistance = Math.max(
+          480,
+          Math.round((heroEl.getBoundingClientRect().height || window.innerHeight) * 1.15)
+        );
+        scheduleExclusionUpdate();
       });
       resizeObs.observe(heroEl);
     }
@@ -133,14 +160,20 @@ export function GlobalVisualEffects() {
       if (hasHero && prefersReducedMotion) {
         applyHeroProgress(window.scrollY / getHeroScrubDistance(), true);
       }
-      updateExclusionZones();
+      scheduleExclusionUpdate();
     };
 
     const handleResize = () => {
+      if (heroEl) {
+        cachedHeroScrubDistance = Math.max(
+          480,
+          Math.round((heroEl.getBoundingClientRect().height || window.innerHeight) * 1.15)
+        );
+      }
       if (hasHero && prefersReducedMotion) {
         applyHeroProgress(window.scrollY / getHeroScrubDistance(), true);
       }
-      updateExclusionZones();
+      scheduleExclusionUpdate();
       ScrollTrigger.refresh();
     };
 
@@ -148,12 +181,14 @@ export function GlobalVisualEffects() {
     window.addEventListener("resize", handleResize, { passive: true });
 
     const settleTimer = setTimeout(() => {
-      updateExclusionZones();
+      refreshCachedEls();
+      updateExclusionZonesNow();
       ScrollTrigger.refresh();
     }, 120);
 
     return () => {
       clearTimeout(settleTimer);
+      if (exclusionRaf) cancelAnimationFrame(exclusionRaf);
       resizeObs?.disconnect();
       trigger?.kill();
       scrollTween?.kill();

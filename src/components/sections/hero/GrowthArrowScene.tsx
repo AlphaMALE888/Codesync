@@ -123,9 +123,10 @@ export function GrowthArrowScene() {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 0.96;
-    renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.shadowMap.enabled = !isSoftwareGl;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.autoUpdate = false;
     renderer.setClearColor(0x080808, 0);
 
     const canvas = renderer.domElement;
@@ -144,7 +145,7 @@ export function GrowthArrowScene() {
     const roomEnvironment = new RoomEnvironment();
     const envTarget = pmremGenerator.fromScene(roomEnvironment, 0.04);
     scene.environment = envTarget.texture;
-    scene.environmentIntensity = 0.28;
+    scene.environmentIntensity = 0.12;
     roomEnvironment.dispose();
     pmremGenerator.dispose();
 
@@ -164,30 +165,31 @@ export function GrowthArrowScene() {
     const outlineRig = buildMovingOutlineGlow(assets.contours);
     const marketingBundle = buildMarketingElements(assets.roughnessTexture, !isSoftwareGl);
 
-    // Main monolithic 3D arrow group (ribbon + arrowhead + dynamic moving outline glow)
+    // Main monolithic 3D arrow group (seamless extruded sculpture + dynamic moving outline glow)
     const arrowMainGroup = new THREE.Group();
     arrowMainGroup.name = "mainGrowthArrow";
+    arrowMainGroup.rotation.set(-0.17, -0.40, 0);
+    arrowMainGroup.position.set(0.10, 0.10, 0.14);
 
-    const ribbonMesh = new THREE.Mesh(assets.ribbonGeometry, assets.sculptureMaterial);
-    ribbonMesh.castShadow = !isSoftwareGl;
-    ribbonMesh.receiveShadow = true;
-
-    const arrowheadMesh = new THREE.Mesh(assets.arrowheadGeometry, assets.sculptureMaterial);
-    arrowheadMesh.castShadow = !isSoftwareGl;
-    arrowheadMesh.receiveShadow = true;
+    const arrowMesh = new THREE.Mesh(assets.arrowGeometry, assets.sculptureMaterial);
+    arrowMesh.castShadow = !isSoftwareGl;
+    arrowMesh.receiveShadow = true;
 
     const platformMesh = new THREE.Mesh(assets.platformGeometry, assets.platformMaterial);
     platformMesh.receiveShadow = true;
 
-    arrowMainGroup.add(ribbonMesh, arrowheadMesh, outlineRig.group);
+    const pulsePointLight = new THREE.PointLight(0xd40f2d, 0.85, 3.8, 2.0);
+    pulsePointLight.position.set(-1.2, -0.6, 0.8);
+
+    arrowMainGroup.add(arrowMesh, outlineRig.group, pulsePointLight);
     parallaxGroup.add(platformMesh, arrowMainGroup, marketingBundle.root);
 
     // Balanced studio 3-point + crimson underside + moving pulse light rig
-    const hemiFill = new THREE.HemisphereLight(0xe5ddd4, 0x0d0103, 0.20);
+    const hemiFill = new THREE.HemisphereLight(0xf3ebe2, 0x0d0103, 0.13);
     scene.add(hemiFill);
 
-    const keyLight = new THREE.DirectionalLight(0xfff5ea, 1.22);
-    keyLight.position.set(-5.8, 8.6, 7.2);
+    const keyLight = new THREE.DirectionalLight(0xfff8f0, 1.72);
+    keyLight.position.set(-8.2, 10.2, 5.0);
     keyLight.castShadow = !isSoftwareGl;
     keyLight.shadow.mapSize.width = 1024;
     keyLight.shadow.mapSize.height = 1024;
@@ -201,19 +203,17 @@ export function GrowthArrowScene() {
     keyLight.shadow.normalBias = 0.025;
     scene.add(keyLight);
 
-    const coolRimLight = new THREE.DirectionalLight(0xc2cde0, 0.46);
-    coolRimLight.position.set(7.2, 5.2, -5.5);
+    const coolRimLight = new THREE.DirectionalLight(0xc2cde0, 0.24);
+    coolRimLight.position.set(-3.5, 5.0, -7.2);
     scene.add(coolRimLight);
 
-    // Crimson underside bounce lights attached to parallaxGroup so they move cohesively with arches
-    const underLight1 = new THREE.PointLight(0xa0061c, 0.95, 4.4, 2.0);
-    underLight1.position.set(-1.55, -1.72, 0.45);
-    const underLight2 = new THREE.PointLight(0xb00820, 1.05, 4.8, 2.0);
-    underLight2.position.set(0.9, -0.82, 0.42);
-    const pulsePointLight = new THREE.PointLight(0xd40f2d, 0.78, 3.4, 2.0);
-    pulsePointLight.position.set(-1.2, -0.6, 0.8);
+    // Crimson underside bounce lights attached to parallaxGroup beneath Crest 1 & Crest 2 arches (also lighting left bar faces)
+    const underLight1 = new THREE.PointLight(0xb50620, 0.85, 5.0, 2.0);
+    underLight1.position.set(-1.60, -1.05, 0.45);
+    const underLight2 = new THREE.PointLight(0xc60824, 0.95, 5.2, 2.0);
+    underLight2.position.set(0.20, -0.50, 0.55);
 
-    parallaxGroup.add(underLight1, underLight2, pulsePointLight);
+    parallaxGroup.add(underLight1, underLight2);
 
     // Apply layout relative to hero DOM bounds
     let targetAnchorX = 1.25;
@@ -273,6 +273,10 @@ export function GrowthArrowScene() {
           entry.group.visible = layout.showSecondaryTiles;
         }
       });
+
+      if (!isSoftwareGl) {
+        renderer.shadowMap.needsUpdate = true;
+      }
     };
 
     syncViewportAndLayout();
@@ -280,30 +284,6 @@ export function GrowthArrowScene() {
     if (!isSoftwareGl) {
       renderer.compile(scene, camera);
     }
-
-    // Track pointer parallax across hero
-    let targetPointerX = 0;
-    let targetPointerY = 0;
-    let smoothPointerX = 0;
-    let smoothPointerY = 0;
-
-    const handlePointerMove = (e: PointerEvent) => {
-      const heroEl = document.getElementById("hero");
-      const rect = (heroEl || container).getBoundingClientRect();
-      if (rect.width <= 0 || rect.height <= 0) return;
-      const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-      targetPointerX = clamp(nx, -1, 1);
-      targetPointerY = clamp(ny, -1, 1);
-    };
-
-    const handlePointerLeave = () => {
-      targetPointerX = 0;
-      targetPointerY = 0;
-    };
-
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    document.addEventListener("pointerleave", handlePointerLeave);
 
     // Responsive measurement updates
     let resizeObs: ResizeObserver | null = null;
@@ -385,58 +365,50 @@ export function GrowthArrowScene() {
         elapsed += delta;
       }
 
-      // Smooth damped pointer & scroll transitions
-      const dampLambda = reduced ? 12 : 5.2;
-      smoothPointerX = THREE.MathUtils.damp(smoothPointerX, targetPointerX, dampLambda, delta);
-      smoothPointerY = THREE.MathUtils.damp(smoothPointerY, targetPointerY, dampLambda, delta);
-      smoothScroll = THREE.MathUtils.damp(smoothScroll, particleBridge.heroDissolve, 6.5, delta);
+      // Smooth damped scroll transition (tracks Lenis crisply without double-lag)
+      smoothScroll = THREE.MathUtils.damp(smoothScroll, particleBridge.heroDissolve, 14, delta);
 
       const scrollState = computeGrowthArrowScrollState(smoothScroll);
 
       // Anchor & responsive scale damping
-      sculptureRoot.position.x = THREE.MathUtils.damp(sculptureRoot.position.x, targetAnchorX, 8, delta);
+      sculptureRoot.position.x = THREE.MathUtils.damp(sculptureRoot.position.x, targetAnchorX, 10, delta);
       sculptureRoot.position.y = THREE.MathUtils.damp(
         sculptureRoot.position.y,
         targetAnchorY + scrollState.elevationY,
-        8,
+        10,
         delta
       );
       sculptureRoot.position.z = THREE.MathUtils.damp(
         sculptureRoot.position.z,
         scrollState.depthOffsetZ,
-        8,
+        10,
         delta
       );
-      const nextScale = THREE.MathUtils.damp(sculptureRoot.scale.x, targetScale, 8, delta);
+      const nextScale = THREE.MathUtils.damp(sculptureRoot.scale.x, targetScale, 10, delta);
       sculptureRoot.scale.setScalar(nextScale);
 
-      // Subtle mouse-driven sculptural parallax
-      const motionMult = reduced ? 0.15 : 1.0;
-      parallaxGroup.rotation.y = smoothPointerX * 0.075 * motionMult;
-      parallaxGroup.rotation.x = -smoothPointerY * 0.045 * motionMult + scrollState.tiltPitchX;
-      parallaxGroup.position.x = -smoothPointerX * 0.14 * motionMult;
-      parallaxGroup.position.y = smoothPointerY * 0.085 * motionMult;
+      // Fixed sculpture orientation & position (scroll pitch only, zero cursor parallax)
+      parallaxGroup.rotation.set(scrollState.tiltPitchX, 0, 0);
+      parallaxGroup.position.set(0, 0, 0);
 
-      // Subtle breathing float + layered parallax on floating marketing elements
+      // Gentle non-mouse ambient breathing float on floating marketing elements
       for (const entry of marketingBundle.entries) {
-        if (!entry.group.visible) continue;
-        const floatY =
-          !reduced && entry.floatAmplitude > 0
-            ? Math.sin(elapsed * entry.floatSpeed + entry.floatPhase) * entry.floatAmplitude
-            : 0;
-        const floatRotZ =
-          !reduced && entry.floatAmplitude > 0
-            ? Math.cos(elapsed * entry.floatSpeed * 0.8 + entry.floatPhase) * 0.032
-            : 0;
+        if (!entry.group.visible || entry.floatAmplitude <= 0) continue;
+        const floatY = !reduced
+          ? Math.sin(elapsed * entry.floatSpeed + entry.floatPhase) * entry.floatAmplitude
+          : 0;
+        const floatRotZ = !reduced
+          ? Math.cos(elapsed * entry.floatSpeed * 0.8 + entry.floatPhase) * 0.032
+          : 0;
 
         entry.group.position.set(
-          entry.basePosition.x + smoothPointerX * 0.09 * entry.parallaxWeight * motionMult,
-          entry.basePosition.y + floatY - smoothPointerY * 0.07 * entry.parallaxWeight * motionMult,
+          entry.basePosition.x,
+          entry.basePosition.y + floatY,
           entry.basePosition.z
         );
         entry.group.rotation.set(
-          entry.baseRotation.x - smoothPointerY * 0.05 * motionMult,
-          entry.baseRotation.y + smoothPointerX * 0.08 * motionMult,
+          entry.baseRotation.x,
+          entry.baseRotation.y,
           entry.baseRotation.z + floatRotZ
         );
       }
@@ -459,8 +431,8 @@ export function GrowthArrowScene() {
         ? 0.48
         : (0.78 + Math.sin(elapsed * 2.2) * 0.12) * (1 + scrollState.crimsonGlowBoost * 0.5);
 
-      underLight1.intensity = 0.95 + scrollState.crimsonGlowBoost * 0.55;
-      underLight2.intensity = 1.05 + scrollState.crimsonGlowBoost * 0.6;
+      underLight1.intensity = 0.85 + scrollState.crimsonGlowBoost * 0.55;
+      underLight2.intensity = 0.95 + scrollState.crimsonGlowBoost * 0.60;
 
       renderer.render(scene, camera);
       scheduleNext();
@@ -546,15 +518,12 @@ export function GrowthArrowScene() {
       intersectionObs?.disconnect();
       resizeObs?.disconnect();
       window.removeEventListener("resize", syncViewportAndLayout);
-      window.removeEventListener("pointermove", handlePointerMove);
-      document.removeEventListener("pointerleave", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       canvas.removeEventListener("webglcontextlost", handleContextLost);
       canvas.removeEventListener("webglcontextrestored", handleContextRestored);
 
       // Thorough Three.js GPU resource disposal
-      assets.ribbonGeometry.dispose();
-      assets.arrowheadGeometry.dispose();
+      assets.arrowGeometry.dispose();
       assets.platformGeometry.dispose();
       assets.sculptureMaterial.dispose();
       assets.platformMaterial.dispose();

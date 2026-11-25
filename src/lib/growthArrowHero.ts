@@ -50,18 +50,18 @@ export interface ContourPulseSample {
  * through two dramatic arches up to the arrowhead neck junction.
  */
 export const ARROW_SPINE_CONTROL_POINTS: readonly Vec3Tuple[] = [
-  { x: -2.92, y: -2.62, z: 0.32 }, // Grounded inside curved dark platform mound
-  { x: -2.52, y: -1.85, z: 0.42 }, // Emergence slope
-  { x: -1.78, y: -0.68, z: 0.48 }, // Crest 1 peak
-  { x: -0.62, y: -1.24, z: 0.22 }, // Valley 1 trough
-  { x: 0.56, y: 0.64, z: 0.34 }, // Crest 2 tall arch
-  { x: 1.5, y: 0.24, z: 0.14 }, // Valley 2 inflection
-  { x: 2.36, y: 1.44, z: -0.02 }, // Neck ramp
-  { x: 2.95, y: 2.22, z: -0.1 }, // Arrowhead collar junction
+  { x: -3.18, y: -2.92, z: 0 }, // Grounded deeply inside curved dark platform mound
+  { x: -2.74, y: -1.66, z: 0 }, // Steep architectural emergence climb
+  { x: -1.88, y: -0.66, z: 0 }, // Crest 1 smooth broad sculptural arch
+  { x: -0.92, y: -1.08, z: 0 }, // Valley 1 gentle U-trough exposing deep crimson vault
+  { x: 0.40, y: 0.68, z: 0 }, // Crest 2 dominant ascending arch
+  { x: 1.24, y: 0.36, z: 0 }, // Valley 2 subtle shoulder inflection
+  { x: 2.00, y: 1.16, z: 0 }, // Diagonal neck ramp (~46 deg)
+  { x: 2.60, y: 1.78, z: 0 }, // Arrowhead collar junction (~46 deg)
 ] as const;
 
-// Slightly tilted sculptural camera-facing depth axis (keeps ribbon facing 3/4 to viewer without Frenet twist)
-const SCULPT_BINORMAL: Vec3Tuple = normalize3({ x: -0.24, y: 0.13, z: 0.962 });
+// Viewer-facing planar normal (flat front face in XY, extruded along Z; group tilts cleanly for 3/4 depth)
+const SCULPT_BINORMAL: Vec3Tuple = normalize3({ x: 0, y: 0, z: 1 });
 
 function add3(a: Vec3Tuple, b: Vec3Tuple): Vec3Tuple {
   return { x: a.x + b.x, y: a.y + b.y, z: a.z + b.z };
@@ -149,17 +149,28 @@ export function evaluateArrowRibbonFrame(u: number): RibbonFrame {
 }
 
 /**
- * Smooth ribbon cross-section half-height (tapers very slightly upward into a crisp neck before the arrowhead).
+ * Smooth ribbon cross-section half-height (sleek crisp architectural ribbon profile).
  */
 export function evaluateRibbonHalfHeight(u: number): number {
   const t = clamp(u, 0, 1);
-  // Broad anchored base tapering smoothly toward sleek upper neck
-  return 0.42 - smoothstep(0.0, 0.92, t) * 0.085;
+  return 0.38 - smoothstep(0.0, 0.92, t) * 0.055;
 }
 
 export function evaluateRibbonHalfDepth(u: number): number {
   const t = clamp(u, 0, 1);
-  return 0.46 - smoothstep(0.0, 0.95, t) * 0.06;
+  return 0.68 - smoothstep(0.0, 0.95, t) * 0.04;
+}
+
+/**
+ * Computes the diagonal upper-right arrowhead tip direction angle (in degrees, ~43-46 deg)
+ * used by the monolithic extruded growth arrow geometry.
+ */
+export function getArrowheadAxisAngleDeg(): number {
+  const p0 = evaluateArrowSpinePoint(0.86);
+  const p1 = evaluateArrowSpinePoint(1.0);
+  const dx = p1.x - p0.x;
+  const dy = p1.y - p0.y;
+  return (Math.atan2(dy, dx) * 180) / Math.PI;
 }
 
 /**
@@ -167,11 +178,11 @@ export function evaluateRibbonHalfDepth(u: number): number {
  * Forms a smooth low-profile architectural mound peaking beneath Crest 2 and rolling off left/right.
  */
 export function platformHeightAt(x: number, z: number): number {
-  const dx = (x - 0.65) / 6.6;
-  const dz = (z + 0.1) / 3.8;
+  const dx = (x - 0.55) / 6.9;
+  const dz = (z + 0.1) / 3.9;
   const dome = Math.exp(-(dx * dx * 0.88 + dz * dz * 1.18));
-  const wave = Math.sin((x + 1.4) * 0.34) * 0.065;
-  return -2.86 + dome * 0.98 + wave;
+  const wave = Math.sin((x + 1.4) * 0.34) * 0.05;
+  return -2.86 + dome * 0.88 + wave;
 }
 
 /**
@@ -290,35 +301,36 @@ export function computeGrowthArrowViewportLayout(
     };
   }
 
-  const cameraZ = 14.2;
+  const cameraZ = 14.6;
   const visH = 2 * cameraZ * Math.tan(fovRad * 0.5);
   const visW = visH * aspect;
 
   // Compute normalized right boundary of the copy block inside the hero frame
   const copyRightNorm = clamp((copyRect.right - heroRect.left) / heroW, 0.28, 0.62);
-  const minClearWorldX = (copyRightNorm - 0.5) * visW + 0.62;
-  const maxRightWorldX = visW * 0.5 - 0.42;
+  const minClearWorldX = (copyRightNorm - 0.5) * visW + 0.55;
+  const maxRightWorldX = visW * 0.5 - 0.45;
   const rightSpan = Math.max(3.8, maxRightWorldX - minClearWorldX);
 
-  // Target visual span of the arrow composition: width ~ 7.3 units at scale=1
-  const scaleFromWidth = rightSpan / 7.3;
-  const scaleFromHeight = visH / 8.0;
-  const sceneScale = clamp(Math.min(scaleFromWidth, scaleFromHeight, 1.04), 0.64, 1.04);
+  // Target visual span of the arrow composition: slightly compact so arrowhead tip & wing keep clean headroom inside the frame
+  const scaleFromWidth = rightSpan / 7.65;
+  const scaleFromHeight = visH / 9.15;
+  const sceneScale = clamp(Math.min(scaleFromWidth, scaleFromHeight, 0.92), 0.62, 0.92);
 
-  // Anchor so left emergence of arrow sits neatly past text, while tip fills upper-right
-  const desiredLeftEdgeX = minClearWorldX + Math.max(0.05, (rightSpan - 7.35 * sceneScale) * 0.38);
-  const anchorX = clamp(desiredLeftEdgeX + 2.65 * sceneScale, 0.72, 2.45);
+  // Anchor so left emergence clears hero copy and arrowhead tip + wing stay safely inside right/top borders
+  const desiredLeftEdgeX = minClearWorldX + Math.max(0.08, (rightSpan - 7.35 * sceneScale) * 0.42);
+  const maxAnchorForRight = Math.max(0.95, maxRightWorldX - 3.65 * sceneScale * 1.12);
+  const anchorX = clamp(desiredLeftEdgeX + 2.65 * sceneScale, 0.72, Math.min(2.35, maxAnchorForRight));
 
-  // Position vertically so dark platform sits just above TrustRail and tip reaches upper right
-  const anchorY = clamp(0.04 + (aspect < 1.5 ? -0.12 : 0.08), -0.25, 0.24);
+  // Position vertically so arrowhead tip has clean dark margin below top border while platform rests above TrustRail
+  const anchorY = clamp(-0.08 + (aspect < 1.5 ? -0.08 : 0.02), -0.22, 0.04);
 
   return {
     isMobile: false,
-    cameraX: -0.15,
-    cameraY: 0.2,
+    cameraX: -0.20,
+    cameraY: -0.06,
     cameraZ,
-    lookAtX: 0.12,
-    lookAtY: 0.12,
+    lookAtX: 0.14,
+    lookAtY: 0.04,
     lookAtZ: 0,
     fovDeg,
     anchorX,

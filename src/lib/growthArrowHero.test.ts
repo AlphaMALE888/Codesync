@@ -8,6 +8,7 @@ import {
   evaluateArrowSpinePoint,
   evaluateContourPulse,
   evaluateRibbonHalfHeight,
+  getArrowheadAxisAngleDeg,
   platformHeightAt,
 } from "./growthArrowHero";
 
@@ -35,6 +36,12 @@ describe("growthArrowHero pure math & layout", () => {
 
     assert.ok(ARROW_SPINE_CONTROL_POINTS.length >= 6);
     assert.ok(evaluateRibbonHalfHeight(0) > evaluateRibbonHalfHeight(1));
+
+    const tipAngleDeg = getArrowheadAxisAngleDeg();
+    assert.ok(
+      tipAngleDeg >= 38 && tipAngleDeg <= 50,
+      `arrowhead points cleanly toward upper-right diagonal (${tipAngleDeg.toFixed(1)} deg)`
+    );
   });
 
   it("models a smooth curved dark platform mound peaking beneath Crest 2", () => {

@@ -854,7 +854,7 @@ export function FluidInkCanvas() {
     };
 
     const resizeCanvas = () => {
-      const dpr = isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+      const dpr = 1;
       const width = Math.max(1, Math.floor(canvas.clientWidth * dpr));
       const height = Math.max(1, Math.floor(canvas.clientHeight * dpr));
       if (canvas.width !== width || canvas.height !== height) {
@@ -1080,11 +1080,31 @@ export function FluidInkCanvas() {
     let rafId = 0;
     let timerId: ReturnType<typeof setTimeout> | null = null;
     let disposed = false;
+    let isSleeping = false;
+    let clearedWhileIdle = false;
     let lastTime = performance.now();
+    let lastFluidActivity = 0;
     let prevSpringUvX = 0.5;
     let prevSpringUvY = 0.5;
     let initializedCursor = false;
     let smoothedOpacity = 0;
+
+    const wake = () => {
+      if (disposed) return;
+      if (
+        particleBridge.fluidBlend <= 0.04 &&
+        smoothedOpacity <= 0.002 &&
+        particleBridge.pendingDissolveSeeds.length === 0
+      ) {
+        return;
+      }
+      lastFluidActivity = performance.now();
+      if (isSleeping) {
+        isSleeping = false;
+        lastTime = performance.now();
+        rafId = requestAnimationFrame(tick);
+      }
+    };
 
     const tick = () => {
       if (disposed) return;
@@ -1093,9 +1113,12 @@ export function FluidInkCanvas() {
       const dt = Math.min(0.025, Math.max(0.004, (now - lastTime) / 1000));
       lastTime = now;
 
+      let hadNewActivity = false;
+
       if (!contextLost) {
         if (resizeCanvas()) {
           initFramebuffers();
+          hadNewActivity = true;
         }
 
         const fluidBlend = particleBridge.fluidBlend;
@@ -1103,10 +1126,14 @@ export function FluidInkCanvas() {
           fluidBlend *
           (particleBridge.cursorExcluded ? 0.08 : 1.0) *
           0.52;
+        if (Math.abs(targetOpacity - smoothedOpacity) > 0.002) {
+          hadNewActivity = true;
+        }
         smoothedOpacity += (targetOpacity - smoothedOpacity) * Math.min(1, dt * 8);
 
-        // 1. Consume dispersing hero-sphere ink wisps as particles dissolve into liquid ink
+        // 1. Consume dispersing hero wisps
         while (particleBridge.pendingDissolveSeeds.length > 0) {
+          hadNewActivity = true;
           const seed = particleBridge.pendingDissolveSeeds.shift()!;
           const c = pickWineInkColor(seed.strength, now * 0.002);
           splat(
@@ -1119,7 +1146,7 @@ export function FluidInkCanvas() {
           );
         }
 
-        // 2. Drive fluid wake directly from the single shared SmoothCursor spring stream
+        // 2. Drive fluid wake directly from SmoothCursor spring stream
         if (
           particleBridge.hasPointerMoved &&
           particleBridge.cursorActive &&
@@ -1148,6 +1175,7 @@ export function FluidInkCanvas() {
           const dist = Math.hypot(corrDx, corrDy);
 
           if (dist > 0.00015) {
+            hadNewActivity = true;
             const speedRatio = clamp(dist * 28, 0.18, 1);
             const inkColor = pickWineInkColor(speedRatio, now * 0.0018);
             const baseR = config.SPLAT_RADIUS / 100;
@@ -1191,6 +1219,7 @@ export function FluidInkCanvas() {
 
         // 3. Subtle click impulse outside excluded regions
         while (particleBridge.pendingClickSplats.length > 0) {
+          hadNewActivity = true;
           const click = particleBridge.pendingClickSplats.shift()!;
           if (!particleBridge.cursorExcluded && fluidBlend > 0.15) {
             const vw = Math.max(1, window.innerWidth);
@@ -1207,14 +1236,29 @@ export function FluidInkCanvas() {
           }
         }
 
-        if (smoothedOpacity > 0.002 || fluidBlend > 0.04) {
+        if (hadNewActivity) {
+          lastFluidActivity = now;
+        }
+
+        const isRecentlyActive = lastFluidActivity > 0 && now - lastFluidActivity < 4200;
+
+        if ((smoothedOpacity > 0.002 || fluidBlend > 0.04) && isRecentlyActive) {
+          clearedWhileIdle = false;
           step(dt);
           renderDisplay(smoothedOpacity);
         } else {
-          gl!.viewport(0, 0, gl!.drawingBufferWidth, gl!.drawingBufferHeight);
-          gl!.bindFramebuffer(gl!.FRAMEBUFFER, null);
-          gl!.clearColor(0, 0, 0, 0);
-          gl!.clear(gl!.COLOR_BUFFER_BIT);
+          if (!clearedWhileIdle) {
+            gl!.viewport(0, 0, gl!.drawingBufferWidth, gl!.drawingBufferHeight);
+            gl!.bindFramebuffer(gl!.FRAMEBUFFER, null);
+            gl!.clearColor(0, 0, 0, 0);
+            gl!.clear(gl!.COLOR_BUFFER_BIT);
+            clearedWhileIdle = true;
+          }
+          // Put fluid simulation cleanly to sleep when hidden on hero top or after dye fades out
+          if (fluidBlend <= 0.04 || !isRecentlyActive) {
+            isSleeping = true;
+            return;
+          }
         }
       }
 
@@ -1227,12 +1271,21 @@ export function FluidInkCanvas() {
       }
     };
 
+    window.addEventListener("pointermove", wake, { passive: true });
+    window.addEventListener("pointerdown", wake, { passive: true });
+    window.addEventListener("scroll", wake, { passive: true });
+    window.addEventListener("resize", wake, { passive: true });
+
     rafId = requestAnimationFrame(tick);
 
     return () => {
       disposed = true;
       cancelAnimationFrame(rafId);
       if (timerId) clearTimeout(timerId);
+      window.removeEventListener("pointermove", wake);
+      window.removeEventListener("pointerdown", wake);
+      window.removeEventListener("scroll", wake);
+      window.removeEventListener("resize", wake);
       canvas.removeEventListener("webglcontextlost", handleContextLost);
       canvas.removeEventListener("webglcontextrestored", handleContextRestored);
 

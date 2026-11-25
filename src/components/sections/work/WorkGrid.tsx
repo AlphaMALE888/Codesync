@@ -5,11 +5,15 @@ import { ProjectItem } from "@/data/types";
 import { CaseStudyCard } from "./CaseStudyCard";
 import { motion, AnimatePresence } from "@/lib/motion";
 
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+
 interface WorkGridProps {
   projects: ProjectItem[];
 }
 
 export function WorkGrid({ projects }: WorkGridProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   if (projects.length === 0) {
     return (
       <div className="py-24 text-center border border-dashed border-hairline rounded-md bg-surface-dark-2/75">
@@ -41,11 +45,16 @@ export function WorkGrid({ projects }: WorkGridProps) {
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 26, scale: 0.985 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.15 }}
                 exit={{ opacity: 0, transition: { duration: 0.15 } }}
-                transition={{ duration: 0.35, delay: idx * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                className={isFeatured ? "md:col-span-2 lg:col-span-2" : "col-span-1"}
+                transition={{
+                  duration: 0.6,
+                  delay: Math.min(idx % 3, 2) * 0.09,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className={isFeatured ? "md:col-span-2 lg:col-span-2 h-full" : "col-span-1 h-full"}
               >
                 <CaseStudyCard project={project} featured={isFeatured} />
               </motion.div>

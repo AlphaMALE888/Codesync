@@ -65,15 +65,35 @@ export function SmoothCursor() {
       particleBridge.springClientY = val;
     });
 
+    let cachedFooterEl: HTMLElement | null = null;
+    let cachedServicesEl: HTMLElement | null = null;
+    let cachedPathname = "";
+    let lastExclusionCheck = 0;
+
     const updateExclusionAtPoint = (clientX: number, clientY: number) => {
-      const footerRect = document.getElementById("site-footer")?.getBoundingClientRect() ?? null;
-      const servicesRect =
-        particleBridge.pathname === "/"
-          ? document.getElementById("services-section")?.getBoundingClientRect() ?? null
-          : null;
+      if (particleBridge.fluidBlend <= 0.01) {
+        particleBridge.cursorExcluded = false;
+        return;
+      }
+      const now = performance.now();
+      if (now - lastExclusionCheck < 80) return;
+      lastExclusionCheck = now;
+
+      if (cachedPathname !== particleBridge.pathname) {
+        cachedPathname = particleBridge.pathname;
+        cachedFooterEl = document.getElementById("site-footer");
+        cachedServicesEl =
+          cachedPathname === "/" ? document.getElementById("services-section") : null;
+      } else {
+        if (!cachedFooterEl) cachedFooterEl = document.getElementById("site-footer");
+        if (cachedPathname === "/" && !cachedServicesEl) {
+          cachedServicesEl = document.getElementById("services-section");
+        }
+      }
+
       particleBridge.cursorExcluded = isPointExcluded(clientX, clientY, [
-        footerRect,
-        servicesRect,
+        cachedFooterEl?.getBoundingClientRect() ?? null,
+        cachedServicesEl?.getBoundingClientRect() ?? null,
       ]);
     };
 

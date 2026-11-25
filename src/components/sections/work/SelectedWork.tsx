@@ -2,7 +2,8 @@ import React from "react";
 import { Container } from "@/components/layout/Container";
 import { DisplayMarquee } from "@/components/ui/DisplayMarquee";
 import { SplitArrowButton } from "@/components/ui/SplitArrowButton";
-import { CaseStudyCard } from "./CaseStudyCard";
+import { SelectedWorkGrid } from "./SelectedWorkGrid";
+import { Reveal } from "@/components/ui/Reveal";
 import { getRenderableProjects } from "@/lib/content";
 import { features } from "@/data/features";
 
@@ -28,17 +29,13 @@ export function SelectedWork() {
       </div>
 
       <Container>
-        {/* 3-Card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {projects.map((project) => (
-            <CaseStudyCard key={project.id} project={project} />
-          ))}
-        </div>
+        {/* 3-Card Grid with Scroll-Triggered Fade-In */}
+        <SelectedWorkGrid projects={projects} />
 
         {/* View All Work Button */}
-        <div className="mt-12 text-center">
+        <Reveal delay={0.18} className="mt-12 text-center">
           <SplitArrowButton href="/work" variant="solid-light">View all work</SplitArrowButton>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

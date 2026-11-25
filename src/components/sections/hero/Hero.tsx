@@ -35,26 +35,22 @@ export function Hero() {
             trigger: heroRef.current,
             start: "top top",
             end: "bottom top",
-            scrub: 1.2,
+            scrub: true,
           },
         });
 
-        // Copy block scrub
+        // GPU-composited copy block scrub synced 1:1 with Lenis
         if (copyBlockRef.current) {
           tl.to(
             copyBlockRef.current,
             {
-              yPercent: -8,
-              opacity: 0.4,
+              yPercent: -6,
+              opacity: 0.45,
+              force3D: true,
               ease: "none",
             },
             0
           );
-        }
-
-        // Backdrop subtle scale
-        if (backdropRef.current) {
-          tl.to(backdropRef.current, { scale: 1.04, ease: "none" }, 0);
         }
       });
     },

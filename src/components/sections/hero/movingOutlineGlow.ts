@@ -99,11 +99,11 @@ function createOutlineTraceMaterial(mode: "base" | "core" | "halo"): THREE.Shade
         float facing = abs(dot(normalize(vViewNormal), normalize(vViewDir)));
 
         if (uIsBase > 0.5) {
-          vec3 wineEdge = vec3(0.55, 0.01, 0.055);
-          vec3 pulseEdge = vec3(0.92, 0.04, 0.12);
+          vec3 wineEdge = vec3(0.45, 0.008, 0.045);
+          vec3 pulseEdge = vec3(0.96, 0.045, 0.13);
           vec3 baseCol = mix(wineEdge, pulseEdge, activePulse);
-          float baseAlpha = (0.44 + activePulse * 0.54) * endFade * pow(facing, 0.55);
-          gl_FragColor = vec4(baseCol, clamp(baseAlpha, 0.0, 0.96));
+          float baseAlpha = (0.12 + activePulse * 0.82) * endFade * pow(facing, 0.55);
+          gl_FragColor = vec4(baseCol, clamp(baseAlpha, 0.0, 0.95));
           return;
         }
 
@@ -116,8 +116,8 @@ function createOutlineTraceMaterial(mode: "base" | "core" | "halo"): THREE.Shade
         vec3 baseCol = mix(deepCrimson, vividCrimson, smoothstep(0.08, 0.65, activePulse));
         vec3 col = mix(baseCol, hotCrimsonPeak, hotMix * (1.0 - uIsHalo * 0.75));
 
-        float baseIdle = uIsHalo > 0.5 ? 0.035 : 0.12;
-        float pulseGain = uIsHalo > 0.5 ? 0.46 : 0.96;
+        float baseIdle = uIsHalo > 0.5 ? 0.015 : 0.05;
+        float pulseGain = uIsHalo > 0.5 ? 0.48 : 0.96;
         float alpha = (baseIdle + activePulse * pulseGain) * (1.0 + uBoost * 0.42) * endFade * radialProfile;
 
         gl_FragColor = vec4(col * alpha, clamp(alpha, 0.0, 1.0));
@@ -130,20 +130,19 @@ export function buildMovingOutlineGlow(contours: ArrowContourData): MovingOutlin
   const group = new THREE.Group();
   group.name = "arrowMovingOutlineGlow";
 
-  const peri = contours.arrowheadPerimeter;
-  const upperArrowWing = peri.slice(0, 6);
-  const upperPoints = [
-    ...contours.upperContour.filter((_, idx) => idx % 3 === 0 || idx === contours.upperContour.length - 1),
-    ...upperArrowWing,
-  ];
-  const upperCurve = new THREE.CatmullRomCurve3(upperPoints, false, "centripetal", 0.35);
+  const upperCurve = new THREE.CatmullRomCurve3(
+    contours.upperContour,
+    false,
+    "centripetal",
+    0.25
+  );
 
-  const lowerArrowWing = peri.slice(5).reverse();
-  const lowerPoints = [
-    ...contours.lowerContour.filter((_, idx) => idx % 3 === 0 || idx === contours.lowerContour.length - 1),
-    ...lowerArrowWing,
-  ];
-  const lowerCurve = new THREE.CatmullRomCurve3(lowerPoints, false, "centripetal", 0.35);
+  const lowerCurve = new THREE.CatmullRomCurve3(
+    contours.lowerContour,
+    false,
+    "centripetal",
+    0.25
+  );
 
   const baseMat = createOutlineTraceMaterial("base");
   const coreMat = createOutlineTraceMaterial("core");
