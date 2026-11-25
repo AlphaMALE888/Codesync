@@ -71,11 +71,11 @@ export function Hero() {
       )}
     >
       {/* Outer Rounded Hero Frame */}
-      <div className="relative w-full flex-1 rounded-lg flex flex-col justify-between gap-8 sm:gap-10 px-5 pt-7 pb-5 sm:px-10 sm:pt-9 sm:pb-6 md:px-14 md:pt-11 md:pb-8 border border-white/10 shadow-2xl overflow-clip bg-transparent">
-        {/* Atmospheric Vignette & Film-Grain over Persistent Particle Cloud */}
+      <div className="relative w-full flex-1 rounded-lg flex flex-col justify-between gap-6 sm:gap-8 px-5 pt-7 pb-5 sm:px-10 sm:pt-9 sm:pb-6 md:px-14 md:pt-11 md:pb-8 border border-white/10 shadow-2xl overflow-clip bg-[#080808]">
+        {/* Atmospheric Obsidian Studio Backdrop & Sculptural 3D Growth Arrow */}
         <HeroBackdrop ref={backdropRef} />
 
-        {/* Main Copy Block (aligned slightly higher so text & right sphere sit cleanly above the fold) */}
+        {/* Main Copy Block */}
         <div id="hero-copy-block" ref={copyBlockRef} className="relative z-10 max-w-4xl space-y-5 sm:space-y-6">
           {/* Eyebrow Label */}
           <motion.div
@@ -137,6 +137,13 @@ export function Hero() {
             </TextLink>
           </motion.div>
         </div>
+
+        {/* Dedicated non-overlapping mobile 3D stage below CTAs */}
+        <div
+          id="hero-mobile-stage"
+          className="md:hidden h-[270px] sm:h-[290px] w-full pointer-events-none"
+          aria-hidden="true"
+        />
 
         {/* Bottom Trust Rail */}
         <div className="relative z-10 w-full">

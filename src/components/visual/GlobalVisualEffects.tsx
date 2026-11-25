@@ -4,58 +4,14 @@ import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { HeroParticleSphere } from "@/components/particles/ParticleCanvas";
 import { FluidInkCanvas } from "@/components/visual/FluidInkCanvas";
 import { SmoothCursor } from "@/components/visual/SmoothCursor";
 import { particleBridge } from "@/components/particles/particleState";
 import {
   computeHeroDissolveState,
-  computeHeroSphereLayout,
   isPointExcluded,
   rectToUvBounds,
-  type ViewportRect,
 } from "@/lib/visualExperience";
-
-function measureHeroCopyVisualRect(copyEl: HTMLElement): ViewportRect {
-  const baseRect = copyEl.getBoundingClientRect();
-  let visualRight = baseRect.left;
-
-  try {
-    const walker = document.createTreeWalker(copyEl, NodeFilter.SHOW_TEXT);
-    const range = document.createRange();
-    let node: Node | null;
-    while ((node = walker.nextNode())) {
-      if (!node.textContent || !node.textContent.trim()) continue;
-      range.selectNodeContents(node);
-      const r = range.getBoundingClientRect();
-      if (r.width > 0) {
-        visualRight = Math.max(visualRight, r.right);
-      }
-    }
-  } catch {
-    visualRight = Math.min(baseRect.right, baseRect.left + 620);
-  }
-
-  // Include interactive CTA buttons/links at bottom of copy block
-  const interactiveEls = copyEl.querySelectorAll("a, button");
-  interactiveEls.forEach((el) => {
-    const r = el.getBoundingClientRect();
-    if (r.width > 0) {
-      visualRight = Math.max(visualRight, r.right);
-    }
-  });
-
-  if (visualRight <= baseRect.left) {
-    visualRight = Math.min(baseRect.right, baseRect.left + 620);
-  }
-
-  return {
-    left: baseRect.left,
-    top: baseRect.top,
-    right: Math.min(baseRect.right, visualRight),
-    bottom: baseRect.bottom,
-  };
-}
 
 export function GlobalVisualEffects() {
   const pathname = usePathname() || "/";
@@ -87,34 +43,6 @@ export function GlobalVisualEffects() {
       }
     };
 
-    const updateHeroSphereLayout = () => {
-      const heroEl = document.getElementById("hero");
-      const copyEl = document.getElementById("hero-copy-block");
-      if (!heroEl || !copyEl || pathname !== "/") return;
-
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const heroRect = heroEl.getBoundingClientRect();
-      const copyRect = measureHeroCopyVisualRect(copyEl);
-      const layout = computeHeroSphereLayout(vw, vh, heroRect, copyRect);
-
-      particleBridge.heroSphere = layout;
-      particleBridge.hasMeasuredSphere = true;
-
-      const backdropEl = document.getElementById("hero-backdrop");
-      if (backdropEl) {
-        const bdRect = backdropEl.getBoundingClientRect();
-        const relX = layout.centerX - bdRect.left;
-        const relY = layout.centerY - bdRect.top;
-        backdropEl.style.setProperty("--hero-sphere-x", `${relX.toFixed(1)}px`);
-        backdropEl.style.setProperty("--hero-sphere-y", `${relY.toFixed(1)}px`);
-        backdropEl.style.setProperty(
-          "--hero-sphere-glow-r",
-          `${(layout.radiusPx * 1.18).toFixed(1)}px`
-        );
-      }
-    };
-
     const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
     const applyHeroProgress = (progress: number, hasHero: boolean) => {
@@ -135,7 +63,6 @@ export function GlobalVisualEffects() {
     };
 
     const heroEl = pathname === "/" ? document.getElementById("hero") : null;
-    const copyEl = pathname === "/" ? document.getElementById("hero-copy-block") : null;
     const hasHero = pathname === "/" && Boolean(heroEl);
     particleBridge.hasHero = hasHero;
 
@@ -151,7 +78,6 @@ export function GlobalVisualEffects() {
     } else {
       const initialProgress = clamp01(window.scrollY / getHeroScrubDistance());
       applyHeroProgress(initialProgress, true);
-      updateHeroSphereLayout();
       updateExclusionZones();
     }
 
@@ -167,7 +93,6 @@ export function GlobalVisualEffects() {
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             applyHeroProgress(self.progress, true);
-            updateHeroSphereLayout();
             updateExclusionZones();
           },
         });
@@ -188,7 +113,6 @@ export function GlobalVisualEffects() {
             scrub: 1.25,
             invalidateOnRefresh: true,
             onUpdate: () => {
-              updateHeroSphereLayout();
               updateExclusionZones();
             },
           },
@@ -198,31 +122,23 @@ export function GlobalVisualEffects() {
     }
 
     let resizeObs: ResizeObserver | null = null;
-    if (copyEl && typeof ResizeObserver !== "undefined") {
+    if (heroEl && typeof ResizeObserver !== "undefined") {
       resizeObs = new ResizeObserver(() => {
-        updateHeroSphereLayout();
         updateExclusionZones();
       });
-      resizeObs.observe(copyEl);
-      if (heroEl) resizeObs.observe(heroEl);
+      resizeObs.observe(heroEl);
     }
 
     const handleScroll = () => {
-      if (hasHero) {
-        updateHeroSphereLayout();
-        if (prefersReducedMotion) {
-          applyHeroProgress(window.scrollY / getHeroScrubDistance(), true);
-        }
+      if (hasHero && prefersReducedMotion) {
+        applyHeroProgress(window.scrollY / getHeroScrubDistance(), true);
       }
       updateExclusionZones();
     };
 
     const handleResize = () => {
-      if (hasHero) {
-        updateHeroSphereLayout();
-        if (prefersReducedMotion) {
-          applyHeroProgress(window.scrollY / getHeroScrubDistance(), true);
-        }
+      if (hasHero && prefersReducedMotion) {
+        applyHeroProgress(window.scrollY / getHeroScrubDistance(), true);
       }
       updateExclusionZones();
       ScrollTrigger.refresh();
@@ -231,24 +147,12 @@ export function GlobalVisualEffects() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
 
-    let cancelled = false;
-    document.fonts?.ready?.then(() => {
-      if (!cancelled && hasHero) {
-        updateHeroSphereLayout();
-      }
-    });
-
-    // Re-sync shortly after route transition settles so DOM bounding rects match new route height
     const settleTimer = setTimeout(() => {
-      if (hasHero) {
-        updateHeroSphereLayout();
-      }
       updateExclusionZones();
       ScrollTrigger.refresh();
     }, 120);
 
     return () => {
-      cancelled = true;
       clearTimeout(settleTimer);
       resizeObs?.disconnect();
       trigger?.kill();
@@ -260,7 +164,6 @@ export function GlobalVisualEffects() {
 
   return (
     <>
-      <HeroParticleSphere />
       <FluidInkCanvas />
       <SmoothCursor />
     </>
